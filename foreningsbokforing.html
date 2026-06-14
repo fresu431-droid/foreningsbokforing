@@ -595,13 +595,16 @@ function totIntakt(){return DB.poster.filter(p=>p.typ==='intäkt').reduce((s,p)=
 function totKostnad(){return DB.poster.filter(p=>p.typ==='kostnad').reduce((s,p)=>s+p.belopp,0);}
 
 // ══ INIT ════════════════════════════════════════════════════════════════════
-window.onload = async function(){
+window.onload = function(){
   renderWelcomeYears();
-  const saved = await loadIDB();
-  if(saved && saved.forening && saved.forening !== 'Min idrottsförening'){
-    DB = saved;
-    showApp();
-  }
+  loadIDB().then(function(saved){
+    if(saved && saved.forening && saved.forening.trim() !== '' && saved.forening !== 'Min idrottsförening'){
+      DB = saved;
+      showApp();
+    }
+  }).catch(function(){
+    // Kunde inte ladda sparad data — välkomstskärmen visas som fallback
+  });
 };
 
 // ══ VÄLKOMST ══════════════════════════════════════════════════════════════
@@ -621,8 +624,8 @@ function startApp(){
   DB.orgnr = $('w-orgnr').value.trim();
   DB.ar = welcomeAr;
   DB.poster = [];
-  saveDB();
-  showApp();
+  showApp(); // Visa appen direkt — spara i bakgrunden
+  saveDB().catch(function(){}); // Tyst fel om lagring misslyckas
 }
 
 // ══ APP ════════════════════════════════════════════════════════════════════
@@ -788,7 +791,7 @@ function renderPoster(){
 function deletePost(id){
   if(!confirm('Ta bort denna post?')) return;
   DB.poster = DB.poster.filter(p=>p.id!==id);
-  saveDB(); updateHeader(); renderPoster();
+  saveDB().catch(function(){}); updateHeader(); renderPoster();
 }
 
 // ══ NY POST ════════════════════════════════════════════════════════════════
@@ -852,7 +855,7 @@ function savePost(){
     foto: currentFotoB64 || null
   };
   DB.poster.push(post);
-  saveDB();
+  saveDB().catch(function(){});
   $('nypost-body').innerHTML = '<div class="saved-screen"><div class="saved-circle">✓</div><div class="saved-lbl">Sparad!</div></div>';
   setTimeout(()=>{
     closeNyPost();
@@ -1010,13 +1013,13 @@ function saveSettings(){
   DB.forening = $('s-forening').value.trim()||DB.forening;
   DB.orgnr = $('s-orgnr').value.trim();
   DB.ar = settingsAr;
-  saveDB(); updateHeader(); closeSettings();
+  saveDB().catch(function(){}); updateHeader(); closeSettings();
 }
 function showRensaConfirm(){$('rensa-confirm-1').classList.add('hidden');$('rensa-confirm-2').classList.remove('hidden');}
 function hideRensaConfirm(){$('rensa-confirm-1').classList.remove('hidden');$('rensa-confirm-2').classList.add('hidden');}
 function rensaAllt(){
   DB.poster = [];
-  saveDB(); closeSettings(); updateHeader(); renderResultat(); openGrupper={};
+  saveDB().catch(function(){}); closeSettings(); updateHeader(); renderResultat(); openGrupper={};
 }
 
 // ══ KONTODETALJ ═══════════════════════════════════════════════════════════

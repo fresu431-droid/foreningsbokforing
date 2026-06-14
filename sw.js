@@ -1,6 +1,6 @@
 // Föreningsbokföring – Service Worker
 // Uppdatera CACHE_NAME vid varje ny version för att tvinga uppdatering
-const CACHE_NAME = 'foreningsbokforing-v1';
+const CACHE_NAME = 'foreningsbokforing-v2';
 
 const ASSETS = [
   './foreningsbokforing.html',
