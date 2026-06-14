@@ -2,7 +2,7 @@
   "name": "Föreningsbokföring",
   "short_name": "Bokföring",
   "description": "Enkelt bokföringshjälpmedel för ideella idrottsföreningar. Bygger på Idrottens BAS-kontoplan IBK v3.3.",
-  "start_url": "/foreningsbokforing.html",
+  "start_url": "./foreningsbokforing.html",
   "display": "standalone",
   "background_color": "#1a1a2e",
   "theme_color": "#1a1a2e",

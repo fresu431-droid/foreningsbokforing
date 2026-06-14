@@ -3,10 +3,10 @@
 const CACHE_NAME = 'foreningsbokforing-v1';
 
 const ASSETS = [
-  '/foreningsbokforing.html',
-  '/manifest.json',
-  '/icon-192.png',
-  '/icon-512.png',
+  './foreningsbokforing.html',
+  './manifest.json',
+  './icon-192.png',
+  './icon-512.png',
 ];
 
 // ── Install: cache alla filer ──────────────────────────────────────────────
@@ -48,7 +48,7 @@ self.addEventListener('fetch', event => {
       });
     }).catch(() => {
       // Offline-fallback: returnera appen
-      return caches.match('/foreningsbokforing.html');
+      return caches.match('./foreningsbokforing.html');
     })
   );
 });

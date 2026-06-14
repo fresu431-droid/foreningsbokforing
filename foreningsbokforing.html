@@ -8,8 +8,8 @@
 <meta name="apple-mobile-web-app-title" content="Bokföring"/>
 <meta name="mobile-web-app-capable" content="yes"/>
 <meta name="theme-color" content="#1a1a2e"/>
-<link rel="manifest" href="manifest.json"/>
-<link rel="apple-touch-icon" href="icon-192.png"/>
+<link rel="manifest" href="./manifest.json"/>
+<link rel="apple-touch-icon" href="./icon-192.png"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0"/>
 <title>Föreningsbokföring – Idrottens bokföringshjälpmedel</title>
 <style>
@@ -1144,7 +1144,7 @@ ${kG.map(g=>`
 <script>
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', () => {
-    navigator.serviceWorker.register('/sw.js').then(reg => {
+    navigator.serviceWorker.register('./sw.js', {scope: './'}).then(reg => {
       console.log('SW registrerad:', reg.scope);
     }).catch(err => {
       console.log('SW fel:', err);
@@ -1511,7 +1511,7 @@ function closePanelOutside(e, id){if(e.target===$(id)) $(id).classList.add('hidd
 <script>
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', () => {
-    navigator.serviceWorker.register('/sw.js').then(reg => {
+    navigator.serviceWorker.register('./sw.js', {scope: './'}).then(reg => {
       console.log('SW registrerad:', reg.scope);
     }).catch(err => {
       console.log('SW fel:', err);
