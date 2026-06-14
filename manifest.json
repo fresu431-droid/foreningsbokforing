@@ -1,0 +1,17 @@
+{
+  "name": "Föreningsbokföring",
+  "short_name": "Bokföring",
+  "description": "Enkelt bokföringshjälpmedel för ideella idrottsföreningar. Bygger på Idrottens BAS-kontoplan IBK v3.3.",
+  "start_url": "/foreningsbokforing.html",
+  "display": "standalone",
+  "background_color": "#1a1a2e",
+  "theme_color": "#1a1a2e",
+  "orientation": "portrait-primary",
+  "lang": "sv",
+  "icons": [
+    { "src": "icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any maskable" },
+    { "src": "icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any maskable" }
+  ],
+  "categories": ["finance", "productivity"],
+  "screenshots": []
+}

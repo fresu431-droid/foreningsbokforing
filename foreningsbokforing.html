@@ -1,0 +1,1579 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+<meta charset="UTF-8"/>
+
+<meta name="apple-mobile-web-app-capable" content="yes"/>
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
+<meta name="apple-mobile-web-app-title" content="Bokföring"/>
+<meta name="mobile-web-app-capable" content="yes"/>
+<meta name="theme-color" content="#1a1a2e"/>
+<link rel="manifest" href="manifest.json"/>
+<link rel="apple-touch-icon" href="icon-192.png"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0"/>
+<title>Föreningsbokföring – Idrottens bokföringshjälpmedel</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;}
+body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;background:#f7f8fc;color:#1a1a2e;max-width:480px;margin:0 auto;min-height:100vh;position:relative;}
+input,button,select,textarea{font-family:inherit;}
+input[type=number]::-webkit-inner-spin-button{-webkit-appearance:none;}
+button{cursor:pointer;}
+.hidden{display:none!important;}
+
+/* ── Skärmar ── */
+#screen-welcome,#screen-app{min-height:100vh;}
+
+/* ── Välkomst ── */
+#screen-welcome{display:flex;flex-direction:column;background:#1a1a2e;}
+.welcome-top{padding:52px 28px 32px;}
+.welcome-tag{font-size:11px;color:rgba(255,255,255,0.4);font-weight:700;text-transform:uppercase;letter-spacing:.1em;margin-bottom:10px;}
+.welcome-title{font-size:34px;font-weight:800;color:#fff;line-height:1.1;margin-bottom:10px;}
+.welcome-sub{font-size:14px;color:rgba(255,255,255,0.5);line-height:1.6;}
+.welcome-form{flex:1;background:#f7f8fc;border-radius:24px 24px 0 0;padding:32px 24px 48px;overflow-y:auto;}
+.welcome-form h2{font-size:18px;font-weight:800;color:#1a1a2e;margin-bottom:6px;}
+.welcome-form p{font-size:13px;color:#888;margin-bottom:28px;line-height:1.5;}
+.field{margin-bottom:20px;}
+.field label{display:block;font-size:12px;font-weight:700;color:#888;text-transform:uppercase;letter-spacing:.04em;margin-bottom:6px;}
+.field .hint{font-size:11px;color:#bbb;margin-bottom:6px;}
+.input-base{width:100%;padding:14px 16px;border-radius:12px;border:2px solid #e8e8e8;font-size:15px;color:#1a1a2e;background:#fff;outline:none;transition:border-color .15s;}
+.input-base:focus{border-color:#1a1a2e;}
+.year-row{display:flex;gap:8px;}
+.year-btn{flex:1;padding:13px;border-radius:12px;border:2px solid #e8e8e8;background:#fff;font-size:16px;font-weight:700;color:#555;transition:all .15s;}
+.year-btn.active{background:#1a1a2e;color:#fff;border-color:#1a1a2e;}
+.btn-primary{width:100%;padding:18px;border-radius:14px;border:none;background:#1a1a2e;color:#fff;font-size:16px;font-weight:800;margin-top:8px;}
+.welcome-note{text-align:center;margin-top:20px;font-size:11px;color:#bbb;line-height:1.7;}
+.error-box{background:#fff3f3;border:1px solid #fca5a5;border-radius:10px;padding:10px 14px;color:#dc2626;font-size:13px;margin-bottom:16px;}
+
+/* ── App shell ── */
+#screen-app{display:flex;flex-direction:column;height:100vh;}
+.app-header{background:#1a1a2e;padding:20px 20px 0;flex-shrink:0;}
+.app-header-top{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:16px;}
+.header-info{flex:1;min-width:0;}
+.header-forening{font-size:11px;color:rgba(255,255,255,0.4);font-weight:700;letter-spacing:.08em;text-transform:uppercase;margin-bottom:2px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.header-title{font-size:20px;font-weight:800;color:#fff;}
+.header-right{display:flex;align-items:flex-start;gap:8px;flex-shrink:0;margin-left:10px;}
+.header-result{border-radius:12px;padding:8px 12px;text-align:right;}
+.header-result .lbl{font-size:10px;color:rgba(255,255,255,0.5);font-weight:700;text-transform:uppercase;}
+.header-result .val{font-size:16px;font-weight:800;}
+.btn-icon{background:rgba(255,255,255,0.1);border:none;border-radius:10px;width:36px;height:36px;display:flex;align-items:center;justify-content:center;color:rgba(255,255,255,0.6);margin-top:2px;}
+.btn-icon svg{width:18px;height:18px;}
+.app-tabs{display:flex;gap:4px;}
+.tab-btn{flex:1;padding:12px 8px 14px;border:none;background:transparent;color:rgba(255,255,255,0.4);font-size:13px;font-weight:700;border-bottom:3px solid transparent;display:flex;align-items:center;justify-content:center;gap:6px;transition:all .15s;}
+.tab-btn svg{width:16px;height:16px;}
+.tab-btn.active{color:#fff;border-bottom-color:#fff;}
+.app-content{flex:1;overflow-y:auto;padding-top:20px;}
+
+/* FAB */
+.fab{position:fixed;bottom:28px;right:20px;width:60px;height:60px;border-radius:50%;background:#1a1a2e;border:none;color:#fff;box-shadow:0 6px 24px rgba(26,26,46,.4);display:flex;align-items:center;justify-content:center;z-index:40;}
+.fab svg{width:28px;height:28px;}
+
+/* ── Ny post panel ── */
+#panel-nypost{position:fixed;inset:0;background:#f7f8fc;z-index:60;display:flex;flex-direction:column;transform:translateY(100%);transition:transform .3s ease;}
+#panel-nypost.open{transform:translateY(0);}
+.panel-header{background:#1a1a2e;padding:20px;display:flex;align-items:center;gap:12px;flex-shrink:0;}
+.panel-header .back-btn{background:rgba(255,255,255,0.1);border:none;border-radius:10px;width:36px;height:36px;display:flex;align-items:center;justify-content:center;color:#fff;}
+.panel-header .back-btn svg{width:20px;height:20px;}
+.panel-header .ph-label{font-size:11px;color:rgba(255,255,255,0.5);font-weight:700;text-transform:uppercase;letter-spacing:.08em;}
+.panel-header .ph-title{font-size:17px;font-weight:800;color:#fff;}
+.panel-body{flex:1;overflow-y:auto;padding:24px 20px 140px;}
+.konto-btn{width:100%;padding:16px;border-radius:14px;border:2px dashed #ddd;background:#fafafa;text-align:left;display:flex;align-items:center;gap:12px;transition:all .15s;}
+.konto-btn.selected{border:2px solid #2563eb;background:#f0f7ff;}
+.konto-btn .placeholder{font-size:15px;color:#aaa;}
+.konto-tag{font-family:monospace;font-size:13px;font-weight:700;padding:4px 8px;border-radius:6px;flex-shrink:0;}
+.konto-tag.intakt{background:#e8f5e9;color:#2e7d32;}
+.konto-tag.kostnad{background:#fff3e0;color:#e65100;}
+.konto-name{font-size:14px;font-weight:600;color:#1a1a2e;flex:1;}
+.belopp-wrap{position:relative;}
+.belopp-input{font-size:24px!important;font-weight:700!important;padding-right:48px!important;}
+.belopp-kr{position:absolute;right:16px;top:50%;transform:translateY(-50%);color:#aaa;font-size:16px;font-weight:600;}
+.belopp-hint{font-size:12px;color:#888;margin-top:6px;}
+.betalning-row{display:flex;gap:8px;flex-wrap:wrap;}
+.betal-btn{padding:10px 16px;border-radius:20px;border:2px solid #e8e8e8;background:#fff;font-size:13px;font-weight:600;color:#555;transition:all .15s;}
+.betal-btn.active{background:#1a1a2e;color:#fff;border-color:#1a1a2e;}
+.kvitto-btn{width:100%;padding:14px 16px;border-radius:14px;border:2px solid #e8e8e8;background:#fafafa;display:flex;align-items:center;gap:12px;transition:all .15s;}
+.kvitto-btn.checked{border-color:#2e7d32;background:#e8f5e9;}
+.kvitto-box{width:24px;height:24px;border-radius:6px;border:2px solid #ccc;background:#fff;display:flex;align-items:center;justify-content:center;color:#fff;flex-shrink:0;font-size:14px;transition:all .15s;}
+.kvitto-box.checked{background:#2e7d32;border-color:#2e7d32;}
+.kvitto-lbl{font-size:14px;font-weight:600;color:#555;}
+.kvitto-lbl.checked{color:#2e7d32;}
+.panel-footer{position:fixed;bottom:0;left:0;right:0;background:#fff;border-top:1px solid #f0f0f0;padding:16px 20px;display:flex;gap:10px;z-index:70;max-width:480px;margin:0 auto;}
+.panel-footer button{flex:1;padding:16px;border-radius:14px;font-size:15px;font-weight:700;}
+.btn-cancel{border:2px solid #e8e8e8;background:#fff;color:#555;}
+.btn-save{border:none;background:#1a1a2e;color:#fff;flex:2!important;}
+.saved-screen{display:flex;flex-direction:column;align-items:center;justify-content:center;height:100%;gap:16px;}
+.saved-circle{width:64px;height:64px;border-radius:50%;background:#e8f5e9;display:flex;align-items:center;justify-content:center;color:#2e7d32;font-size:32px;}
+.saved-lbl{font-size:18px;font-weight:700;color:#1a1a2e;}
+
+/* ── Kontopicker ── */
+#panel-konto{position:fixed;inset:0;background:rgba(0,0,0,0.6);z-index:80;display:flex;flex-direction:column;justify-content:flex-end;}
+.konto-sheet{background:#fff;border-radius:20px 20px 0 0;max-height:85vh;display:flex;flex-direction:column;overflow:hidden;}
+.konto-sheet-head{padding:20px 20px 0;border-bottom:1px solid #f0f0f0;}
+.konto-sheet-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;}
+.konto-sheet-top h3{font-size:17px;font-weight:700;color:#1a1a2e;}
+.konto-sheet-top .close-btn{background:#f5f5f5;border:none;border-radius:20px;padding:6px 14px;font-size:13px;color:#666;}
+.search-wrap{display:flex;align-items:center;background:#f5f7fa;border-radius:12px;padding:10px 14px;margin-bottom:12px;gap:8px;}
+.search-wrap svg{width:18px;height:18px;color:#999;flex-shrink:0;}
+.search-wrap input{border:none;background:transparent;flex:1;outline:none;font-size:15px;color:#1a1a2e;}
+.filter-tabs{display:flex;gap:6px;overflow-x:auto;padding-bottom:12px;scrollbar-width:none;}
+.filter-tabs::-webkit-scrollbar{display:none;}
+.filter-tab{flex-shrink:0;padding:6px 14px;border-radius:20px;border:1px solid #e8e8e8;background:#fff;font-size:12px;font-weight:600;color:#555;white-space:nowrap;}
+.filter-tab.active{background:#1a1a2e;color:#fff;border-color:#1a1a2e;}
+.konto-list{overflow-y:auto;flex:1;}
+.konto-row{display:flex;width:100%;align-items:center;padding:14px 20px;border:none;background:#fff;border-bottom:1px solid #f5f5f5;text-align:left;gap:14px;transition:background .1s;}
+.konto-row:hover{background:#f9f9f9;}
+.konto-row.selected{background:#f0f7ff;}
+.konto-row-info{flex:1;}
+.konto-row-name{font-size:14px;font-weight:600;color:#1a1a2e;}
+.konto-row-sub{font-size:12px;color:#999;margin-top:2px;}
+.konto-row-check{color:#2563eb;font-size:16px;}
+.konto-empty{padding:40px;text-align:center;color:#aaa;font-size:14px;}
+
+/* ── Resultat ── */
+.resultat-pad{padding:0 20px 100px;}
+.cards-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:16px;}
+.card{border-radius:14px;padding:16px 14px;}
+.card .card-lbl{font-size:11px;font-weight:700;color:#888;text-transform:uppercase;margin-bottom:6px;}
+.card .card-val{font-size:18px;font-weight:800;}
+.card .card-sub{font-size:11px;color:#999;margin-top:3px;}
+.resultat-bar{border-radius:16px;padding:18px 20px;margin-bottom:12px;display:flex;justify-content:space-between;align-items:center;}
+.resultat-bar .rb-lbl{font-size:13px;font-weight:700;color:rgba(255,255,255,0.7);}
+.resultat-bar .rb-val{font-size:22px;font-weight:800;color:#fff;}
+.quick-btns{display:flex;gap:8px;margin-bottom:20px;}
+.quick-btn{flex:1;padding:13px 10px;border-radius:12px;border:1.5px solid #d0d5e8;background:#fff;display:flex;align-items:center;justify-content:center;gap:7px;font-size:13px;font-weight:700;color:#1a1a2e;}
+.section-lbl{font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.08em;margin-bottom:8px;padding-left:2px;}
+.grupp-block{margin-bottom:10px;border-radius:14px;overflow:hidden;border:1px solid rgba(0,0,0,0.06);background:#fff;}
+.grupp-header{display:flex;justify-content:space-between;align-items:center;padding:14px 16px;border:none;background:transparent;width:100%;text-align:left;}
+.grupp-header .gh-name{font-size:14px;font-weight:700;color:#1a1a2e;}
+.grupp-header .gh-sum{font-size:15px;font-weight:800;}
+.grupp-detail{padding:10px 16px;border-top:1px solid #f5f5f5;background:#fafafa;}
+.grupp-detail-row{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:6px;}
+.grupp-detail-tag{font-family:monospace;font-size:11px;padding:2px 6px;border-radius:4px;margin-right:8px;}
+.grupp-detail-name{font-size:13px;color:#444;}
+.grupp-detail-sum{font-size:14px;font-weight:700;color:#1a1a2e;flex-shrink:0;margin-left:8px;}
+.progress-bar{height:3px;background:#efefef;border-radius:2px;margin-top:6px;}
+.progress-fill{height:100%;border-radius:2px;}
+.empty-hint{text-align:center;padding:40px 20px;color:#bbb;font-size:14px;line-height:1.7;}
+
+/* ── Verifikationer ── */
+.ver-pad{padding:0 20px 100px;}
+.ver-search{display:flex;align-items:center;background:#f5f7fa;border-radius:12px;padding:10px 14px;gap:8px;margin-bottom:16px;}
+.ver-search svg{width:18px;height:18px;color:#bbb;flex-shrink:0;}
+.ver-search input{border:none;background:transparent;flex:1;outline:none;font-size:14px;color:#1a1a2e;}
+.ver-row{background:#fff;border-radius:14px;padding:14px 16px;margin-bottom:10px;border:1px solid #f0f0f0;display:flex;align-items:flex-start;gap:12px;}
+.ver-icon{width:40px;height:40px;border-radius:10px;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-family:monospace;font-size:11px;font-weight:700;}
+.ver-body{flex:1;min-width:0;}
+.ver-name{font-size:14px;font-weight:700;color:#1a1a2e;margin-bottom:2px;}
+.ver-desc{font-size:12px;color:#888;margin-bottom:4px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.ver-tags{display:flex;gap:6px;flex-wrap:wrap;}
+.ver-tag{font-size:11px;font-weight:600;padding:3px 8px;border-radius:6px;background:#f5f5f5;color:#888;}
+.ver-tag.kvitto{background:#e8f5e9;color:#2e7d32;}
+.ver-right{display:flex;flex-direction:column;align-items:flex-end;gap:8px;flex-shrink:0;}
+.ver-amount{font-size:16px;font-weight:800;}
+.del-btn{background:none;border:none;color:#ddd;width:20px;height:20px;padding:0;display:flex;align-items:center;justify-content:center;}
+.del-btn svg{width:16px;height:16px;}
+.ver-empty{text-align:center;padding:60px 20px;color:#ccc;font-size:14px;}
+
+/* ── Inställningar ── */
+#panel-settings{position:fixed;inset:0;background:rgba(0,0,0,0.5);z-index:80;display:flex;flex-direction:column;justify-content:flex-end;}
+.settings-sheet{background:#f7f8fc;border-radius:20px 20px 0 0;max-height:90vh;display:flex;flex-direction:column;overflow:hidden;}
+.settings-head{background:#1a1a2e;padding:20px;display:flex;justify-content:space-between;align-items:center;}
+.settings-head .sh-label{font-size:11px;color:rgba(255,255,255,0.5);font-weight:700;text-transform:uppercase;letter-spacing:.08em;}
+.settings-head .sh-title{font-size:17px;font-weight:800;color:#fff;}
+.settings-head .close-btn{background:rgba(255,255,255,0.12);border:none;border-radius:10px;padding:8px 14px;color:#fff;font-size:13px;font-weight:600;}
+.settings-body{overflow-y:auto;padding:24px 20px 40px;}
+.danger-zone{border-top:1px solid #e8e8e8;padding-top:20px;margin-top:8px;}
+.danger-lbl{font-size:12px;font-weight:700;color:#c00;text-transform:uppercase;letter-spacing:.04em;margin-bottom:10px;}
+.btn-danger{width:100%;padding:14px;border-radius:12px;border:2px solid #fca5a5;background:#fff3f3;color:#dc2626;font-size:14px;font-weight:700;}
+.confirm-box{background:#fff3f3;border-radius:12px;padding:16px;border:2px solid #fca5a5;}
+.confirm-box p{font-size:14px;font-weight:700;color:#dc2626;margin-bottom:12px;}
+.confirm-row{display:flex;gap:8px;}
+.btn-confirm-cancel{flex:1;padding:12px;border-radius:10px;border:2px solid #e8e8e8;background:#fff;font-size:14px;font-weight:600;}
+.btn-confirm-ok{flex:1;padding:12px;border-radius:10px;border:none;background:#dc2626;color:#fff;font-size:14px;font-weight:700;}
+
+/* ── Detalj RR ── */
+#panel-detalj{position:fixed;inset:0;background:rgba(0,0,0,0.5);z-index:80;display:flex;flex-direction:column;justify-content:flex-end;}
+.detalj-sheet{background:#fff;border-radius:20px 20px 0 0;height:92vh;display:flex;flex-direction:column;overflow:hidden;}
+.detalj-head{background:#1a1a2e;padding:20px;flex-shrink:0;}
+.detalj-head-top{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:14px;}
+.detalj-head-top .dh-label{font-size:11px;color:rgba(255,255,255,0.5);font-weight:700;text-transform:uppercase;letter-spacing:.08em;margin-bottom:4px;}
+.detalj-head-top .dh-title{font-size:18px;font-weight:800;color:#fff;}
+.detalj-mini{display:flex;gap:8px;}
+.detalj-mini-item{flex:1;background:rgba(255,255,255,0.08);border-radius:10px;padding:10px;}
+.detalj-mini-item .dm-lbl{font-size:10px;color:rgba(255,255,255,0.5);font-weight:700;text-transform:uppercase;margin-bottom:3px;}
+.detalj-mini-item .dm-val{font-size:13px;font-weight:800;font-family:monospace;}
+.detalj-body{flex:1;overflow-y:auto;padding:12px 0 40px;}
+.rr-divider{display:flex;align-items:center;gap:8px;padding:6px 16px 4px;}
+.rr-divider hr{flex:1;border:none;border-top:1px solid #e0e0e0;}
+.rr-divider span{font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:.1em;}
+.rr-grupp-lbl{padding:8px 16px 2px;font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:.06em;}
+.rr-row{display:flex;justify-content:space-between;align-items:center;padding:6px 28px;}
+.rr-row.bold{padding:8px 16px;background:#f5f7fa;border-radius:0;}
+.rr-row.bold-indent{padding:8px 28px;background:#f5f7fa;}
+.rr-nr{font-family:monospace;font-size:10px;color:#bbb;background:#f0f0f0;padding:2px 5px;border-radius:4px;margin-right:8px;flex-shrink:0;}
+.rr-name{font-size:12px;color:#444;flex:1;}
+.rr-name.bold{font-size:13px;font-weight:700;color:#1a1a2e;}
+.rr-val{font-family:monospace;font-size:12px;font-weight:500;flex-shrink:0;margin-left:8px;}
+.rr-val.bold{font-size:13px;font-weight:700;}
+.rr-val.zero{color:#ccc;}
+.rr-sep{height:1px;background:#eee;margin:2px 0;}
+.rr-total{margin:4px 16px 16px;border-radius:10px;padding:12px 16px;display:flex;justify-content:space-between;align-items:center;}
+.rr-total .rt-lbl{font-size:13px;font-weight:800;}
+.rr-total .rt-val{font-family:monospace;font-size:14px;font-weight:800;}
+.rr-result{margin:8px 16px;border-radius:14px;padding:18px 20px;display:flex;justify-content:space-between;align-items:center;}
+.rr-result .rrs-lbl{font-size:10px;color:rgba(255,255,255,0.5);font-weight:700;text-transform:uppercase;margin-bottom:4px;}
+.rr-result .rrs-sub{font-size:11px;color:rgba(255,255,255,0.4);}
+.rr-result .rrs-val{font-family:monospace;font-size:22px;font-weight:800;}
+
+
+/* ── Kvittofoto ── */
+.kvitto-foto-wrap{margin-top:10px;}
+.foto-btn{width:100%;padding:14px;border-radius:12px;border:2px dashed #d0d5e8;background:#f8faff;display:flex;align-items:center;justify-content:center;gap:10px;font-size:14px;font-weight:600;color:#4a5568;cursor:pointer;}
+.foto-btn svg{width:20px;height:20px;color:#7b8794;flex-shrink:0;}
+.foto-preview{margin-top:10px;position:relative;border-radius:12px;overflow:hidden;border:2px solid #e8e8e8;}
+.foto-preview img{width:100%;display:block;max-height:200px;object-fit:cover;}
+.foto-remove{position:absolute;top:8px;right:8px;background:rgba(0,0,0,0.55);border:none;border-radius:20px;color:#fff;font-size:12px;font-weight:700;padding:5px 10px;cursor:pointer;}
+.foto-hint{font-size:11px;color:#aaa;margin-top:6px;text-align:center;}
+
+/* ── Kontodetalj panel ── */
+#panel-kontodetalj{position:fixed;inset:0;background:rgba(0,0,0,0.5);z-index:90;display:flex;flex-direction:column;justify-content:flex-end;}
+.kontodetalj-sheet{background:#f7f8fc;border-radius:20px 20px 0 0;height:88vh;display:flex;flex-direction:column;overflow:hidden;}
+.kontodetalj-head{background:#1a1a2e;padding:20px;flex-shrink:0;}
+.kontodetalj-head .kdh-label{font-size:11px;color:rgba(255,255,255,0.5);font-weight:700;text-transform:uppercase;letter-spacing:.08em;margin-bottom:4px;}
+.kontodetalj-head .kdh-nr{font-family:monospace;font-size:13px;padding:3px 8px;border-radius:6px;margin-right:8px;font-weight:700;}
+.kontodetalj-head .kdh-name{font-size:17px;font-weight:800;color:#fff;}
+.kontodetalj-head .kdh-summa{font-size:22px;font-weight:800;margin-top:8px;}
+.kontodetalj-body{flex:1;overflow-y:auto;padding:16px 20px 40px;}
+.kd-post{background:#fff;border-radius:14px;padding:16px;margin-bottom:12px;border:1px solid #f0f0f0;}
+.kd-post-top{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:8px;}
+.kd-post-info{flex:1;}
+.kd-post-desc{font-size:14px;font-weight:600;color:#1a1a2e;margin-bottom:4px;}
+.kd-post-meta{display:flex;gap:6px;flex-wrap:wrap;}
+.kd-post-tag{font-size:11px;font-weight:600;padding:3px 8px;border-radius:6px;background:#f5f5f5;color:#888;}
+.kd-post-tag.kvitto{background:#e8f5e9;color:#2e7d32;}
+.kd-post-amount{font-size:18px;font-weight:800;flex-shrink:0;margin-left:12px;}
+.kd-post-foto{margin-top:10px;border-radius:10px;overflow:hidden;border:1px solid #e8e8e8;cursor:pointer;}
+.kd-post-foto img{width:100%;display:block;max-height:180px;object-fit:cover;}
+.kd-post-foto-full{position:fixed;inset:0;background:rgba(0,0,0,0.92);z-index:200;display:flex;align-items:center;justify-content:center;padding:20px;}
+.kd-post-foto-full img{max-width:100%;max-height:100%;border-radius:8px;object-fit:contain;}
+.kd-post-foto-full-close{position:fixed;top:20px;right:20px;background:rgba(255,255,255,0.15);border:none;border-radius:20px;color:#fff;font-size:14px;font-weight:700;padding:8px 16px;cursor:pointer;}
+.kd-empty{text-align:center;padding:40px 20px;color:#ccc;font-size:14px;}
+/* ── Disclaimer ── */
+.disclaimer{background:#fffbeb;border:1px solid #fcd34d;border-radius:12px;padding:14px 16px;margin-bottom:20px;}
+.disclaimer p{font-size:12px;color:#92400e;line-height:1.6;}
+.disclaimer strong{font-weight:700;}
+</style>
+</head>
+<body>
+
+<!-- ══ VÄLKOMSTSKÄRM ══════════════════════════════════════════════════════ -->
+<div id="screen-welcome">
+  <div class="welcome-top">
+    <div class="welcome-tag">Idrottens bokföringshjälpmedel</div>
+    <div class="welcome-title">Förenings&shy;bokföring</div>
+    <div class="welcome-sub">Enkelt hjälpmedel för att registrera intäkter och kostnader i ideella idrottsföreningar. Bygger på Idrottens BAS-kontoplan IBK v3.3.</div>
+  </div>
+  <div class="welcome-form">
+    <h2>Kom igång</h2>
+    <p>Fyll i uppgifterna om din förening — du kan alltid ändra dem senare under Inställningar.</p>
+    <div class="field">
+      <label>Föreningens namn *</label>
+      <input class="input-base" id="w-forening" placeholder="T.ex. Norrköping IF" type="text"/>
+    </div>
+    <div class="field">
+      <label>Organisationsnummer</label>
+      <div class="hint">Valfritt — syns på PDF-rapporten</div>
+      <input class="input-base" id="w-orgnr" placeholder="XXXXXX-XXXX" type="text"/>
+    </div>
+    <div class="field">
+      <label>Räkenskapsår</label>
+      <div class="year-row" id="w-year-row"></div>
+    </div>
+    <div id="w-error" class="error-box hidden"></div>
+    <button class="btn-primary" onclick="startApp()">Starta bokföringen →</button>
+    <div class="welcome-note">All data sparas lokalt i din webbläsare.<br/>Ingenting skickas till någon server.<br/>Du äger din data.</div>
+  </div>
+</div>
+
+<!-- ══ APP-SKÄRM ═══════════════════════════════════════════════════════════ -->
+<div id="screen-app" class="hidden">
+  <div class="app-header">
+    <div class="app-header-top">
+      <div class="header-info">
+        <div class="header-forening" id="h-forening"></div>
+        <div class="header-title" id="h-title"></div>
+      </div>
+      <div class="header-right">
+        <div class="header-result" id="h-result-box">
+          <div class="lbl">Resultat</div>
+          <div class="val" id="h-result-val"></div>
+        </div>
+        <button class="btn-icon" onclick="openSettings()">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+            <circle cx="12" cy="12" r="3"/>
+            <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/>
+          </svg>
+        </button>
+      </div>
+    </div>
+    <div class="app-tabs">
+      <button class="tab-btn active" id="tab-hem" onclick="switchTab('hem')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+        Resultat
+      </button>
+      <button class="tab-btn" id="tab-poster" onclick="switchTab('poster')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg>
+        Poster
+      </button>
+    </div>
+  </div>
+  <div class="app-content" id="app-content"></div>
+  <button class="fab" onclick="openNyPost()">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+  </button>
+</div>
+
+<!-- ══ NY POST PANEL ═══════════════════════════════════════════════════════ -->
+<div id="panel-nypost">
+  <div class="panel-header">
+    <button class="back-btn" onclick="closeNyPost()">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="15 18 9 12 15 6"/></svg>
+    </button>
+    <div>
+      <div class="ph-label">Ny verifikation</div>
+      <div class="ph-title">Registrera post</div>
+    </div>
+  </div>
+  <div class="panel-body" id="nypost-body">
+    <div class="field">
+      <label>Kategori *</label>
+      <button class="konto-btn" id="konto-btn" onclick="openKontoPicker()">
+        <span class="placeholder">Tryck för att välja kategori…</span>
+      </button>
+      <div class="belopp-hint" id="konto-hint" style="display:none;margin-top:6px;"></div>
+    </div>
+    <div class="field">
+      <label>Belopp (kr) *</label>
+      <div class="belopp-wrap">
+        <input class="input-base belopp-input" id="np-belopp" type="number" inputmode="decimal" placeholder="0"/>
+        <span class="belopp-kr">kr</span>
+      </div>
+    </div>
+    <div class="field">
+      <label>Datum</label>
+      <input class="input-base" id="np-datum" type="date"/>
+    </div>
+    <div class="field">
+      <label>Vad gäller det? <span style="color:#bbb;font-weight:400;text-transform:none;">(valfritt)</span></label>
+      <input class="input-base" id="np-beskrivning" type="text" placeholder="T.ex. hallhyra mars, cupen i Linköping…"/>
+    </div>
+    <div class="field">
+      <label>Betalning via</label>
+      <div class="betalning-row" id="betalning-row"></div>
+    </div>
+    <div class="field">
+      <button class="kvitto-btn" id="kvitto-btn" onclick="toggleKvitto()">
+        <div class="kvitto-box" id="kvitto-box"></div>
+        <span class="kvitto-lbl" id="kvitto-lbl">Kvitto finns?</span>
+      </button>
+    </div>
+    <div class="field kvitto-foto-wrap">
+      <label>Kvittofoto <span style="color:#bbb;font-weight:400;text-transform:none;">(valfritt)</span></label>
+      <button class="foto-btn" onclick="document.getElementById('foto-input').click()">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>
+        Fota kvitto eller välj bild
+      </button>
+      <div id="foto-preview" class="foto-preview hidden">
+        <img id="foto-preview-img" src="" alt="Kvitto"/>
+        <button class="foto-remove" onclick="removeFoto()">Ta bort ✕</button>
+      </div>
+      <div class="foto-hint">Tar foto med kameran på mobil, väljer fil på dator</div>
+    </div>
+    <div id="np-error" class="error-box hidden"></div>
+  </div>
+  <div class="panel-footer">
+    <button class="btn-cancel" onclick="closeNyPost()">Avbryt</button>
+    <button class="btn-save" onclick="savePost()">Spara post</button>
+  </div>
+</div>
+
+<!-- ══ KONTOPICKER ═════════════════════════════════════════════════════════ -->
+<div id="panel-konto" class="hidden" onclick="closeKontoPicker(event)">
+  <div class="konto-sheet">
+    <div class="konto-sheet-head">
+      <div class="konto-sheet-top">
+        <h3>Välj kategori</h3>
+        <button class="close-btn" onclick="closeKontoPicker()">Avbryt</button>
+      </div>
+      <div class="search-wrap">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+        <input id="konto-search" type="text" placeholder="Sök kategori eller nummer…" oninput="renderKontoList()"/>
+      </div>
+      <div class="filter-tabs" id="konto-filter-tabs"></div>
+    </div>
+    <div class="konto-list" id="konto-list"></div>
+  </div>
+</div>
+
+<!-- ══ INSTÄLLNINGAR ═══════════════════════════════════════════════════════ -->
+<div id="panel-settings" class="hidden" onclick="closePanelOutside(event,'panel-settings')">
+  <div class="settings-sheet">
+    <div class="settings-head">
+      <div>
+        <div class="sh-label">Inställningar</div>
+        <div class="sh-title">Förening & räkenskapsår</div>
+      </div>
+      <button class="close-btn" onclick="closeSettings()">Avbryt</button>
+    </div>
+    <div class="settings-body">
+      <div class="field">
+        <label>Föreningens namn</label>
+        <input class="input-base" id="s-forening" type="text"/>
+      </div>
+      <div class="field">
+        <label>Organisationsnummer</label>
+        <div class="hint">Visas på PDF-rapporten</div>
+        <input class="input-base" id="s-orgnr" type="text" placeholder="XXXXXX-XXXX"/>
+      </div>
+      <div class="field">
+        <label>Räkenskapsår</label>
+        <div class="year-row" id="s-year-row"></div>
+      </div>
+      <button class="btn-primary" style="margin-bottom:24px;" onclick="saveSettings()">Spara ändringar</button>
+      <div class="danger-zone">
+        <div class="danger-lbl">Farlig zon</div>
+        <div id="rensa-confirm-1">
+          <button class="btn-danger" onclick="showRensaConfirm()">Rensa all bokföringsdata…</button>
+        </div>
+        <div id="rensa-confirm-2" class="hidden">
+          <div class="confirm-box">
+            <p>Är du säker? All bokföringsdata raderas permanent och kan inte återställas.</p>
+            <div class="confirm-row">
+              <button class="btn-confirm-cancel" onclick="hideRensaConfirm()">Avbryt</button>
+              <button class="btn-confirm-ok" onclick="rensaAllt()">Ja, rensa allt</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ DETALJ RR ═══════════════════════════════════════════════════════════ -->
+<div id="panel-detalj" class="hidden" onclick="closePanelOutside(event,'panel-detalj')">
+  <div class="detalj-sheet">
+    <div class="detalj-head">
+      <div class="detalj-head-top">
+        <div>
+          <div class="dh-label">Fullständig resultaträkning</div>
+          <div class="dh-title">Idrottens BAS-kontoplan</div>
+        </div>
+        <button class="close-btn" onclick="closeDetalj()">Stäng</button>
+      </div>
+      <div class="detalj-mini" id="detalj-mini"></div>
+    </div>
+    <div class="detalj-body" id="detalj-body"></div>
+  </div>
+</div>
+
+<script>
+
+// ══ INDEXEDDB STORAGE (ersätter localStorage) ════════════════════════════
+// Ger mer plats för kvittofoton — typiskt 50–500 MB beroende på enhet
+const DB_NAME = 'foreningsbokforing';
+const DB_STORE = 'data';
+const DB_KEY = 'main';
+let _idb = null;
+
+function openIDB() {
+  return new Promise((resolve, reject) => {
+    if (_idb) { resolve(_idb); return; }
+    const req = indexedDB.open(DB_NAME, 1);
+    req.onupgradeneeded = e => {
+      e.target.result.createObjectStore(DB_STORE);
+    };
+    req.onsuccess = e => { _idb = e.target.result; resolve(_idb); };
+    req.onerror = e => {
+      console.warn('IndexedDB ej tillgänglig, faller tillbaka på localStorage');
+      resolve(null);
+    };
+  });
+}
+
+async function saveDB() {
+  try {
+    const db = await openIDB();
+    if (db) {
+      await new Promise((res, rej) => {
+        const tx = db.transaction(DB_STORE, 'readwrite');
+        tx.objectStore(DB_STORE).put(JSON.parse(JSON.stringify(DB)), DB_KEY);
+        tx.oncomplete = res;
+        tx.onerror = rej;
+      });
+    } else {
+      localStorage.setItem('foreningsbokforing_v1', JSON.stringify(DB));
+    }
+  } catch(e) {
+    try { localStorage.setItem('foreningsbokforing_v1', JSON.stringify(DB)); } catch(e2) {}
+  }
+}
+
+async function loadIDB() {
+  try {
+    const db = await openIDB();
+    if (db) {
+      return await new Promise((res, rej) => {
+        const tx = db.transaction(DB_STORE, 'readonly');
+        const req = tx.objectStore(DB_STORE).get(DB_KEY);
+        req.onsuccess = e => res(e.target.result || null);
+        req.onerror = rej;
+      });
+    }
+  } catch(e) {}
+  // Fallback: localStorage (migration från gammal version)
+  try {
+    const raw = localStorage.getItem('foreningsbokforing_v1');
+    return raw ? JSON.parse(raw) : null;
+  } catch(e) { return null; }
+}
+
+// ══ DATA ════════════════════════════════════════════════════════════════════
+const STORAGE_KEY = 'foreningsbokforing_v1';
+const BETALNING = ['Bankkonto','Swish','Kassa','Kort','Bankgiro'];
+const KONTON = [
+  {nr:'3055',namn:'Träningsavgifter',typ:'intäkt',grupp:'Träning & tävling'},
+  {nr:'3053',namn:'Anmälningsavgifter / cuper',typ:'intäkt',grupp:'Träning & tävling'},
+  {nr:'3051',namn:'Entréintäkter (matcher/tävlingar)',typ:'intäkt',grupp:'Träning & tävling'},
+  {nr:'3210',namn:'Sponsorintäkter',typ:'intäkt',grupp:'Sponsorer & reklam'},
+  {nr:'3230',namn:'Reklam- och annonsintäkter',typ:'intäkt',grupp:'Sponsorer & reklam'},
+  {nr:'3380',namn:'Arrangemang (cuper, idrottsskola)',typ:'intäkt',grupp:'Arrangemang'},
+  {nr:'3510',namn:'Kiosk och serveringsintäkter',typ:'intäkt',grupp:'Arrangemang'},
+  {nr:'3540',namn:'Försäljning kläder/material',typ:'intäkt',grupp:'Arrangemang'},
+  {nr:'3360',namn:'Gräsroten / Svenska Spel',typ:'intäkt',grupp:'Bidrag & avgifter'},
+  {nr:'3890',namn:'Medlemsavgifter',typ:'intäkt',grupp:'Bidrag & avgifter'},
+  {nr:'3810',namn:'Kommunala bidrag (inkl. Fritidskortet)',typ:'intäkt',grupp:'Bidrag & avgifter'},
+  {nr:'3820',namn:'Statliga bidrag (LOK-stöd)',typ:'intäkt',grupp:'Bidrag & avgifter'},
+  {nr:'3880',namn:'Övriga bidrag',typ:'intäkt',grupp:'Bidrag & avgifter'},
+  {nr:'4058',namn:'Plan- och hallhyror',typ:'kostnad',grupp:'Träning & tävling'},
+  {nr:'4060',namn:'Materialkostnader (utrustning, redskap)',typ:'kostnad',grupp:'Träning & tävling'},
+  {nr:'4063',namn:'Licensavgifter',typ:'kostnad',grupp:'Träning & tävling'},
+  {nr:'4067',namn:'Anmälningsavgifter (borta/cuper)',typ:'kostnad',grupp:'Träning & tävling'},
+  {nr:'4068',namn:'Tillstånd / förbundsavgifter',typ:'kostnad',grupp:'Träning & tävling'},
+  {nr:'4070',namn:'Träningsläger',typ:'kostnad',grupp:'Träning & tävling'},
+  {nr:'4071',namn:'Färdbiljetter / resor till tävling',typ:'kostnad',grupp:'Träning & tävling'},
+  {nr:'4073',namn:'Bilersättningar',typ:'kostnad',grupp:'Träning & tävling'},
+  {nr:'4118',namn:'Plan-/hallhyra arrangemang',typ:'kostnad',grupp:'Arrangemang'},
+  {nr:'4120',namn:'Materialkostnader arrangemang',typ:'kostnad',grupp:'Arrangemang'},
+  {nr:'4122',namn:'Priser och medaljer',typ:'kostnad',grupp:'Arrangemang'},
+  {nr:'4149',namn:'Övriga arrangemangskostnader',typ:'kostnad',grupp:'Arrangemang'},
+  {nr:'4510',namn:'Inköp kiosk och serveringsvaror',typ:'kostnad',grupp:'Kläder & försäljning'},
+  {nr:'4540',namn:'Inköp kläder och material',typ:'kostnad',grupp:'Kläder & försäljning'},
+  {nr:'4891',namn:'Demokratikostnader / årsmöte',typ:'kostnad',grupp:'Administration'},
+  {nr:'5010',namn:'Lokalhyra (kansli / förråd)',typ:'kostnad',grupp:'Administration'},
+  {nr:'6210',namn:'Telefon och internet',typ:'kostnad',grupp:'Administration'},
+  {nr:'6310',namn:'Försäkringar',typ:'kostnad',grupp:'Administration'},
+  {nr:'6410',namn:'Styrelsearvoden',typ:'kostnad',grupp:'Administration'},
+  {nr:'6420',namn:'Revisionsarvode',typ:'kostnad',grupp:'Administration'},
+  {nr:'6530',namn:'Bokföring / redovisning',typ:'kostnad',grupp:'Administration'},
+  {nr:'6570',namn:'Bankkostnader / Swish-avgifter',typ:'kostnad',grupp:'Administration'},
+  {nr:'6980',namn:'Medlemsavgifter till SF / SDF',typ:'kostnad',grupp:'Administration'},
+  {nr:'7110',namn:'Löner / arvoden tränare och ledare',typ:'kostnad',grupp:'Personal'},
+  {nr:'7130',namn:'Arvoden instruktörer / funktionärer',typ:'kostnad',grupp:'Personal'},
+  {nr:'7510',namn:'Sociala avgifter',typ:'kostnad',grupp:'Personal'},
+  {nr:'7610',namn:'Utbildning / ledarutbildning',typ:'kostnad',grupp:'Personal'},
+];
+
+let DB = {poster:[], forening:'', orgnr:'', ar: new Date().getFullYear()};
+let selectedKonto = null;
+let kvittoChecked = false;
+let selectedBetalning = 'Swish';
+let activeTab = 'hem';
+let openGrupper = {};
+let settingsAr = new Date().getFullYear();
+let welcomeAr = new Date().getFullYear();
+
+// ══ HELPERS ═════════════════════════════════════════════════════════════════
+const fmt = n => new Intl.NumberFormat('sv-SE',{style:'currency',currency:'SEK',maximumFractionDigits:0}).format(n);
+const today = () => new Date().toISOString().slice(0,10);
+const $ = id => document.getElementById(id);
+const grupper = [...new Set(KONTON.map(k=>k.grupp))];
+
+// loadDB is now async (use loadIDB instead)
+// saveDB is now async (defined above with IndexedDB)
+
+function totIntakt(){return DB.poster.filter(p=>p.typ==='intäkt').reduce((s,p)=>s+p.belopp,0);}
+function totKostnad(){return DB.poster.filter(p=>p.typ==='kostnad').reduce((s,p)=>s+p.belopp,0);}
+
+// ══ INIT ════════════════════════════════════════════════════════════════════
+window.onload = async function(){
+  renderWelcomeYears();
+  const saved = await loadIDB();
+  if(saved && saved.forening && saved.forening !== 'Min idrottsförening'){
+    DB = saved;
+    showApp();
+  }
+};
+
+// ══ VÄLKOMST ═══════════════════════════════════════════════════════════════
+function renderWelcomeYears(){
+  const yr = new Date().getFullYear();
+  const row = $('w-year-row');
+  row.innerHTML = [yr-1, yr].map(y=>`
+    <button class="year-btn ${y===welcomeAr?'active':''}" onclick="setWelcomeYear(${y})">${y}</button>
+  `).join('');
+}
+function setWelcomeYear(y){welcomeAr=y; renderWelcomeYears();}
+
+function startApp(){
+  const f = $('w-forening').value.trim();
+  if(!f){$('w-error').textContent='Ange föreningens namn.'; $('w-error').classList.remove('hidden'); return;}
+  DB.forening = f;
+  DB.orgnr = $('w-orgnr').value.trim();
+  DB.ar = welcomeAr;
+  DB.poster = [];
+  saveDB();
+  showApp();
+}
+
+// ══ APP ═════════════════════════════════════════════════════════════════════
+function showApp(){
+  $('screen-welcome').classList.add('hidden');
+  $('screen-app').classList.remove('hidden');
+  updateHeader();
+  renderTab();
+}
+
+function updateHeader(){
+  const res = totIntakt() - totKostnad();
+  $('h-forening').textContent = DB.forening + (DB.orgnr ? ' · ' + DB.orgnr : '');
+  $('h-title').textContent = 'Föreningsbokföring ' + DB.ar;
+  $('h-result-box').style.background = res >= 0 ? 'rgba(46,125,50,0.2)' : 'rgba(220,38,38,0.2)';
+  $('h-result-val').style.color = res >= 0 ? '#81c784' : '#ef9a9a';
+  $('h-result-val').textContent = (res>=0?'+':'') + fmt(res);
+}
+
+function switchTab(t){
+  activeTab = t;
+  document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+  $('tab-'+t).classList.add('active');
+  renderTab();
+}
+
+function renderTab(){
+  if(activeTab==='hem') renderResultat();
+  else renderPoster();
+}
+
+// ══ RESULTAT ════════════════════════════════════════════════════════════════
+function renderResultat(){
+  const ti = totIntakt(), tk = totKostnad(), res = ti - tk;
+  const iAnt = DB.poster.filter(p=>p.typ==='intäkt').length;
+  const kAnt = DB.poster.filter(p=>p.typ==='kostnad').length;
+
+  // Per konto
+  const perKonto = {};
+  DB.poster.forEach(p=>{
+    if(!perKonto[p.konto]) perKonto[p.konto]={nr:p.konto,namn:p.kontoNamn,typ:p.typ,grupp:p.grupp,summa:0};
+    perKonto[p.konto].summa += p.belopp;
+  });
+  const kList = Object.values(perKonto).sort((a,b)=>a.nr.localeCompare(b.nr));
+
+  // Per grupp
+  const perGrupp = {};
+  kList.forEach(k=>{
+    const key = k.grupp+'|'+k.typ;
+    if(!perGrupp[key]) perGrupp[key]={grupp:k.grupp,typ:k.typ,konton:[],summa:0};
+    perGrupp[key].konton.push(k);
+    perGrupp[key].summa += k.summa;
+  });
+  const gList = Object.values(perGrupp);
+  const iG = gList.filter(g=>g.typ==='intäkt');
+  const kG = gList.filter(g=>g.typ==='kostnad');
+
+  const gruppBlock = (g, maxVal, color, bgColor) => {
+    const key = g.grupp+'|'+g.typ;
+    const isOpen = !!openGrupper[key];
+    const rows = isOpen ? g.konton.map(k=>`
+      <div class="grupp-detail">
+        <div class="grupp-detail-row">
+          <div style="flex:1;display:flex;align-items:center;">
+            <span class="grupp-detail-tag" style="background:${bgColor};color:${color};">${k.nr}</span>
+            <span class="grupp-detail-name">${k.namn}</span>
+          </div>
+          <span class="grupp-detail-sum">${fmt(k.summa)}</span>
+        </div>
+        <div class="progress-bar"><div class="progress-fill" style="background:${color};width:${maxVal>0?Math.min(100,(k.summa/maxVal)*100):0}%;"></div></div>
+      </div>`).join('') : '';
+    return `
+      <div class="grupp-block">
+        <button class="grupp-header" onclick="toggleGrupp('${key}')">
+          <span class="gh-name">${g.grupp}</span>
+          <span class="gh-sum" style="color:${color};">${fmt(g.summa)}</span>
+        </button>
+        ${rows}
+      </div>`;
+  };
+
+  $('app-content').innerHTML = `<div class="resultat-pad">
+    <div class="disclaimer">
+      <p><strong>OBS:</strong> Det här är ett hjälpmedel för att registrera ekonomiska poster — inte ett certifierat bokföringssystem. Det ersätter inte revision eller professionell bokföringsrådgivning. Föreningen ansvarar alltid för sin egen bokföring.</p>
+    </div>
+    <div class="cards-grid">
+      <div class="card" style="background:#e8f5e9;">
+        <div class="card-lbl">Intäkter</div>
+        <div class="card-val" style="color:#2e7d32;">${fmt(ti)}</div>
+        <div class="card-sub">${iAnt} poster</div>
+      </div>
+      <div class="card" style="background:#fff3e0;">
+        <div class="card-lbl">Kostnader</div>
+        <div class="card-val" style="color:#e65100;">${fmt(tk)}</div>
+        <div class="card-sub">${kAnt} poster</div>
+      </div>
+    </div>
+    <div class="resultat-bar" style="background:${res>=0?'#1a1a2e':'#7f1d1d'};">
+      <span class="rb-lbl">RESULTAT</span>
+      <span class="rb-val">${res>=0?'+':''}${fmt(res)}</span>
+    </div>
+    <div class="quick-btns">
+      <button class="quick-btn" onclick="openDetalj()">📋 Fullständig RR</button>
+      <button class="quick-btn" onclick="exportPDF()">🖨️ Skriv ut / PDF</button>
+    </div>
+    ${DB.poster.length===0?`<div class="empty-hint">Inga poster registrerade ännu.<br><span style="font-size:12px;">Tryck + för att lägga till din första post.</span></div>`:''}
+    ${iG.length>0?`<div class="section-lbl" style="color:#2e7d32;">Intäkter</div>${iG.map(g=>gruppBlock(g,ti,'#2e7d32','#e8f5e9')).join('')}`:''}
+    ${kG.length>0?`<div class="section-lbl" style="color:#e65100;margin-top:16px;">Kostnader</div>${kG.map(g=>gruppBlock(g,tk,'#e65100','#fff3e0')).join('')}`:''}
+  </div>`;
+}
+
+function toggleGrupp(key){
+  openGrupper[key] = !openGrupper[key];
+  renderResultat();
+}
+
+// ══ POSTER ══════════════════════════════════════════════════════════════════
+function renderPoster(){
+  const sorted = [...DB.poster].sort((a,b)=>b.datum.localeCompare(a.datum));
+  const q = ($('ver-search-input')||{value:''}).value||'';
+  const filtered = q ? sorted.filter(p=>
+    p.kontoNamn.toLowerCase().includes(q.toLowerCase())||
+    (p.beskrivning||'').toLowerCase().includes(q.toLowerCase())
+  ) : sorted;
+
+  $('app-content').innerHTML = `<div class="ver-pad">
+    <div class="ver-search">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+      <input id="ver-search-input" type="text" placeholder="Sök poster…" value="${q}" oninput="renderPoster()"/>
+    </div>
+    ${filtered.length===0?`<div class="ver-empty">Inga poster ännu</div>`:''}
+    ${filtered.map(p=>{
+      const isIn = p.typ==='intäkt';
+      return `<div class="ver-row">
+        <div class="ver-icon" style="background:${isIn?'#e8f5e9':'#fff3e0'};color:${isIn?'#2e7d32':'#e65100'};">${p.konto}</div>
+        <div class="ver-body">
+          <div class="ver-name">${p.kontoNamn}</div>
+          ${p.beskrivning?`<div class="ver-desc">${p.beskrivning}</div>`:''}
+          <div class="ver-tags">
+            <span class="ver-tag">${p.datum}</span>
+            <span class="ver-tag">${p.betalning}</span>
+            ${p.kvitto?'<span class="ver-tag kvitto">Kvitto ✓</span>':''}
+          </div>
+        </div>
+        <div class="ver-right">
+          <span class="ver-amount" style="color:${isIn?'#2e7d32':'#e65100'};">${isIn?'+':'-'}${fmt(p.belopp)}</span>
+          <button class="del-btn" onclick="deletePost(${p.id})">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14H6L5 6"/><path d="M10 11v6"/><path d="M14 11v6"/><path d="M9 6V4h6v2"/></svg>
+          </button>
+        </div>
+      </div>`;
+    }).join('')}
+  </div>`;
+}
+
+function deletePost(id){
+  if(!confirm('Ta bort denna post?')) return;
+  DB.poster = DB.poster.filter(p=>p.id!==id);
+  saveDB(); updateHeader(); renderPoster();
+}
+
+// ══ NY POST ════════════════════════════════════════════════════════════════
+function openNyPost(){
+  selectedKonto = null;
+  kvittoChecked = false;
+  selectedBetalning = 'Swish';
+  $('konto-btn').innerHTML = '<span class="placeholder">Tryck för att välja kategori…</span>';
+  $('konto-hint').style.display = 'none';
+  $('np-belopp').value = '';
+  $('np-datum').value = today();
+  $('np-beskrivning').value = '';
+  $('np-error').classList.add('hidden');
+  renderBetalningRow();
+  updateKvittoUI();
+  $('panel-nypost').classList.add('open');
+}
+function closeNyPost(){$('panel-nypost').classList.remove('open');}
+
+function renderBetalningRow(){
+  $('betalning-row').innerHTML = BETALNING.map(b=>
+    `<button class="betal-btn ${b===selectedBetalning?'active':''}" onclick="setBetalning('${b}')">${b}</button>`
+  ).join('');
+}
+function setBetalning(b){selectedBetalning=b; renderBetalningRow();}
+
+function toggleKvitto(){
+  kvittoChecked = !kvittoChecked;
+  updateKvittoUI();
+}
+function updateKvittoUI(){
+  const btn = $('kvitto-btn'), box = $('kvitto-box'), lbl = $('kvitto-lbl');
+  if(kvittoChecked){
+    btn.classList.add('checked'); box.classList.add('checked'); box.textContent='✓';
+    lbl.classList.add('checked'); lbl.textContent='Kvitto finns ✓';
+  } else {
+    btn.classList.remove('checked'); box.classList.remove('checked'); box.textContent='';
+    lbl.classList.remove('checked'); lbl.textContent='Kvitto finns?';
+  }
+}
+
+function savePost(){
+  if(!selectedKonto){showNpError('Välj en kategori.'); return;}
+  const b = parseFloat($('np-belopp').value.replace(',','.'));
+  if(!b || isNaN(b)){showNpError('Ange ett giltigt belopp.'); return;}
+  const post = {
+    id: Date.now(),
+    datum: $('np-datum').value || today(),
+    konto: selectedKonto.nr,
+    kontoNamn: selectedKonto.namn,
+    typ: selectedKonto.typ,
+    grupp: selectedKonto.grupp,
+    belopp: b,
+    beskrivning: $('np-beskrivning').value.trim(),
+    betalning: selectedBetalning,
+    kvitto: kvittoChecked
+  };
+  DB.poster.push(post);
+  saveDB();
+  $('nypost-body').innerHTML = '<div class="saved-screen"><div class="saved-circle">✓</div><div class="saved-lbl">Sparad!</div></div>';
+  setTimeout(()=>{
+    closeNyPost();
+    updateHeader();
+    switchTab('poster');
+    const nb = $('nypost-body');
+    nb.innerHTML = '';
+    $('panel-nypost').classList.remove('open');
+    // rebuild form
+    openNyPost();
+    closeNyPost();
+  }, 700);
+}
+function showNpError(msg){$('np-error').textContent=msg; $('np-error').classList.remove('hidden');}
+
+// ══ KONTOPICKER ════════════════════════════════════════════════════════════
+let kontoFilter = 'alla';
+function openKontoPicker(){
+  kontoFilter = 'alla';
+  $('konto-search').value = '';
+  renderFilterTabs();
+  renderKontoList();
+  $('panel-konto').classList.remove('hidden');
+  setTimeout(()=>$('konto-search').focus(), 100);
+}
+function closeKontoPicker(e){
+  if(!e || e.target === $('panel-konto')) $('panel-konto').classList.add('hidden');
+}
+function renderFilterTabs(){
+  $('konto-filter-tabs').innerHTML = ['alla',...grupper].map(g=>
+    `<button class="filter-tab ${g===kontoFilter?'active':''}" onclick="setKontoFilter('${g}')">${g==='alla'?'Alla':g}</button>`
+  ).join('');
+}
+function setKontoFilter(g){kontoFilter=g; renderFilterTabs(); renderKontoList();}
+function renderKontoList(){
+  const q = $('konto-search').value.toLowerCase();
+  let list = kontoFilter==='alla' ? KONTON : KONTON.filter(k=>k.grupp===kontoFilter);
+  if(q) list = list.filter(k=>k.namn.toLowerCase().includes(q)||k.nr.includes(q));
+  $('konto-list').innerHTML = list.length===0
+    ? '<div class="konto-empty">Inga kategorier hittades</div>'
+    : list.map(k=>`
+      <button class="konto-row ${selectedKonto&&selectedKonto.nr===k.nr?'selected':''}" onclick="selectKonto('${k.nr}')">
+        <span class="konto-tag ${k.typ==='intäkt'?'intakt':'kostnad'}">${k.nr}</span>
+        <div class="konto-row-info">
+          <div class="konto-row-name">${k.namn}</div>
+          <div class="konto-row-sub">${k.grupp} · ${k.typ==='intäkt'?'Intäkt':'Kostnad'}</div>
+        </div>
+        ${selectedKonto&&selectedKonto.nr===k.nr?'<span class="konto-row-check">✓</span>':''}
+      </button>`).join('');
+}
+function selectKonto(nr){
+  selectedKonto = KONTON.find(k=>k.nr===nr);
+  $('panel-konto').classList.add('hidden');
+  const btn = $('konto-btn');
+  const isIn = selectedKonto.typ==='intäkt';
+  btn.classList.add('selected');
+  btn.innerHTML = `
+    <span class="konto-tag ${isIn?'intakt':'kostnad'}">${selectedKonto.nr}</span>
+    <span class="konto-name">${selectedKonto.namn}</span>`;
+  const hint = $('konto-hint');
+  hint.style.display = 'block';
+  hint.textContent = isIn ? '✓ Pengar som kommer in till föreningen' : '✓ Pengar som betalas ut från föreningen';
+}
+
+// ══ INSTÄLLNINGAR ══════════════════════════════════════════════════════════
+function openSettings(){
+  $('s-forening').value = DB.forening;
+  $('s-orgnr').value = DB.orgnr||'';
+  settingsAr = DB.ar;
+  renderSettingsYears();
+  $('rensa-confirm-1').classList.remove('hidden');
+  $('rensa-confirm-2').classList.add('hidden');
+  $('panel-settings').classList.remove('hidden');
+}
+function closeSettings(){$('panel-settings').classList.add('hidden');}
+function renderSettingsYears(){
+  const yr = new Date().getFullYear();
+  $('s-year-row').innerHTML = [yr-1,yr].map(y=>
+    `<button class="year-btn ${y===settingsAr?'active':''}" onclick="setSettingsYear(${y})">${y}</button>`
+  ).join('');
+}
+function setSettingsYear(y){settingsAr=y; renderSettingsYears();}
+function saveSettings(){
+  DB.forening = $('s-forening').value.trim()||DB.forening;
+  DB.orgnr = $('s-orgnr').value.trim();
+  DB.ar = settingsAr;
+  saveDB(); updateHeader(); closeSettings();
+}
+function showRensaConfirm(){$('rensa-confirm-1').classList.add('hidden');$('rensa-confirm-2').classList.remove('hidden');}
+function hideRensaConfirm(){$('rensa-confirm-1').classList.remove('hidden');$('rensa-confirm-2').classList.add('hidden');}
+function rensaAllt(){
+  DB.poster = [];
+  saveDB(); closeSettings(); updateHeader(); renderResultat(); openGrupper={};
+}
+
+// ══ DETALJ RR ══════════════════════════════════════════════════════════════
+function openDetalj(){
+  const ti = totIntakt(), tk = totKostnad(), res = ti-tk;
+  $('detalj-mini').innerHTML = [
+    {l:'Intäkter',v:fmt(ti),c:'#81c784'},
+    {l:'Kostnader',v:fmt(tk),c:'#ffb74d'},
+    {l:'Resultat',v:(res>=0?'+':'')+fmt(res),c:res>=0?'#81c784':'#ef9a9a'}
+  ].map(i=>`<div class="detalj-mini-item"><div class="dm-lbl">${i.l}</div><div class="dm-val" style="color:${i.c};">${i.v}</div></div>`).join('');
+
+  const allK = KONTON.map(k=>({...k,summa:DB.poster.filter(p=>p.konto===k.nr).reduce((s,p)=>s+p.belopp,0)}));
+  const grp = (konton) => {
+    const g={};
+    konton.forEach(k=>{if(!g[k.grupp])g[k.grupp]={grupp:k.grupp,konton:[],summa:0};g[k.grupp].konton.push(k);g[k.grupp].summa+=k.summa;});
+    return Object.values(g);
+  };
+  const iG = grp(allK.filter(k=>k.typ==='intäkt'));
+  const kG = grp(allK.filter(k=>k.typ==='kostnad'));
+
+  const rrRow = (nr,namn,belopp,bold,indent) => `
+    <div class="${bold?'rr-row bold':'rr-row'}" style="${indent?'padding-left:28px;':''}">
+      ${nr?`<span class="rr-nr">${nr}</span>`:''}
+      <span class="rr-name ${bold?'bold':''}" style="${!nr?'padding-left:0;':''}">${namn}</span>
+      <span class="rr-val ${bold?'bold':''} ${belopp===0?'zero':''}">${belopp===0?'–':fmt(Math.abs(belopp))}</span>
+    </div>`;
+
+  let html = '';
+  // Intäkter
+  html += `<div class="rr-divider"><hr/><span style="color:#2e7d32;">Rörelsens intäkter</span><hr/></div>`;
+  iG.forEach(g=>{
+    html += `<div class="rr-grupp-lbl" style="color:#2e7d32;">${g.grupp}</div>`;
+    g.konton.forEach(k=>{ html += rrRow(k.nr,k.namn,k.summa,false,true); });
+    html += `<div class="rr-sep"></div>`;
+    html += rrRow('',`Summa ${g.grupp.toLowerCase()}`,g.summa,true,false);
+  });
+  html += `<div class="rr-total" style="background:#e8f5e9;"><span class="rt-lbl" style="color:#1b5e20;">SUMMA RÖRELSENS INTÄKTER</span><span class="rt-val" style="color:#2e7d32;">${fmt(ti)}</span></div>`;
+
+  // Kostnader
+  html += `<div class="rr-divider"><hr/><span style="color:#e65100;">Rörelsens kostnader</span><hr/></div>`;
+  kG.forEach(g=>{
+    html += `<div class="rr-grupp-lbl" style="color:#e65100;">${g.grupp}</div>`;
+    g.konton.forEach(k=>{ html += rrRow(k.nr,k.namn,k.summa>0?-k.summa:k.summa,false,true); });
+    html += `<div class="rr-sep"></div>`;
+    html += rrRow('',`Summa ${g.grupp.toLowerCase()}`,-g.summa,true,false);
+  });
+  html += `<div class="rr-total" style="background:#fff3e0;"><span class="rt-lbl" style="color:#bf360c;">SUMMA RÖRELSENS KOSTNADER</span><span class="rt-val" style="color:#e65100;">-${fmt(tk)}</span></div>`;
+
+  html += `<div class="rr-result" style="background:${res>=0?'#1a1a2e':'#7f1d1d'};">
+    <div><div class="rrs-lbl">Årets över-/underskott</div><div class="rrs-sub">Konto 8999</div></div>
+    <span class="rrs-val" style="color:${res>=0?'#81c784':'#ef9a9a'};">${res>=0?'+':''}${fmt(res)}</span>
+  </div>`;
+
+  $('detalj-body').innerHTML = html;
+  $('panel-detalj').classList.remove('hidden');
+}
+function closeDetalj(){$('panel-detalj').classList.add('hidden');}
+
+// ══ PDF EXPORT ══════════════════════════════════════════════════════════════
+function exportPDF(){
+  const ti = totIntakt(), tk = totKostnad(), res = ti-tk;
+  const allK = KONTON.map(k=>({...k,summa:DB.poster.filter(p=>p.konto===k.nr).reduce((s,p)=>s+p.belopp,0)}));
+  const grp = (konton) => {const g={};konton.forEach(k=>{if(!g[k.grupp])g[k.grupp]={grupp:k.grupp,konton:[],summa:0};g[k.grupp].konton.push(k);g[k.grupp].summa+=k.summa;});return Object.values(g);};
+  const iG = grp(allK.filter(k=>k.typ==='intäkt'));
+  const kG = grp(allK.filter(k=>k.typ==='kostnad'));
+
+  const pRow = (nr,namn,belopp,bold,indent) => `
+    <tr style="background:${bold?'#f5f7fa':'transparent'}">
+      <td style="padding:${bold?7:5}px 8px 5px ${indent?24:8}px;font-size:11px;color:#aaa;font-family:monospace;white-space:nowrap;">${nr||''}</td>
+      <td style="padding:${bold?7:5}px 8px;font-size:${bold?12:11}px;font-weight:${bold?700:400};color:#1a1a2e;">${namn}</td>
+      <td style="padding:${bold?7:5}px 8px;font-size:${bold?12:11}px;font-weight:${bold?700:400};color:${belopp===0?'#ccc':'#1a1a2e'};text-align:right;font-family:monospace;">${belopp===0?'–':fmt(Math.abs(belopp))}</td>
+    </tr>`;
+
+  const verRows = [...DB.poster].sort((a,b)=>a.datum.localeCompare(b.datum)).map((p,i)=>`
+    <tr style="background:${i%2===0?'#fafafa':'#fff'}">
+      <td style="padding:5px 6px;font-size:10px;color:#888;">${p.datum}</td>
+      <td style="padding:5px 6px;font-size:10px;color:#888;font-family:monospace;">${p.konto}</td>
+      <td style="padding:5px 6px;font-size:11px;color:#1a1a2e;">${p.kontoNamn}${p.beskrivning?' – '+p.beskrivning:''}</td>
+      <td style="padding:5px 6px;font-size:10px;color:#888;">${p.betalning}</td>
+      <td style="padding:5px 6px;font-size:10px;color:${p.typ==='intäkt'?'#2e7d32':'#c0392b'};text-align:right;font-family:monospace;">${p.typ==='intäkt'?'+':'-'}${fmt(p.belopp)}</td>
+      <td style="padding:5px 6px;font-size:10px;text-align:center;">${p.kvitto?'✓':''}</td>
+    </tr>`).join('');
+
+  const html = `<!DOCTYPE html><html lang="sv"><head><meta charset="UTF-8"/>
+<title>Resultaträkning – ${DB.forening} ${DB.ar}</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:Arial,sans-serif;background:#fff;color:#1a1a2e;font-size:12px;}
+.page{max-width:740px;margin:0 auto;padding:40px 32px;}
+.hdr{background:#1a1a2e;color:#fff;padding:28px 32px;border-radius:12px;margin-bottom:28px;}
+.hdr h1{font-size:22px;font-weight:800;margin-bottom:4px;}
+.hdr .sub{font-size:11px;color:rgba(255,255,255,0.5);text-transform:uppercase;letter-spacing:.08em;margin-bottom:12px;}
+.hdr .meta{display:flex;gap:24px;margin-top:14px;}
+.hdr .mi .lbl{font-size:10px;color:rgba(255,255,255,0.4);text-transform:uppercase;letter-spacing:.06em;}
+.hdr .mi .val{font-size:18px;font-weight:800;}
+.disclaimer{background:#fffbeb;border:1px solid #fcd34d;border-radius:8px;padding:12px 16px;margin-bottom:20px;font-size:11px;color:#92400e;line-height:1.6;}
+h2{font-size:13px;font-weight:800;color:#1a1a2e;margin:24px 0 10px;padding-bottom:6px;border-bottom:2px solid #e8e8e8;}
+table{width:100%;border-collapse:collapse;}
+.rr-total{display:flex;justify-content:space-between;padding:10px 8px;border-radius:8px;margin:4px 0 14px;}
+.rr-res{display:flex;justify-content:space-between;align-items:center;background:#1a1a2e;color:#fff;padding:16px 20px;border-radius:12px;margin:8px 0;}
+.rr-res .lbl{font-size:11px;color:rgba(255,255,255,0.5);text-transform:uppercase;letter-spacing:.06em;margin-bottom:4px;}
+.rr-res .val{font-size:22px;font-weight:800;font-family:monospace;}
+.footer{margin-top:40px;padding-top:14px;border-top:1px solid #e8e8e8;font-size:10px;color:#aaa;display:flex;justify-content:space-between;}
+.print-btn{display:block;text-align:center;margin-top:28px;}
+.print-btn button{background:#1a1a2e;color:#fff;border:none;padding:14px 32px;border-radius:10px;font-size:15px;font-weight:700;cursor:pointer;}
+@media print{.print-btn{display:none;} body{-webkit-print-color-adjust:exact;print-color-adjust:exact;}}
+</style></head><body><div class="page">
+<div class="hdr">
+  <div class="sub">Resultaträkning · Räkenskapsår ${DB.ar}</div>
+  <h1>${DB.forening}</h1>
+  <div class="meta">
+    ${DB.orgnr?`<div class="mi"><div class="lbl">Org.nr</div><div class="val" style="font-size:14px;padding-top:4px;">${DB.orgnr}</div></div>`:''}
+    <div class="mi"><div class="lbl">Intäkter</div><div class="val" style="color:#81c784;">${fmt(ti)}</div></div>
+    <div class="mi"><div class="lbl">Kostnader</div><div class="val" style="color:#ffb74d;">${fmt(tk)}</div></div>
+  </div>
+</div>
+<div class="disclaimer"><strong>OBS – Hjälpmedel, inte ett certifierat bokföringssystem.</strong> Det här dokumentet är framtaget med Föreningsbokföring som är ett hjälpmedel för ideella idrottsföreningar. Det ersätter inte revision eller professionell bokföringsrådgivning. Föreningen ansvarar alltid för sin egen bokföring i enlighet med bokföringslagen.</div>
+<h2>Resultaträkning – Rörelsens intäkter</h2>
+<table>
+${iG.map(g=>`
+  <tr><td colspan="3" style="padding:10px 8px 2px;font-size:10px;font-weight:700;color:#2e7d32;text-transform:uppercase;letter-spacing:.06em;">${g.grupp}</td></tr>
+  ${g.konton.map(k=>pRow(k.nr,k.namn,k.summa,false,true)).join('')}
+  <tr><td colspan="3" style="padding:0;"><div style="height:1px;background:#e8e8e8;margin:2px 0;"></div></td></tr>
+  ${pRow('',`Summa ${g.grupp.toLowerCase()}`,g.summa,true,false)}
+`).join('')}
+</table>
+<div class="rr-total" style="background:#e8f5e9;">
+  <span style="font-size:12px;font-weight:800;color:#1b5e20;">SUMMA RÖRELSENS INTÄKTER</span>
+  <span style="font-size:13px;font-weight:800;color:#2e7d32;font-family:monospace;">${fmt(ti)}</span>
+</div>
+
+<h2>Resultaträkning – Rörelsens kostnader</h2>
+<table>
+${kG.map(g=>`
+  <tr><td colspan="3" style="padding:10px 8px 2px;font-size:10px;font-weight:700;color:#e65100;text-transform:uppercase;letter-spacing:.06em;">${g.grupp}</td></tr>
+  ${g.konton.map(k=>pRow(k.nr,k.namn,k.summa>0?-k.summa:k.summa,false,true)).join('')}
+  <tr><td colspan="3" style="padding:0;"><div style="height:1px;background:#e8e8e8;margin:2px 0;"></div></td></tr>
+  ${pRow('',`Summa ${g.grupp.toLowerCase()}`,-g.summa,true,false)}
+`).join('')}
+</table>
+<div class="rr-total" style="background:#fff3e0;">
+  <span style="font-size:12px;font-weight:800;color:#bf360c;">SUMMA RÖRELSENS KOSTNADER</span>
+  <span style="font-size:13px;font-weight:800;color:#e65100;font-family:monospace;">-${fmt(tk)}</span>
+</div>
+
+<div class="rr-res">
+  <div><div class="lbl">Årets över-/underskott · Konto 8999</div><div style="font-size:11px;color:rgba(255,255,255,0.3);margin-top:2px;">Idrottens BAS-kontoplan IBK v3.3</div></div>
+  <div class="val" style="color:${res>=0?'#81c784':'#ef9a9a'};">${res>=0?'+':''}${fmt(res)}</div>
+</div>
+
+<h2>Verifikationslista (${DB.poster.length} poster)</h2>
+<table>
+<thead><tr style="background:#f5f7fa;">
+  <th style="padding:7px 6px;font-size:10px;text-align:left;font-weight:700;color:#888;">Datum</th>
+  <th style="padding:7px 6px;font-size:10px;text-align:left;font-weight:700;color:#888;">Konto</th>
+  <th style="padding:7px 6px;font-size:10px;text-align:left;font-weight:700;color:#888;">Beskrivning</th>
+  <th style="padding:7px 6px;font-size:10px;text-align:left;font-weight:700;color:#888;">Via</th>
+  <th style="padding:7px 6px;font-size:10px;text-align:right;font-weight:700;color:#888;">Belopp</th>
+  <th style="padding:7px 6px;font-size:10px;text-align:center;font-weight:700;color:#888;">Kvitto</th>
+</tr></thead>
+<tbody>${verRows||'<tr><td colspan="6" style="padding:20px;text-align:center;color:#aaa;">Inga poster registrerade</td></tr>'}</tbody>
+</table>
+
+<div class="footer">
+  <span>Föreningsbokföring · Idrottens bokföringshjälpmedel · IBK v3.3 · Hjälpmedel, ej certifierat bokföringssystem</span>
+  <span>Utskrivet ${new Date().toLocaleDateString('sv-SE')}</span>
+</div>
+<div class="print-btn"><button onclick="window.print()">Skriv ut / Spara som PDF</button></div>
+</div>
+<!-- ══ KONTODETALJ PANEL ═══════════════════════════════════════════════════ -->
+<div id="panel-kontodetalj" class="hidden" onclick="closePanelOutside(event,'panel-kontodetalj')">
+  <div class="kontodetalj-sheet">
+    <div class="kontodetalj-head">
+      <div class="kdh-label">Kontodetalj</div>
+      <div style="display:flex;align-items:center;">
+        <span class="kdh-nr" id="kdh-nr"></span>
+        <span class="kdh-name" id="kdh-name"></span>
+      </div>
+      <div class="kdh-summa" id="kdh-summa"></div>
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-top:8px;">
+        <span style="font-size:11px;color:rgba(255,255,255,0.4);" id="kdh-ant"></span>
+        <button class="close-btn" onclick="closeKontodetalj()">Stäng</button>
+      </div>
+    </div>
+    <div class="kontodetalj-body" id="kontodetalj-body"></div>
+  </div>
+</div>
+
+<!-- Fullskärm kvitto -->
+<div id="foto-fullscreen" class="kd-post-foto-full hidden">
+  <img id="foto-fullscreen-img" src="" alt="Kvitto"/>
+  <button class="kd-post-foto-full-close" onclick="closeFotoFullscreen()">Stäng ✕</button>
+</div>
+
+<!-- Dold fil-input för kvittofoto -->
+<input type="file" id="foto-input" accept="image/*" capture="environment" style="display:none;" onchange="handleFotoInput(event)"/>
+
+
+<script>
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('/sw.js').then(reg => {
+      console.log('SW registrerad:', reg.scope);
+    }).catch(err => {
+      console.log('SW fel:', err);
+    });
+  });
+}
+</script>
+
+
+<div id="ios-install-banner" style="display:none;position:fixed;bottom:0;left:0;right:0;background:#1a1a2e;color:#fff;padding:16px 20px;z-index:999;box-shadow:0 -4px 20px rgba(0,0,0,0.3);max-width:480px;margin:0 auto;">
+  <div style="display:flex;align-items:flex-start;gap:12px;">
+    <img src="icon-192.png" style="width:44px;height:44px;border-radius:10px;flex-shrink:0;" alt=""/>
+    <div style="flex:1;">
+      <div style="font-size:13px;font-weight:700;margin-bottom:3px;">Installera som app</div>
+      <div style="font-size:12px;color:rgba(255,255,255,0.6);line-height:1.5;">Tryck på <strong style="color:#fff;">⎋ Dela</strong> och sedan <strong style="color:#fff;">"Lägg till på hemskärmen"</strong> för att använda appen offline.</div>
+    </div>
+    <button onclick="document.getElementById('ios-install-banner').style.display='none';localStorage.setItem('ios-banner-dismissed','1');" style="background:rgba(255,255,255,0.12);border:none;border-radius:8px;color:#fff;font-size:18px;width:30px;height:30px;flex-shrink:0;cursor:pointer;display:flex;align-items:center;justify-content:center;">×</button>
+  </div>
+</div>
+
+<script>
+// Visa iOS-banner om: Safari på iOS, ej redan installerad, ej avvisad
+(function(){
+  const isIOS = /iphone|ipad|ipod/i.test(navigator.userAgent);
+  const isSafari = /safari/i.test(navigator.userAgent) && !/chrome/i.test(navigator.userAgent);
+  const isStandalone = window.navigator.standalone === true;
+  const dismissed = localStorage.getItem('ios-banner-dismissed');
+  if(isIOS && isSafari && !isStandalone && !dismissed){
+    setTimeout(()=>{ document.getElementById('ios-install-banner').style.display='block'; }, 3000);
+  }
+
+  // Android: lyssna på beforeinstallprompt
+  let deferredPrompt;
+  window.addEventListener('beforeinstallprompt', e => {
+    e.preventDefault();
+    deferredPrompt = e;
+    if(!localStorage.getItem('android-banner-dismissed')){
+      document.getElementById('android-install-banner').style.display='block';
+    }
+  });
+  window.installApp = function(){
+    if(deferredPrompt){
+      deferredPrompt.prompt();
+      deferredPrompt.userChoice.then(()=>{ deferredPrompt=null; document.getElementById('android-install-banner').style.display='none'; });
+    }
+  };
+})();
+</script>
+
+<div id="android-install-banner" style="display:none;position:fixed;bottom:0;left:0;right:0;background:#1a1a2e;color:#fff;padding:16px 20px;z-index:999;box-shadow:0 -4px 20px rgba(0,0,0,0.3);max-width:480px;margin:0 auto;">
+  <div style="display:flex;align-items:center;gap:12px;">
+    <img src="icon-192.png" style="width:44px;height:44px;border-radius:10px;flex-shrink:0;" alt=""/>
+    <div style="flex:1;">
+      <div style="font-size:13px;font-weight:700;margin-bottom:2px;">Installera Föreningsbokföring</div>
+      <div style="font-size:12px;color:rgba(255,255,255,0.6);">Lägg till på hemskärmen för snabb åtkomst offline.</div>
+    </div>
+    <div style="display:flex;gap:8px;flex-shrink:0;">
+      <button onclick="document.getElementById('android-install-banner').style.display='none';localStorage.setItem('android-banner-dismissed','1');" style="background:rgba(255,255,255,0.12);border:none;border-radius:8px;color:#fff;font-size:12px;padding:8px 10px;cursor:pointer;">Senare</button>
+      <button onclick="installApp()" style="background:#81c784;border:none;border-radius:8px;color:#1a1a2e;font-size:12px;font-weight:700;padding:8px 12px;cursor:pointer;">Installera</button>
+    </div>
+  </div>
+</div>
+
+</body></html>`;
+
+  const blob = new Blob([html],{type:'text/html;charset=utf-8'});
+  const url = URL.createObjectURL(blob);
+  const w = window.open(url,'_blank');
+  if(w) w.focus();
+}
+
+
+// ══ KVITTOFOTO ════════════════════════════════════════════════════════════
+let currentFotoB64 = null;
+
+function handleFotoInput(e){
+  const file = e.target.files[0];
+  if(!file) return;
+  const reader = new FileReader();
+  reader.onload = function(ev){
+    const img = new Image();
+    img.onload = function(){
+      // Compress: max 1000px wide, quality 0.65
+      const MAX = 1000;
+      let w = img.width, h = img.height;
+      if(w > MAX){h = Math.round(h*(MAX/w)); w = MAX;}
+      const canvas = document.createElement('canvas');
+      canvas.width = w; canvas.height = h;
+      canvas.getContext('2d').drawImage(img,0,0,w,h);
+      currentFotoB64 = canvas.toDataURL('image/jpeg', 0.65);
+      $('foto-preview-img').src = currentFotoB64;
+      $('foto-preview').classList.remove('hidden');
+    };
+    img.src = ev.target.result;
+  };
+  reader.readAsDataURL(file);
+  // Reset input so same file can be re-selected
+  e.target.value = '';
+}
+
+function removeFoto(){
+  currentFotoB64 = null;
+  $('foto-preview').classList.add('hidden');
+  $('foto-preview-img').src = '';
+}
+
+// Reset foto when opening new post form
+const _origOpenNyPost = openNyPost;
+openNyPost = function(){
+  currentFotoB64 = null;
+  $('foto-preview').classList.add('hidden');
+  $('foto-preview-img').src = '';
+  _origOpenNyPost();
+};
+
+// Patch savePost to include foto
+const _origSavePost = savePost;
+savePost = function(){
+  if(!selectedKonto){showNpError('Välj en kategori.'); return;}
+  const b = parseFloat($('np-belopp').value.replace(',','.'));
+  if(!b || isNaN(b)){showNpError('Ange ett giltigt belopp.'); return;}
+  const post = {
+    id: Date.now(),
+    datum: $('np-datum').value || today(),
+    konto: selectedKonto.nr,
+    kontoNamn: selectedKonto.namn,
+    typ: selectedKonto.typ,
+    grupp: selectedKonto.grupp,
+    belopp: b,
+    beskrivning: $('np-beskrivning').value.trim(),
+    betalning: selectedBetalning,
+    kvitto: kvittoChecked,
+    foto: currentFotoB64 || null
+  };
+  DB.poster.push(post);
+  saveDB();
+  $('nypost-body').innerHTML = '<div class="saved-screen"><div class="saved-circle">✓</div><div class="saved-lbl">Sparad!</div></div>';
+  setTimeout(()=>{
+    closeNyPost();
+    updateHeader();
+    switchTab('poster');
+    openNyPost();
+    closeNyPost();
+  }, 700);
+};
+
+// ══ KONTODETALJ ═══════════════════════════════════════════════════════════
+function openKontodetalj(nr){
+  const k = KONTON.find(x=>x.nr===nr);
+  if(!k) return;
+  const poster = DB.poster.filter(p=>p.konto===nr).sort((a,b)=>b.datum.localeCompare(a.datum));
+  const summa = poster.reduce((s,p)=>s+p.belopp,0);
+  const isIn = k.typ==='intäkt';
+  const color = isIn ? '#2e7d32' : '#e65100';
+  const bg = isIn ? '#e8f5e9' : '#fff3e0';
+
+  $('kdh-nr').textContent = nr;
+  $('kdh-nr').style.background = bg;
+  $('kdh-nr').style.color = color;
+  $('kdh-name').textContent = k.namn;
+  $('kdh-summa').textContent = fmt(summa);
+  $('kdh-summa').style.color = isIn ? '#81c784' : '#ffb74d';
+  $('kdh-ant').textContent = poster.length + ' verifikation' + (poster.length===1?'':'er');
+
+  $('kontodetalj-body').innerHTML = poster.length===0
+    ? '<div class="kd-empty">Inga poster registrerade på detta konto ännu.</div>'
+    : poster.map(p=>`
+      <div class="kd-post">
+        <div class="kd-post-top">
+          <div class="kd-post-info">
+            <div class="kd-post-desc">${p.beskrivning||p.kontoNamn}</div>
+            <div class="kd-post-meta">
+              <span class="kd-post-tag">${p.datum}</span>
+              <span class="kd-post-tag">${p.betalning}</span>
+              ${p.kvitto?'<span class="kd-post-tag kvitto">Kvitto ✓</span>':''}
+              ${p.foto?'<span class="kd-post-tag" style="background:#e8f0fe;color:#3730a3;">📷 Foto</span>':''}
+            </div>
+          </div>
+          <span class="kd-post-amount" style="color:${color};">${isIn?'+':'-'}${fmt(p.belopp)}</span>
+        </div>
+        ${p.foto?`<div class="kd-post-foto" onclick="openFotoFullscreen('${p.id}')">
+          <img src="${p.foto}" alt="Kvitto"/>
+        </div>`:''}
+      </div>`).join('');
+
+  $('panel-kontodetalj').classList.remove('hidden');
+}
+
+function closeKontodetalj(){$('panel-kontodetalj').classList.add('hidden');}
+
+function openFotoFullscreen(id){
+  const p = DB.poster.find(x=>x.id==id);
+  if(!p||!p.foto) return;
+  $('foto-fullscreen-img').src = p.foto;
+  $('foto-fullscreen').classList.remove('hidden');
+}
+function closeFotoFullscreen(){
+  $('foto-fullscreen').classList.add('hidden');
+  $('foto-fullscreen-img').src='';
+}
+
+// ══ PATCH renderResultat to make kontonummer clickable ════════════════════
+// Override toggleGrupp to also make konto rows clickable
+const _origRenderResultat = renderResultat;
+renderResultat = function(){
+  const ti = totIntakt(), tk = totKostnad(), res = ti-tk;
+  const iAnt = DB.poster.filter(p=>p.typ==='intäkt').length;
+  const kAnt = DB.poster.filter(p=>p.typ==='kostnad').length;
+
+  const perKonto = {};
+  DB.poster.forEach(p=>{
+    if(!perKonto[p.konto]) perKonto[p.konto]={nr:p.konto,namn:p.kontoNamn,typ:p.typ,grupp:p.grupp,summa:0};
+    perKonto[p.konto].summa += p.belopp;
+  });
+  const kList = Object.values(perKonto).sort((a,b)=>a.nr.localeCompare(b.nr));
+  const perGrupp = {};
+  kList.forEach(k=>{
+    const key=k.grupp+'|'+k.typ;
+    if(!perGrupp[key]) perGrupp[key]={grupp:k.grupp,typ:k.typ,konton:[],summa:0};
+    perGrupp[key].konton.push(k);
+    perGrupp[key].summa+=k.summa;
+  });
+  const gList = Object.values(perGrupp);
+  const iG = gList.filter(g=>g.typ==='intäkt');
+  const kG = gList.filter(g=>g.typ==='kostnad');
+
+  const gruppBlock = (g, maxVal, color, bgColor) => {
+    const key = g.grupp+'|'+g.typ;
+    const isOpen = !!openGrupper[key];
+    const rows = isOpen ? g.konton.map(k=>`
+      <div class="grupp-detail" onclick="openKontodetalj('${k.nr}')" style="cursor:pointer;transition:background .1s;" onmouseover="this.style.background='#f0f7ff'" onmouseout="this.style.background=''">
+        <div class="grupp-detail-row">
+          <div style="flex:1;display:flex;align-items:center;">
+            <span class="grupp-detail-tag" style="background:${bgColor};color:${color};">${k.nr}</span>
+            <span class="grupp-detail-name">${k.namn}</span>
+            <span style="font-size:11px;color:#bbb;margin-left:6px;">${DB.poster.filter(p=>p.konto===k.nr).length} st</span>
+          </div>
+          <div style="display:flex;align-items:center;gap:8px;">
+            <span class="grupp-detail-sum">${fmt(k.summa)}</span>
+            <span style="color:#ccc;font-size:14px;">›</span>
+          </div>
+        </div>
+        <div class="progress-bar"><div class="progress-fill" style="background:${color};width:${maxVal>0?Math.min(100,(k.summa/maxVal)*100):0}%;"></div></div>
+      </div>`).join('') : '';
+    return `
+      <div class="grupp-block">
+        <button class="grupp-header" onclick="toggleGrupp('${key}')">
+          <span class="gh-name">${g.grupp}</span>
+          <div style="display:flex;align-items:center;gap:8px;">
+            <span class="gh-sum" style="color:${color};">${fmt(g.summa)}</span>
+            <span style="color:#ccc;font-size:16px;transition:transform .2s;transform:${isOpen?'rotate(90deg)':'rotate(0)'}">›</span>
+          </div>
+        </button>
+        ${rows}
+      </div>`;
+  };
+
+  $('app-content').innerHTML = `<div class="resultat-pad">
+    <div class="disclaimer">
+      <p><strong>OBS:</strong> Det här är ett hjälpmedel för att registrera ekonomiska poster — inte ett certifierat bokföringssystem. Det ersätter inte revision eller professionell bokföringsrådgivning. Föreningen ansvarar alltid för sin egen bokföring.</p>
+    </div>
+    <div class="cards-grid">
+      <div class="card" style="background:#e8f5e9;">
+        <div class="card-lbl">Intäkter</div>
+        <div class="card-val" style="color:#2e7d32;">${fmt(ti)}</div>
+        <div class="card-sub">${iAnt} poster</div>
+      </div>
+      <div class="card" style="background:#fff3e0;">
+        <div class="card-lbl">Kostnader</div>
+        <div class="card-val" style="color:#e65100;">${fmt(tk)}</div>
+        <div class="card-sub">${kAnt} poster</div>
+      </div>
+    </div>
+    <div class="resultat-bar" style="background:${res>=0?'#1a1a2e':'#7f1d1d'};">
+      <span class="rb-lbl">RESULTAT</span>
+      <span class="rb-val">${res>=0?'+':''}${fmt(res)}</span>
+    </div>
+    <div class="quick-btns">
+      <button class="quick-btn" onclick="openDetalj()">📋 Fullständig RR</button>
+      <button class="quick-btn" onclick="exportPDF()">🖨️ Skriv ut / PDF</button>
+    </div>
+    ${DB.poster.length===0?`<div class="empty-hint">Inga poster registrerade ännu.<br><span style="font-size:12px;">Tryck + för att lägga till din första post.</span></div>`:''}
+    ${iG.length>0?`<div class="section-lbl" style="color:#2e7d32;">Intäkter</div>${iG.map(g=>gruppBlock(g,ti,'#2e7d32','#e8f5e9')).join('')}`:''}
+    ${kG.length>0?`<div class="section-lbl" style="color:#e65100;margin-top:16px;">Kostnader</div>${kG.map(g=>gruppBlock(g,tk,'#e65100','#fff3e0')).join('')}`:''}
+  </div>`;
+};
+renderResultat();
+
+// Also patch renderPoster to show foto indicator and clicking opens kontodetalj
+const _origRenderPoster = renderPoster;
+renderPoster = function(){
+  const sorted = [...DB.poster].sort((a,b)=>b.datum.localeCompare(a.datum));
+  const q = ($('ver-search-input')||{value:''}).value||'';
+  const filtered = q ? sorted.filter(p=>
+    p.kontoNamn.toLowerCase().includes(q.toLowerCase())||
+    (p.beskrivning||'').toLowerCase().includes(q.toLowerCase())
+  ) : sorted;
+
+  $('app-content').innerHTML = `<div class="ver-pad">
+    <div class="ver-search">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+      <input id="ver-search-input" type="text" placeholder="Sök poster…" value="${q}" oninput="renderPoster()"/>
+    </div>
+    ${filtered.length===0?'<div class="ver-empty">Inga poster ännu</div>':''}
+    ${filtered.map(p=>{
+      const isIn = p.typ==='intäkt';
+      return `<div class="ver-row">
+        <div class="ver-icon" style="background:${isIn?'#e8f5e9':'#fff3e0'};color:${isIn?'#2e7d32':'#e65100'};">${p.konto}</div>
+        <div class="ver-body">
+          <div class="ver-name">${p.kontoNamn}</div>
+          ${p.beskrivning?`<div class="ver-desc">${p.beskrivning}</div>`:''}
+          <div class="ver-tags">
+            <span class="ver-tag">${p.datum}</span>
+            <span class="ver-tag">${p.betalning}</span>
+            ${p.kvitto?'<span class="ver-tag kvitto">Kvitto ✓</span>':''}
+            ${p.foto?'<span class="ver-tag" style="background:#e8f0fe;color:#3730a3;">📷</span>':''}
+          </div>
+          ${p.foto?`<div style="margin-top:8px;border-radius:8px;overflow:hidden;border:1px solid #e8e8e8;cursor:pointer;" onclick="openFotoFullscreen(${p.id})"><img src="${p.foto}" style="width:100%;max-height:120px;object-fit:cover;display:block;" alt="Kvitto"/></div>`:''}
+        </div>
+        <div class="ver-right">
+          <span class="ver-amount" style="color:${isIn?'#2e7d32':'#e65100'};">${isIn?'+':'-'}${fmt(p.belopp)}</span>
+          <button class="del-btn" onclick="deletePost(${p.id})">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14H6L5 6"/><path d="M10 11v6"/><path d="M14 11v6"/><path d="M9 6V4h6v2"/></svg>
+          </button>
+        </div>
+      </div>`;
+    }).join('')}
+  </div>`;
+};
+
+// ══ UTILS ════════════════════════════════════════════════════════════════════
+function closePanelOutside(e, id){if(e.target===$(id)) $(id).classList.add('hidden');}
+</script>
+
+<!-- ══ KONTODETALJ PANEL ═══════════════════════════════════════════════════ -->
+<div id="panel-kontodetalj" class="hidden" onclick="closePanelOutside(event,'panel-kontodetalj')">
+  <div class="kontodetalj-sheet">
+    <div class="kontodetalj-head">
+      <div class="kdh-label">Kontodetalj</div>
+      <div style="display:flex;align-items:center;">
+        <span class="kdh-nr" id="kdh-nr"></span>
+        <span class="kdh-name" id="kdh-name"></span>
+      </div>
+      <div class="kdh-summa" id="kdh-summa"></div>
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-top:8px;">
+        <span style="font-size:11px;color:rgba(255,255,255,0.4);" id="kdh-ant"></span>
+        <button class="close-btn" onclick="closeKontodetalj()">Stäng</button>
+      </div>
+    </div>
+    <div class="kontodetalj-body" id="kontodetalj-body"></div>
+  </div>
+</div>
+
+<!-- Fullskärm kvitto -->
+<div id="foto-fullscreen" class="kd-post-foto-full hidden">
+  <img id="foto-fullscreen-img" src="" alt="Kvitto"/>
+  <button class="kd-post-foto-full-close" onclick="closeFotoFullscreen()">Stäng ✕</button>
+</div>
+
+<!-- Dold fil-input för kvittofoto -->
+<input type="file" id="foto-input" accept="image/*" capture="environment" style="display:none;" onchange="handleFotoInput(event)"/>
+
+
+<script>
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('/sw.js').then(reg => {
+      console.log('SW registrerad:', reg.scope);
+    }).catch(err => {
+      console.log('SW fel:', err);
+    });
+  });
+}
+</script>
+
+
+<div id="ios-install-banner" style="display:none;position:fixed;bottom:0;left:0;right:0;background:#1a1a2e;color:#fff;padding:16px 20px;z-index:999;box-shadow:0 -4px 20px rgba(0,0,0,0.3);max-width:480px;margin:0 auto;">
+  <div style="display:flex;align-items:flex-start;gap:12px;">
+    <img src="icon-192.png" style="width:44px;height:44px;border-radius:10px;flex-shrink:0;" alt=""/>
+    <div style="flex:1;">
+      <div style="font-size:13px;font-weight:700;margin-bottom:3px;">Installera som app</div>
+      <div style="font-size:12px;color:rgba(255,255,255,0.6);line-height:1.5;">Tryck på <strong style="color:#fff;">⎋ Dela</strong> och sedan <strong style="color:#fff;">"Lägg till på hemskärmen"</strong> för att använda appen offline.</div>
+    </div>
+    <button onclick="document.getElementById('ios-install-banner').style.display='none';localStorage.setItem('ios-banner-dismissed','1');" style="background:rgba(255,255,255,0.12);border:none;border-radius:8px;color:#fff;font-size:18px;width:30px;height:30px;flex-shrink:0;cursor:pointer;display:flex;align-items:center;justify-content:center;">×</button>
+  </div>
+</div>
+
+<script>
+// Visa iOS-banner om: Safari på iOS, ej redan installerad, ej avvisad
+(function(){
+  const isIOS = /iphone|ipad|ipod/i.test(navigator.userAgent);
+  const isSafari = /safari/i.test(navigator.userAgent) && !/chrome/i.test(navigator.userAgent);
+  const isStandalone = window.navigator.standalone === true;
+  const dismissed = localStorage.getItem('ios-banner-dismissed');
+  if(isIOS && isSafari && !isStandalone && !dismissed){
+    setTimeout(()=>{ document.getElementById('ios-install-banner').style.display='block'; }, 3000);
+  }
+
+  // Android: lyssna på beforeinstallprompt
+  let deferredPrompt;
+  window.addEventListener('beforeinstallprompt', e => {
+    e.preventDefault();
+    deferredPrompt = e;
+    if(!localStorage.getItem('android-banner-dismissed')){
+      document.getElementById('android-install-banner').style.display='block';
+    }
+  });
+  window.installApp = function(){
+    if(deferredPrompt){
+      deferredPrompt.prompt();
+      deferredPrompt.userChoice.then(()=>{ deferredPrompt=null; document.getElementById('android-install-banner').style.display='none'; });
+    }
+  };
+})();
+</script>
+
+<div id="android-install-banner" style="display:none;position:fixed;bottom:0;left:0;right:0;background:#1a1a2e;color:#fff;padding:16px 20px;z-index:999;box-shadow:0 -4px 20px rgba(0,0,0,0.3);max-width:480px;margin:0 auto;">
+  <div style="display:flex;align-items:center;gap:12px;">
+    <img src="icon-192.png" style="width:44px;height:44px;border-radius:10px;flex-shrink:0;" alt=""/>
+    <div style="flex:1;">
+      <div style="font-size:13px;font-weight:700;margin-bottom:2px;">Installera Föreningsbokföring</div>
+      <div style="font-size:12px;color:rgba(255,255,255,0.6);">Lägg till på hemskärmen för snabb åtkomst offline.</div>
+    </div>
+    <div style="display:flex;gap:8px;flex-shrink:0;">
+      <button onclick="document.getElementById('android-install-banner').style.display='none';localStorage.setItem('android-banner-dismissed','1');" style="background:rgba(255,255,255,0.12);border:none;border-radius:8px;color:#fff;font-size:12px;padding:8px 10px;cursor:pointer;">Senare</button>
+      <button onclick="installApp()" style="background:#81c784;border:none;border-radius:8px;color:#1a1a2e;font-size:12px;font-weight:700;padding:8px 12px;cursor:pointer;">Installera</button>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>
