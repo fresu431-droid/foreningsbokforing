@@ -2,7 +2,6 @@
 <html lang="sv">
 <head>
 <meta charset="UTF-8"/>
-
 <meta name="apple-mobile-web-app-capable" content="yes"/>
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
 <meta name="apple-mobile-web-app-title" content="Bokföring"/>
@@ -14,16 +13,12 @@
 <title>Föreningsbokföring – Idrottens bokföringshjälpmedel</title>
 <style>
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;}
-body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;background:#f7f8fc;color:#1a1a2e;max-width:480px;margin:0 auto;min-height:100vh;position:relative;}
+body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;background:#f7f8fc;color:#1a1a2e;max-width:480px;margin:0 auto;min-height:100vh;}
 input,button,select,textarea{font-family:inherit;}
 input[type=number]::-webkit-inner-spin-button{-webkit-appearance:none;}
 button{cursor:pointer;}
 .hidden{display:none!important;}
-
-/* ── Skärmar ── */
 #screen-welcome,#screen-app{min-height:100vh;}
-
-/* ── Välkomst ── */
 #screen-welcome{display:flex;flex-direction:column;background:#1a1a2e;}
 .welcome-top{padding:52px 28px 32px;}
 .welcome-tag{font-size:11px;color:rgba(255,255,255,0.4);font-weight:700;text-transform:uppercase;letter-spacing:.1em;margin-bottom:10px;}
@@ -43,8 +38,6 @@ button{cursor:pointer;}
 .btn-primary{width:100%;padding:18px;border-radius:14px;border:none;background:#1a1a2e;color:#fff;font-size:16px;font-weight:800;margin-top:8px;}
 .welcome-note{text-align:center;margin-top:20px;font-size:11px;color:#bbb;line-height:1.7;}
 .error-box{background:#fff3f3;border:1px solid #fca5a5;border-radius:10px;padding:10px 14px;color:#dc2626;font-size:13px;margin-bottom:16px;}
-
-/* ── App shell ── */
 #screen-app{display:flex;flex-direction:column;height:100vh;}
 .app-header{background:#1a1a2e;padding:20px 20px 0;flex-shrink:0;}
 .app-header-top{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:16px;}
@@ -58,16 +51,12 @@ button{cursor:pointer;}
 .btn-icon{background:rgba(255,255,255,0.1);border:none;border-radius:10px;width:36px;height:36px;display:flex;align-items:center;justify-content:center;color:rgba(255,255,255,0.6);margin-top:2px;}
 .btn-icon svg{width:18px;height:18px;}
 .app-tabs{display:flex;gap:4px;}
-.tab-btn{flex:1;padding:12px 8px 14px;border:none;background:transparent;color:rgba(255,255,255,0.4);font-size:13px;font-weight:700;border-bottom:3px solid transparent;display:flex;align-items:center;justify-content:center;gap:6px;transition:all .15s;}
-.tab-btn svg{width:16px;height:16px;}
+.tab-btn{flex:1;padding:12px 8px 14px;border:none;background:transparent;color:rgba(255,255,255,0.4);font-size:12px;font-weight:700;border-bottom:3px solid transparent;display:flex;align-items:center;justify-content:center;gap:5px;transition:all .15s;}
+.tab-btn svg{width:15px;height:15px;}
 .tab-btn.active{color:#fff;border-bottom-color:#fff;}
 .app-content{flex:1;overflow-y:auto;padding-top:20px;}
-
-/* FAB */
 .fab{position:fixed;bottom:28px;right:20px;width:60px;height:60px;border-radius:50%;background:#1a1a2e;border:none;color:#fff;box-shadow:0 6px 24px rgba(26,26,46,.4);display:flex;align-items:center;justify-content:center;z-index:40;}
 .fab svg{width:28px;height:28px;}
-
-/* ── Ny post panel ── */
 #panel-nypost{position:fixed;inset:0;background:#f7f8fc;z-index:60;display:flex;flex-direction:column;transform:translateY(100%);transition:transform .3s ease;}
 #panel-nypost.open{transform:translateY(0);}
 .panel-header{background:#1a1a2e;padding:20px;display:flex;align-items:center;gap:12px;flex-shrink:0;}
@@ -103,8 +92,6 @@ button{cursor:pointer;}
 .saved-screen{display:flex;flex-direction:column;align-items:center;justify-content:center;height:100%;gap:16px;}
 .saved-circle{width:64px;height:64px;border-radius:50%;background:#e8f5e9;display:flex;align-items:center;justify-content:center;color:#2e7d32;font-size:32px;}
 .saved-lbl{font-size:18px;font-weight:700;color:#1a1a2e;}
-
-/* ── Kontopicker ── */
 #panel-konto{position:fixed;inset:0;background:rgba(0,0,0,0.6);z-index:80;display:flex;flex-direction:column;justify-content:flex-end;}
 .konto-sheet{background:#fff;border-radius:20px 20px 0 0;max-height:85vh;display:flex;flex-direction:column;overflow:hidden;}
 .konto-sheet-head{padding:20px 20px 0;border-bottom:1px solid #f0f0f0;}
@@ -120,15 +107,13 @@ button{cursor:pointer;}
 .filter-tab.active{background:#1a1a2e;color:#fff;border-color:#1a1a2e;}
 .konto-list{overflow-y:auto;flex:1;}
 .konto-row{display:flex;width:100%;align-items:center;padding:14px 20px;border:none;background:#fff;border-bottom:1px solid #f5f5f5;text-align:left;gap:14px;transition:background .1s;}
-.konto-row:hover{background:#f9f9f9;}
+.konto-row:active{background:#f9f9f9;}
 .konto-row.selected{background:#f0f7ff;}
 .konto-row-info{flex:1;}
 .konto-row-name{font-size:14px;font-weight:600;color:#1a1a2e;}
 .konto-row-sub{font-size:12px;color:#999;margin-top:2px;}
 .konto-row-check{color:#2563eb;font-size:16px;}
 .konto-empty{padding:40px;text-align:center;color:#aaa;font-size:14px;}
-
-/* ── Resultat ── */
 .resultat-pad{padding:0 20px 100px;}
 .cards-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:16px;}
 .card{border-radius:14px;padding:16px 14px;}
@@ -139,7 +124,7 @@ button{cursor:pointer;}
 .resultat-bar .rb-lbl{font-size:13px;font-weight:700;color:rgba(255,255,255,0.7);}
 .resultat-bar .rb-val{font-size:22px;font-weight:800;color:#fff;}
 .quick-btns{display:flex;gap:8px;margin-bottom:20px;}
-.quick-btn{flex:1;padding:13px 10px;border-radius:12px;border:1.5px solid #d0d5e8;background:#fff;display:flex;align-items:center;justify-content:center;gap:7px;font-size:13px;font-weight:700;color:#1a1a2e;}
+.quick-btn{flex:1;padding:11px 8px;border-radius:12px;border:1.5px solid #d0d5e8;background:#fff;display:flex;align-items:center;justify-content:center;gap:6px;font-size:12px;font-weight:700;color:#1a1a2e;}
 .section-lbl{font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.08em;margin-bottom:8px;padding-left:2px;}
 .grupp-block{margin-bottom:10px;border-radius:14px;overflow:hidden;border:1px solid rgba(0,0,0,0.06);background:#fff;}
 .grupp-header{display:flex;justify-content:space-between;align-items:center;padding:14px 16px;border:none;background:transparent;width:100%;text-align:left;}
@@ -153,8 +138,6 @@ button{cursor:pointer;}
 .progress-bar{height:3px;background:#efefef;border-radius:2px;margin-top:6px;}
 .progress-fill{height:100%;border-radius:2px;}
 .empty-hint{text-align:center;padding:40px 20px;color:#bbb;font-size:14px;line-height:1.7;}
-
-/* ── Verifikationer ── */
 .ver-pad{padding:0 20px 100px;}
 .ver-search{display:flex;align-items:center;background:#f5f7fa;border-radius:12px;padding:10px 14px;gap:8px;margin-bottom:16px;}
 .ver-search svg{width:18px;height:18px;color:#bbb;flex-shrink:0;}
@@ -172,15 +155,14 @@ button{cursor:pointer;}
 .del-btn{background:none;border:none;color:#ddd;width:20px;height:20px;padding:0;display:flex;align-items:center;justify-content:center;}
 .del-btn svg{width:16px;height:16px;}
 .ver-empty{text-align:center;padding:60px 20px;color:#ccc;font-size:14px;}
-
-/* ── Inställningar ── */
 #panel-settings{position:fixed;inset:0;background:rgba(0,0,0,0.5);z-index:80;display:flex;flex-direction:column;justify-content:flex-end;}
-.settings-sheet{background:#f7f8fc;border-radius:20px 20px 0 0;max-height:90vh;display:flex;flex-direction:column;overflow:hidden;}
+.settings-sheet{background:#f7f8fc;border-radius:20px 20px 0 0;max-height:92vh;display:flex;flex-direction:column;overflow:hidden;}
 .settings-head{background:#1a1a2e;padding:20px;display:flex;justify-content:space-between;align-items:center;}
 .settings-head .sh-label{font-size:11px;color:rgba(255,255,255,0.5);font-weight:700;text-transform:uppercase;letter-spacing:.08em;}
 .settings-head .sh-title{font-size:17px;font-weight:800;color:#fff;}
 .settings-head .close-btn{background:rgba(255,255,255,0.12);border:none;border-radius:10px;padding:8px 14px;color:#fff;font-size:13px;font-weight:600;}
 .settings-body{overflow-y:auto;padding:24px 20px 40px;}
+.settings-section{font-size:12px;font-weight:800;text-transform:uppercase;letter-spacing:.06em;color:#888;margin:24px 0 10px;}
 .danger-zone{border-top:1px solid #e8e8e8;padding-top:20px;margin-top:8px;}
 .danger-lbl{font-size:12px;font-weight:700;color:#c00;text-transform:uppercase;letter-spacing:.04em;margin-bottom:10px;}
 .btn-danger{width:100%;padding:14px;border-radius:12px;border:2px solid #fca5a5;background:#fff3f3;color:#dc2626;font-size:14px;font-weight:700;}
@@ -189,8 +171,55 @@ button{cursor:pointer;}
 .confirm-row{display:flex;gap:8px;}
 .btn-confirm-cancel{flex:1;padding:12px;border-radius:10px;border:2px solid #e8e8e8;background:#fff;font-size:14px;font-weight:600;}
 .btn-confirm-ok{flex:1;padding:12px;border-radius:10px;border:none;background:#dc2626;color:#fff;font-size:14px;font-weight:700;}
-
-/* ── Detalj RR ── */
+/* Kontolista i inställningar */
+.konto-manage-row{display:flex;align-items:center;padding:12px 0;border-bottom:1px solid #f0f0f0;gap:10px;}
+.konto-manage-row:last-child{border-bottom:none;}
+.konto-manage-info{flex:1;min-width:0;}
+.konto-manage-name{font-size:13px;font-weight:600;color:#1a1a2e;}
+.konto-manage-sub{font-size:11px;color:#aaa;margin-top:1px;}
+.konto-manage-del{background:none;border:none;color:#fca5a5;font-size:18px;padding:4px;flex-shrink:0;}
+.konto-manage-del:disabled{color:#e8e8e8;}
+.btn-add-konto{width:100%;padding:12px;border-radius:12px;border:2px dashed #c8d0e8;background:#f5f7ff;color:#4a5568;font-size:14px;font-weight:600;margin-top:8px;}
+/* Lägg till konto modal */
+#panel-add-konto{position:fixed;inset:0;background:rgba(0,0,0,0.6);z-index:100;display:flex;align-items:flex-end;}
+.add-konto-sheet{background:#fff;border-radius:20px 20px 0 0;padding:24px 20px 40px;width:100%;max-width:480px;margin:0 auto;}
+.add-konto-sheet h3{font-size:17px;font-weight:800;margin-bottom:16px;}
+.typ-row{display:flex;gap:8px;margin-bottom:4px;}
+.typ-btn{flex:1;padding:12px;border-radius:12px;border:2px solid #e8e8e8;background:#fff;font-size:14px;font-weight:600;color:#555;transition:all .15s;}
+.typ-btn.intakt.active{background:#e8f5e9;border-color:#2e7d32;color:#2e7d32;}
+.typ-btn.kostnad.active{background:#fff3e0;border-color:#e65100;color:#e65100;}
+/* Balansräkning */
+.balans-pad{padding:0 20px 100px;}
+.balans-intro{background:#e8f0fe;border-radius:14px;padding:16px;margin-bottom:20px;font-size:13px;color:#1a3a6e;line-height:1.6;}
+.balans-intro strong{font-weight:700;}
+.balans-section{margin-bottom:20px;}
+.balans-section-header{font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.08em;color:#888;margin-bottom:10px;padding-left:2px;}
+.balans-row{background:#fff;border-radius:12px;padding:14px 16px;margin-bottom:8px;border:1px solid #f0f0f0;display:flex;align-items:center;gap:12px;}
+.balans-row-icon{width:36px;height:36px;border-radius:9px;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:16px;}
+.balans-row-body{flex:1;}
+.balans-row-name{font-size:14px;font-weight:600;color:#1a1a2e;}
+.balans-row-sub{font-size:11px;color:#bbb;margin-top:1px;}
+.balans-row-right{text-align:right;flex-shrink:0;}
+.balans-row-val{font-size:16px;font-weight:800;}
+.balans-row-lbl{font-size:10px;color:#bbb;margin-top:1px;}
+.balans-edit-btn{background:#f5f7fa;border:1px solid #e8e8e8;border-radius:8px;padding:6px 12px;font-size:12px;font-weight:600;color:#555;margin-top:6px;}
+.balans-total{border-radius:14px;padding:16px 20px;margin:4px 0 16px;display:flex;justify-content:space-between;align-items:center;}
+.balans-total .bt-lbl{font-size:13px;font-weight:800;}
+.balans-total .bt-val{font-size:16px;font-weight:800;font-family:monospace;}
+.balans-eget{background:#1a1a2e;border-radius:16px;padding:18px 20px;margin-bottom:16px;}
+.balans-eget .be-lbl{font-size:11px;color:rgba(255,255,255,0.5);font-weight:700;text-transform:uppercase;margin-bottom:4px;}
+.balans-eget .be-row{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;}
+.balans-eget .be-name{font-size:13px;color:rgba(255,255,255,0.7);}
+.balans-eget .be-val{font-size:14px;font-weight:700;font-family:monospace;color:#fff;}
+.balans-eget .be-total{border-top:1px solid rgba(255,255,255,0.15);margin-top:10px;padding-top:10px;display:flex;justify-content:space-between;align-items:center;}
+.balans-eget .be-total-lbl{font-size:13px;font-weight:700;color:#fff;}
+.balans-eget .be-total-val{font-size:18px;font-weight:800;font-family:monospace;}
+/* Edit balans modal */
+#panel-edit-balans{position:fixed;inset:0;background:rgba(0,0,0,0.6);z-index:100;display:flex;align-items:flex-end;}
+.edit-balans-sheet{background:#fff;border-radius:20px 20px 0 0;padding:24px 20px 40px;width:100%;max-width:480px;margin:0 auto;}
+.edit-balans-sheet h3{font-size:17px;font-weight:800;margin-bottom:6px;}
+.edit-balans-sheet p{font-size:13px;color:#888;margin-bottom:20px;line-height:1.5;}
+/* Detalj RR */
 #panel-detalj{position:fixed;inset:0;background:rgba(0,0,0,0.5);z-index:80;display:flex;flex-direction:column;justify-content:flex-end;}
 .detalj-sheet{background:#fff;border-radius:20px 20px 0 0;height:92vh;display:flex;flex-direction:column;overflow:hidden;}
 .detalj-head{background:#1a1a2e;padding:20px;flex-shrink:0;}
@@ -207,8 +236,7 @@ button{cursor:pointer;}
 .rr-divider span{font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:.1em;}
 .rr-grupp-lbl{padding:8px 16px 2px;font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:.06em;}
 .rr-row{display:flex;justify-content:space-between;align-items:center;padding:6px 28px;}
-.rr-row.bold{padding:8px 16px;background:#f5f7fa;border-radius:0;}
-.rr-row.bold-indent{padding:8px 28px;background:#f5f7fa;}
+.rr-row.bold{padding:8px 16px;background:#f5f7fa;}
 .rr-nr{font-family:monospace;font-size:10px;color:#bbb;background:#f0f0f0;padding:2px 5px;border-radius:4px;margin-right:8px;flex-shrink:0;}
 .rr-name{font-size:12px;color:#444;flex:1;}
 .rr-name.bold{font-size:13px;font-weight:700;color:#1a1a2e;}
@@ -223,9 +251,7 @@ button{cursor:pointer;}
 .rr-result .rrs-lbl{font-size:10px;color:rgba(255,255,255,0.5);font-weight:700;text-transform:uppercase;margin-bottom:4px;}
 .rr-result .rrs-sub{font-size:11px;color:rgba(255,255,255,0.4);}
 .rr-result .rrs-val{font-family:monospace;font-size:22px;font-weight:800;}
-
-
-/* ── Kvittofoto ── */
+/* Kvittofoto */
 .kvitto-foto-wrap{margin-top:10px;}
 .foto-btn{width:100%;padding:14px;border-radius:12px;border:2px dashed #d0d5e8;background:#f8faff;display:flex;align-items:center;justify-content:center;gap:10px;font-size:14px;font-weight:600;color:#4a5568;cursor:pointer;}
 .foto-btn svg{width:20px;height:20px;color:#7b8794;flex-shrink:0;}
@@ -233,8 +259,7 @@ button{cursor:pointer;}
 .foto-preview img{width:100%;display:block;max-height:200px;object-fit:cover;}
 .foto-remove{position:absolute;top:8px;right:8px;background:rgba(0,0,0,0.55);border:none;border-radius:20px;color:#fff;font-size:12px;font-weight:700;padding:5px 10px;cursor:pointer;}
 .foto-hint{font-size:11px;color:#aaa;margin-top:6px;text-align:center;}
-
-/* ── Kontodetalj panel ── */
+/* Kontodetalj */
 #panel-kontodetalj{position:fixed;inset:0;background:rgba(0,0,0,0.5);z-index:90;display:flex;flex-direction:column;justify-content:flex-end;}
 .kontodetalj-sheet{background:#f7f8fc;border-radius:20px 20px 0 0;height:88vh;display:flex;flex-direction:column;overflow:hidden;}
 .kontodetalj-head{background:#1a1a2e;padding:20px;flex-shrink:0;}
@@ -257,10 +282,14 @@ button{cursor:pointer;}
 .kd-post-foto-full img{max-width:100%;max-height:100%;border-radius:8px;object-fit:contain;}
 .kd-post-foto-full-close{position:fixed;top:20px;right:20px;background:rgba(255,255,255,0.15);border:none;border-radius:20px;color:#fff;font-size:14px;font-weight:700;padding:8px 16px;cursor:pointer;}
 .kd-empty{text-align:center;padding:40px 20px;color:#ccc;font-size:14px;}
-/* ── Disclaimer ── */
 .disclaimer{background:#fffbeb;border:1px solid #fcd34d;border-radius:12px;padding:14px 16px;margin-bottom:20px;}
 .disclaimer p{font-size:12px;color:#92400e;line-height:1.6;}
 .disclaimer strong{font-weight:700;}
+/* Nästa steg-ruta */
+.nasta-steg{background:#f0f7ff;border:1px solid #bfdbfe;border-radius:14px;padding:16px;margin-top:8px;}
+.nasta-steg-title{font-size:13px;font-weight:800;color:#1e40af;margin-bottom:6px;}
+.nasta-steg p{font-size:12px;color:#3b5bdb;line-height:1.6;}
+.nasta-steg a{color:#1e40af;font-weight:700;}
 </style>
 </head>
 <body>
@@ -270,7 +299,7 @@ button{cursor:pointer;}
   <div class="welcome-top">
     <div class="welcome-tag">Idrottens bokföringshjälpmedel</div>
     <div class="welcome-title">Förenings&shy;bokföring</div>
-    <div class="welcome-sub">Enkelt hjälpmedel för att registrera intäkter och kostnader i ideella idrottsföreningar. Bygger på Idrottens BAS-kontoplan IBK v3.3.</div>
+    <div class="welcome-sub">Enkelt hjälpmedel för ideella idrottsföreningar. Bygger på Idrottens BAS-kontoplan IBK v3.3.</div>
   </div>
   <div class="welcome-form">
     <h2>Kom igång</h2>
@@ -308,10 +337,7 @@ button{cursor:pointer;}
           <div class="val" id="h-result-val"></div>
         </div>
         <button class="btn-icon" onclick="openSettings()">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
-            <circle cx="12" cy="12" r="3"/>
-            <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/>
-          </svg>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
         </button>
       </div>
     </div>
@@ -320,6 +346,10 @@ button{cursor:pointer;}
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
         Resultat
       </button>
+      <button class="tab-btn" id="tab-balans" onclick="switchTab('balans')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+        Balans
+      </button>
       <button class="tab-btn" id="tab-poster" onclick="switchTab('poster')">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg>
         Poster
@@ -327,7 +357,7 @@ button{cursor:pointer;}
     </div>
   </div>
   <div class="app-content" id="app-content"></div>
-  <button class="fab" onclick="openNyPost()">
+  <button class="fab" id="fab-btn" onclick="openNyPost()">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
   </button>
 </div>
@@ -420,7 +450,7 @@ button{cursor:pointer;}
     <div class="settings-head">
       <div>
         <div class="sh-label">Inställningar</div>
-        <div class="sh-title">Förening & räkenskapsår</div>
+        <div class="sh-title">Förening & kontoplan</div>
       </div>
       <button class="close-btn" onclick="closeSettings()">Avbryt</button>
     </div>
@@ -438,7 +468,16 @@ button{cursor:pointer;}
         <label>Räkenskapsår</label>
         <div class="year-row" id="s-year-row"></div>
       </div>
-      <button class="btn-primary" style="margin-bottom:24px;" onclick="saveSettings()">Spara ändringar</button>
+      <button class="btn-primary" style="margin-bottom:8px;" onclick="saveSettings()">Spara ändringar</button>
+
+      <div class="settings-section">Kontoplan — Intäkter</div>
+      <div id="konto-list-intakt"></div>
+      <button class="btn-add-konto" onclick="openAddKonto('intäkt')">+ Lägg till intäktskonto</button>
+
+      <div class="settings-section">Kontoplan — Kostnader</div>
+      <div id="konto-list-kostnad"></div>
+      <button class="btn-add-konto" onclick="openAddKonto('kostnad')">+ Lägg till kostnadskonto</button>
+
       <div class="danger-zone">
         <div class="danger-lbl">Farlig zon</div>
         <div id="rensa-confirm-1">
@@ -454,6 +493,56 @@ button{cursor:pointer;}
           </div>
         </div>
       </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ LÄGG TILL KONTO MODAL ════════════════════════════════════════════════ -->
+<div id="panel-add-konto" class="hidden" onclick="closePanelOutside(event,'panel-add-konto')">
+  <div class="add-konto-sheet">
+    <h3>Lägg till konto</h3>
+    <div class="field">
+      <label>Typ</label>
+      <div class="typ-row">
+        <button class="typ-btn intakt" id="typ-btn-intakt" onclick="setAddKontoTyp('intäkt')">Intäkt</button>
+        <button class="typ-btn kostnad" id="typ-btn-kostnad" onclick="setAddKontoTyp('kostnad')">Kostnad</button>
+      </div>
+    </div>
+    <div class="field">
+      <label>Kontonummer</label>
+      <input class="input-base" id="ak-nr" type="text" placeholder="T.ex. 3999"/>
+    </div>
+    <div class="field">
+      <label>Kontonamn</label>
+      <input class="input-base" id="ak-namn" type="text" placeholder="T.ex. Övriga intäkter"/>
+    </div>
+    <div class="field">
+      <label>Grupp</label>
+      <input class="input-base" id="ak-grupp" type="text" placeholder="T.ex. Bidrag & avgifter"/>
+    </div>
+    <div id="ak-error" class="error-box hidden"></div>
+    <div style="display:flex;gap:10px;margin-top:8px;">
+      <button class="btn-cancel" style="flex:1;padding:16px;border-radius:14px;font-size:15px;font-weight:700;border:2px solid #e8e8e8;background:#fff;color:#555;" onclick="closeAddKonto()">Avbryt</button>
+      <button class="btn-save" style="flex:2;padding:16px;border-radius:14px;font-size:15px;font-weight:700;border:none;background:#1a1a2e;color:#fff;" onclick="saveAddKonto()">Lägg till</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══ REDIGERA BALANSVÄRDE ════════════════════════════════════════════════ -->
+<div id="panel-edit-balans" class="hidden" onclick="closePanelOutside(event,'panel-edit-balans')">
+  <div class="edit-balans-sheet">
+    <h3 id="eb-title">Ange ingående saldo</h3>
+    <p id="eb-desc">Ange balansen vid årets början (1 januari).</p>
+    <div class="field">
+      <label>Belopp (kr)</label>
+      <div class="belopp-wrap">
+        <input class="input-base belopp-input" id="eb-belopp" type="number" inputmode="decimal" placeholder="0"/>
+        <span class="belopp-kr">kr</span>
+      </div>
+    </div>
+    <div style="display:flex;gap:10px;margin-top:8px;">
+      <button class="btn-cancel" style="flex:1;padding:16px;border-radius:14px;font-size:15px;font-weight:700;border:2px solid #e8e8e8;background:#fff;color:#555;" onclick="closeEditBalans()">Avbryt</button>
+      <button class="btn-save" style="flex:2;padding:16px;border-radius:14px;font-size:15px;font-weight:700;border:none;background:#1a1a2e;color:#fff;" onclick="saveEditBalans()">Spara</button>
     </div>
   </div>
 </div>
@@ -475,64 +564,43 @@ button{cursor:pointer;}
   </div>
 </div>
 
+<!-- ══ KONTODETALJ PANEL ═══════════════════════════════════════════════════ -->
+<div id="panel-kontodetalj" class="hidden" onclick="closePanelOutside(event,'panel-kontodetalj')">
+  <div class="kontodetalj-sheet">
+    <div class="kontodetalj-head">
+      <div class="kdh-label">Kontodetalj</div>
+      <div style="display:flex;align-items:center;">
+        <span class="kdh-nr" id="kdh-nr"></span>
+        <span class="kdh-name" id="kdh-name"></span>
+      </div>
+      <div class="kdh-summa" id="kdh-summa"></div>
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-top:8px;">
+        <span style="font-size:11px;color:rgba(255,255,255,0.4);" id="kdh-ant"></span>
+        <button class="close-btn" onclick="closeKontodetalj()">Stäng</button>
+      </div>
+    </div>
+    <div class="kontodetalj-body" id="kontodetalj-body"></div>
+  </div>
+</div>
+
+<!-- Fullskärm kvitto -->
+<div id="foto-fullscreen" class="kd-post-foto-full hidden">
+  <img id="foto-fullscreen-img" src="" alt="Kvitto"/>
+  <button class="kd-post-foto-full-close" onclick="closeFotoFullscreen()">Stäng ✕</button>
+</div>
+
+<!-- Dold fil-input -->
+<input type="file" id="foto-input" accept="image/*" capture="environment" style="display:none;" onchange="handleFotoInput(event)"/>
+
 <script>
+// ══ INDEXEDDB ═══════════════════════════════════════════════════════════════
+const DB_NAME='foreningsbokforing';const DB_STORE='data';const DB_KEY='main';let _idb=null;
+function openIDB(){return new Promise((res,rej)=>{if(_idb){res(_idb);return;}const req=indexedDB.open(DB_NAME,1);req.onupgradeneeded=e=>{e.target.result.createObjectStore(DB_STORE);};req.onsuccess=e=>{_idb=e.target.result;res(_idb);};req.onerror=()=>res(null);});}
+function saveDB(){openIDB().then(function(db){if(db){const tx=db.transaction(DB_STORE,'readwrite');tx.objectStore(DB_STORE).put(JSON.parse(JSON.stringify(DB)),DB_KEY);}else{try{localStorage.setItem('foreningsbokforing_v1',JSON.stringify(DB));}catch(e){}}}).catch(function(){try{localStorage.setItem('foreningsbokforing_v1',JSON.stringify(DB));}catch(e){}});}
+function loadIDB(){return new Promise(function(res){openIDB().then(function(db){if(db){const tx=db.transaction(DB_STORE,'readonly');const req=tx.objectStore(DB_STORE).get(DB_KEY);req.onsuccess=function(e){if(e.target.result){res(e.target.result);}else{try{const raw=localStorage.getItem('foreningsbokforing_v1');res(raw?JSON.parse(raw):null);}catch(e2){res(null);}}};req.onerror=function(){try{const raw=localStorage.getItem('foreningsbokforing_v1');res(raw?JSON.parse(raw):null);}catch(e){res(null);}};} else{try{const raw=localStorage.getItem('foreningsbokforing_v1');res(raw?JSON.parse(raw):null);}catch(e){res(null);}}}).catch(function(){try{const raw=localStorage.getItem('foreningsbokforing_v1');res(raw?JSON.parse(raw):null);}catch(e){res(null);}});});}
 
-// ══ INDEXEDDB STORAGE ════════════════════════════════════════════════════════
-const DB_NAME = 'foreningsbokforing';
-const DB_STORE = 'data';
-const DB_KEY = 'main';
-let _idb = null;
-
-function openIDB() {
-  return new Promise((resolve, reject) => {
-    if (_idb) { resolve(_idb); return; }
-    const req = indexedDB.open(DB_NAME, 1);
-    req.onupgradeneeded = e => { e.target.result.createObjectStore(DB_STORE); };
-    req.onsuccess = e => { _idb = e.target.result; resolve(_idb); };
-    req.onerror = e => { console.warn('IndexedDB ej tillgänglig'); resolve(null); };
-  });
-}
-
-async function saveDB() {
-  try {
-    const db = await openIDB();
-    if (db) {
-      await new Promise((res, rej) => {
-        const tx = db.transaction(DB_STORE, 'readwrite');
-        tx.objectStore(DB_STORE).put(JSON.parse(JSON.stringify(DB)), DB_KEY);
-        tx.oncomplete = res;
-        tx.onerror = rej;
-      });
-    } else {
-      localStorage.setItem('foreningsbokforing_v1', JSON.stringify(DB));
-    }
-  } catch(e) {
-    try { localStorage.setItem('foreningsbokforing_v1', JSON.stringify(DB)); } catch(e2) {}
-  }
-}
-
-async function loadIDB() {
-  try {
-    const db = await openIDB();
-    if (db) {
-      return await new Promise((res, rej) => {
-        const tx = db.transaction(DB_STORE, 'readonly');
-        const req = tx.objectStore(DB_STORE).get(DB_KEY);
-        req.onsuccess = e => res(e.target.result || null);
-        req.onerror = rej;
-      });
-    }
-  } catch(e) {}
-  try {
-    const raw = localStorage.getItem('foreningsbokforing_v1');
-    return raw ? JSON.parse(raw) : null;
-  } catch(e) { return null; }
-}
-
-// ══ DATA ════════════════════════════════════════════════════════════════════
-const STORAGE_KEY = 'foreningsbokforing_v1';
-const BETALNING = ['Bankkonto','Swish','Kassa','Kort','Bankgiro'];
-const KONTON = [
+// ══ STANDARDKONTON (IBK v3.3) ════════════════════════════════════════════
+const STD_KONTON=[
   {nr:'3055',namn:'Träningsavgifter',typ:'intäkt',grupp:'Träning & tävling'},
   {nr:'3053',namn:'Anmälningsavgifter / cuper',typ:'intäkt',grupp:'Träning & tävling'},
   {nr:'3051',namn:'Entréintäkter (matcher/tävlingar)',typ:'intäkt',grupp:'Träning & tävling'},
@@ -575,117 +643,93 @@ const KONTON = [
   {nr:'7610',namn:'Utbildning / ledarutbildning',typ:'kostnad',grupp:'Personal'},
 ];
 
-let DB = {poster:[], forening:'', orgnr:'', ar: new Date().getFullYear()};
-let selectedKonto = null;
-let kvittoChecked = false;
-let selectedBetalning = 'Swish';
-let activeTab = 'hem';
-let openGrupper = {};
-let settingsAr = new Date().getFullYear();
-let welcomeAr = new Date().getFullYear();
-let currentFotoB64 = null;
+// Balansposter (ingående saldon)
+const STD_BALANS=[
+  {id:'bankkonto',namn:'Bankkonto',ikon:'🏦',grupp:'tillgång',hint:'Saldo på föreningens bankkonto vid årets start'},
+  {id:'kassa',namn:'Kassa / handkassa',ikon:'💵',grupp:'tillgång',hint:'Kontantkassa vid årets start'},
+  {id:'plusgiro',namn:'Plusgiro / Bankgiro',ikon:'📬',grupp:'tillgång',hint:'Saldo på plusgiro eller bankgiro'},
+  {id:'fordringar',namn:'Övriga fordringar',ikon:'📋',grupp:'tillgång',hint:'Fordringar som föreningen har på andra'},
+  {id:'skulder',namn:'Skulder / leverantörsskulder',ikon:'📄',grupp:'skuld',hint:'Vad föreningen är skyldig leverantörer m.fl.'},
+  {id:'eget_kapital',namn:'Ingående eget kapital',ikon:'⚖️',grupp:'eget',hint:'Föreningens egna kapital vid årets start (tidigare års ackumulerade resultat)'},
+];
 
-// ══ HELPERS ════════════════════════════════════════════════════════════════
-const fmt = n => new Intl.NumberFormat('sv-SE',{style:'currency',currency:'SEK',maximumFractionDigits:0}).format(n);
-const today = () => new Date().toISOString().slice(0,10);
-const $ = id => document.getElementById(id);
-const grupper = [...new Set(KONTON.map(k=>k.grupp))];
+const BETALNING=['Bankkonto','Swish','Kassa','Kort','Bankgiro'];
 
+let DB={poster:[],forening:'',orgnr:'',ar:new Date().getFullYear(),extraKonton:[],dolda:[],balans:{}};
+let KONTON=[];
+let selectedKonto=null,kvittoChecked=false,selectedBetalning='Swish';
+let activeTab='hem',openGrupper={},settingsAr=new Date().getFullYear(),welcomeAr=new Date().getFullYear();
+let currentFotoB64=null,addKontoTyp='intäkt',editBalansId=null;
+
+function buildKonton(){KONTON=[...STD_KONTON,...(DB.extraKonton||[])].filter(k=>!(DB.dolda||[]).includes(k.nr));}
+const fmt=n=>new Intl.NumberFormat('sv-SE',{style:'currency',currency:'SEK',maximumFractionDigits:0}).format(n);
+const today=()=>new Date().toISOString().slice(0,10);
+const $=id=>document.getElementById(id);
+const grupper=()=>[...new Set(KONTON.map(k=>k.grupp))];
 function totIntakt(){return DB.poster.filter(p=>p.typ==='intäkt').reduce((s,p)=>s+p.belopp,0);}
 function totKostnad(){return DB.poster.filter(p=>p.typ==='kostnad').reduce((s,p)=>s+p.belopp,0);}
 
-// ══ INIT ════════════════════════════════════════════════════════════════════
-window.onload = function(){
+// ══ INIT ═════════════════════════════════════════════════════════════════════
+window.onload=function(){
   renderWelcomeYears();
   loadIDB().then(function(saved){
-    if(saved && saved.forening && saved.forening.trim() !== '' && saved.forening !== 'Min idrottsförening'){
-      DB = saved;
+    if(saved&&saved.forening&&saved.forening.trim()!==''&&saved.forening!=='Min idrottsförening'){
+      DB=saved;
+      if(!DB.extraKonton)DB.extraKonton=[];
+      if(!DB.dolda)DB.dolda=[];
+      if(!DB.balans)DB.balans={};
+      buildKonton();
       showApp();
     }
-  }).catch(function(){
-    // Kunde inte ladda sparad data — välkomstskärmen visas som fallback
-  });
+  }).catch(function(){});
 };
 
-// ══ VÄLKOMST ══════════════════════════════════════════════════════════════
-function renderWelcomeYears(){
-  const yr = new Date().getFullYear();
-  const row = $('w-year-row');
-  row.innerHTML = [yr-1, yr].map(y=>
-    `<button class="year-btn ${y===welcomeAr?'active':''}" onclick="setWelcomeYear(${y})">${y}</button>`
-  ).join('');
-}
-function setWelcomeYear(y){welcomeAr=y; renderWelcomeYears();}
-
+// ══ VÄLKOMST ═════════════════════════════════════════════════════════════════
+function renderWelcomeYears(){const yr=new Date().getFullYear();$('w-year-row').innerHTML=[yr-1,yr].map(y=>`<button class="year-btn ${y===welcomeAr?'active':''}" onclick="setWelcomeYear(${y})">${y}</button>`).join('');}
+function setWelcomeYear(y){welcomeAr=y;renderWelcomeYears();}
 function startApp(){
-  const f = $('w-forening').value.trim();
-  if(!f){$('w-error').textContent='Ange föreningens namn.'; $('w-error').classList.remove('hidden'); return;}
-  DB.forening = f;
-  DB.orgnr = $('w-orgnr').value.trim();
-  DB.ar = welcomeAr;
-  DB.poster = [];
-  showApp(); // Visa appen direkt — spara i bakgrunden
-  saveDB().catch(function(){}); // Tyst fel om lagring misslyckas
+  const f=$('w-forening').value.trim();
+  if(!f){$('w-error').textContent='Ange föreningens namn.';$('w-error').classList.remove('hidden');return;}
+  DB.forening=f;DB.orgnr=$('w-orgnr').value.trim();DB.ar=welcomeAr;DB.poster=[];DB.extraKonton=[];DB.dolda=[];DB.balans={};
+  buildKonton();
+  showApp();
+  saveDB();
 }
 
-// ══ APP ════════════════════════════════════════════════════════════════════
-function showApp(){
-  $('screen-welcome').classList.add('hidden');
-  $('screen-app').classList.remove('hidden');
-  updateHeader();
-  renderTab();
-}
-
+// ══ APP ═══════════════════════════════════════════════════════════════════════
+function showApp(){$('screen-welcome').classList.add('hidden');$('screen-app').classList.remove('hidden');updateHeader();renderTab();}
 function updateHeader(){
-  const res = totIntakt() - totKostnad();
-  $('h-forening').textContent = DB.forening + (DB.orgnr ? ' · ' + DB.orgnr : '');
-  $('h-title').textContent = 'Föreningsbokföring ' + DB.ar;
-  $('h-result-box').style.background = res >= 0 ? 'rgba(46,125,50,0.2)' : 'rgba(220,38,38,0.2)';
-  $('h-result-val').style.color = res >= 0 ? '#81c784' : '#ef9a9a';
-  $('h-result-val').textContent = (res>=0?'+':'') + fmt(res);
+  const res=totIntakt()-totKostnad();
+  $('h-forening').textContent=DB.forening+(DB.orgnr?' · '+DB.orgnr:'');
+  $('h-title').textContent='Föreningsbokföring '+DB.ar;
+  $('h-result-box').style.background=res>=0?'rgba(46,125,50,0.2)':'rgba(220,38,38,0.2)';
+  $('h-result-val').style.color=res>=0?'#81c784':'#ef9a9a';
+  $('h-result-val').textContent=(res>=0?'+':'')+fmt(res);
 }
-
 function switchTab(t){
-  activeTab = t;
+  activeTab=t;
   document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
   $('tab-'+t).classList.add('active');
+  $('fab-btn').style.display=t==='balans'?'none':'flex';
   renderTab();
 }
+function renderTab(){if(activeTab==='hem')renderResultat();else if(activeTab==='balans')renderBalans();else renderPoster();}
 
-function renderTab(){
-  if(activeTab==='hem') renderResultat();
-  else renderPoster();
-}
-
-// ══ RESULTAT ═══════════════════════════════════════════════════════════════
+// ══ RESULTAT ══════════════════════════════════════════════════════════════════
 function renderResultat(){
-  const ti = totIntakt(), tk = totKostnad(), res = ti - tk;
-  const iAnt = DB.poster.filter(p=>p.typ==='intäkt').length;
-  const kAnt = DB.poster.filter(p=>p.typ==='kostnad').length;
-
-  const perKonto = {};
-  DB.poster.forEach(p=>{
-    if(!perKonto[p.konto]) perKonto[p.konto]={nr:p.konto,namn:p.kontoNamn,typ:p.typ,grupp:p.grupp,summa:0};
-    perKonto[p.konto].summa += p.belopp;
-  });
-  const kList = Object.values(perKonto).sort((a,b)=>a.nr.localeCompare(b.nr));
-
-  const perGrupp = {};
-  kList.forEach(k=>{
-    const key = k.grupp+'|'+k.typ;
-    if(!perGrupp[key]) perGrupp[key]={grupp:k.grupp,typ:k.typ,konton:[],summa:0};
-    perGrupp[key].konton.push(k);
-    perGrupp[key].summa += k.summa;
-  });
-  const gList = Object.values(perGrupp);
-  const iG = gList.filter(g=>g.typ==='intäkt');
-  const kG = gList.filter(g=>g.typ==='kostnad');
-
-  const gruppBlock = (g, maxVal, color, bgColor) => {
-    const key = g.grupp+'|'+g.typ;
-    const isOpen = !!openGrupper[key];
-    const rows = isOpen ? g.konton.map(k=>`
-      <div class="grupp-detail" onclick="openKontodetalj('${k.nr}')" style="cursor:pointer;" onmouseover="this.style.background='#f0f7ff'" onmouseout="this.style.background=''">
+  const ti=totIntakt(),tk=totKostnad(),res=ti-tk;
+  const iAnt=DB.poster.filter(p=>p.typ==='intäkt').length,kAnt=DB.poster.filter(p=>p.typ==='kostnad').length;
+  const perKonto={};
+  DB.poster.forEach(p=>{if(!perKonto[p.konto])perKonto[p.konto]={nr:p.konto,namn:p.kontoNamn,typ:p.typ,grupp:p.grupp,summa:0};perKonto[p.konto].summa+=p.belopp;});
+  const kList=Object.values(perKonto).sort((a,b)=>a.nr.localeCompare(b.nr));
+  const perGrupp={};
+  kList.forEach(k=>{const key=k.grupp+'|'+k.typ;if(!perGrupp[key])perGrupp[key]={grupp:k.grupp,typ:k.typ,konton:[],summa:0};perGrupp[key].konton.push(k);perGrupp[key].summa+=k.summa;});
+  const gList=Object.values(perGrupp);
+  const iG=gList.filter(g=>g.typ==='intäkt'),kG=gList.filter(g=>g.typ==='kostnad');
+  const gruppBlock=(g,maxVal,color,bgColor)=>{
+    const key=g.grupp+'|'+g.typ,isOpen=!!openGrupper[key];
+    const rows=isOpen?g.konton.map(k=>`
+      <div class="grupp-detail" onclick="openKontodetalj('${k.nr}')" style="cursor:pointer;">
         <div class="grupp-detail-row">
           <div style="flex:1;display:flex;align-items:center;">
             <span class="grupp-detail-tag" style="background:${bgColor};color:${color};">${k.nr}</span>
@@ -698,646 +742,405 @@ function renderResultat(){
           </div>
         </div>
         <div class="progress-bar"><div class="progress-fill" style="background:${color};width:${maxVal>0?Math.min(100,(k.summa/maxVal)*100):0}%;"></div></div>
-      </div>`).join('') : '';
-    return `
-      <div class="grupp-block">
-        <button class="grupp-header" onclick="toggleGrupp('${key}')">
-          <span class="gh-name">${g.grupp}</span>
-          <div style="display:flex;align-items:center;gap:8px;">
-            <span class="gh-sum" style="color:${color};">${fmt(g.summa)}</span>
-            <span style="color:#ccc;font-size:16px;transform:${isOpen?'rotate(90deg)':'rotate(0)'};display:inline-block;">›</span>
-          </div>
-        </button>
-        ${rows}
-      </div>`;
+      </div>`).join(''):'';
+    return `<div class="grupp-block"><button class="grupp-header" onclick="toggleGrupp('${key}')"><span class="gh-name">${g.grupp}</span><div style="display:flex;align-items:center;gap:8px;"><span class="gh-sum" style="color:${color};">${fmt(g.summa)}</span><span style="color:#ccc;font-size:16px;transform:${isOpen?'rotate(90deg)':'rotate(0)'};display:inline-block;">›</span></div></button>${rows}</div>`;
   };
-
-  $('app-content').innerHTML = `<div class="resultat-pad">
-    <div class="disclaimer">
-      <p><strong>OBS:</strong> Det här är ett hjälpmedel för att registrera ekonomiska poster — inte ett certifierat bokföringssystem. Det ersätter inte revision eller professionell bokföringsrådgivning. Föreningen ansvarar alltid för sin egen bokföring.</p>
-    </div>
+  $('app-content').innerHTML=`<div class="resultat-pad">
+    <div class="disclaimer"><p><strong>OBS:</strong> Det här är ett hjälpmedel — inte ett certifierat bokföringssystem. Det ersätter inte revision eller professionell bokföringsrådgivning.</p></div>
     <div class="cards-grid">
-      <div class="card" style="background:#e8f5e9;">
-        <div class="card-lbl">Intäkter</div>
-        <div class="card-val" style="color:#2e7d32;">${fmt(ti)}</div>
-        <div class="card-sub">${iAnt} poster</div>
-      </div>
-      <div class="card" style="background:#fff3e0;">
-        <div class="card-lbl">Kostnader</div>
-        <div class="card-val" style="color:#e65100;">${fmt(tk)}</div>
-        <div class="card-sub">${kAnt} poster</div>
-      </div>
+      <div class="card" style="background:#e8f5e9;"><div class="card-lbl">Intäkter</div><div class="card-val" style="color:#2e7d32;">${fmt(ti)}</div><div class="card-sub">${iAnt} poster</div></div>
+      <div class="card" style="background:#fff3e0;"><div class="card-lbl">Kostnader</div><div class="card-val" style="color:#e65100;">${fmt(tk)}</div><div class="card-sub">${kAnt} poster</div></div>
     </div>
-    <div class="resultat-bar" style="background:${res>=0?'#1a1a2e':'#7f1d1d'};">
-      <span class="rb-lbl">RESULTAT</span>
-      <span class="rb-val">${res>=0?'+':''}${fmt(res)}</span>
-    </div>
+    <div class="resultat-bar" style="background:${res>=0?'#1a1a2e':'#7f1d1d'};"><span class="rb-lbl">RESULTAT</span><span class="rb-val">${res>=0?'+':''}${fmt(res)}</span></div>
     <div class="quick-btns">
       <button class="quick-btn" onclick="openDetalj()">📋 Fullständig RR</button>
       <button class="quick-btn" onclick="exportPDF()">🖨️ Skriv ut / PDF</button>
     </div>
-    ${DB.poster.length===0?`<div class="empty-hint">Inga poster registrerade ännu.<br><span style="font-size:12px;">Tryck + för att lägga till din första post.</span></div>`:''}
+    ${DB.poster.length===0?'<div class="empty-hint">Inga poster registrerade ännu.<br><span style="font-size:12px;">Tryck + för att lägga till din första post.</span></div>':''}
     ${iG.length>0?`<div class="section-lbl" style="color:#2e7d32;">Intäkter</div>${iG.map(g=>gruppBlock(g,ti,'#2e7d32','#e8f5e9')).join('')}`:''}
     ${kG.length>0?`<div class="section-lbl" style="color:#e65100;margin-top:16px;">Kostnader</div>${kG.map(g=>gruppBlock(g,tk,'#e65100','#fff3e0')).join('')}`:''}
   </div>`;
 }
+function toggleGrupp(key){openGrupper[key]=!openGrupper[key];renderResultat();}
 
-function toggleGrupp(key){
-  openGrupper[key] = !openGrupper[key];
-  renderResultat();
+// ══ BALANSRÄKNING ════════════════════════════════════════════════════════════
+function renderBalans(){
+  const res=totIntakt()-totKostnad();
+  const bal=DB.balans||{};
+  const tillgangar=STD_BALANS.filter(b=>b.grupp==='tillgång');
+  const skulder=STD_BALANS.filter(b=>b.grupp==='skuld');
+  const egetPost=STD_BALANS.find(b=>b.grupp==='eget');
+  const sumTillg=tillgangar.reduce((s,b)=>s+(parseFloat(bal[b.id])||0),0);
+  const sumSkuld=skulder.reduce((s,b)=>s+(parseFloat(bal[b.id])||0),0);
+  const ingEget=parseFloat(bal[egetPost.id])||0;
+  const utgEget=ingEget+res;
+  const sumPassiva=sumSkuld+utgEget;
+
+  const balRow=b=>{
+    const v=parseFloat(bal[b.id])||0;
+    return `<div class="balans-row">
+      <div class="balans-row-icon">${b.ikon}</div>
+      <div class="balans-row-body"><div class="balans-row-name">${b.namn}</div><div class="balans-row-sub">${b.hint}</div></div>
+      <div class="balans-row-right">
+        <div class="balans-row-val" style="color:${v>0?'#1a1a2e':'#bbb'};">${v>0?fmt(v):'–'}</div>
+        <button class="balans-edit-btn" onclick="openEditBalans('${b.id}')">Ändra</button>
+      </div>
+    </div>`;
+  };
+
+  $('app-content').innerHTML=`<div class="balans-pad">
+    <div class="balans-intro">
+      <strong>Förenklad balansräkning</strong> — ange ingående saldon för att se en sammanställning av föreningens tillgångar och skulder. Årets resultat (${(res>=0?'+':'')+fmt(res)}) räknas in automatiskt i det egna kapitalet.
+    </div>
+
+    <div class="balans-section">
+      <div class="balans-section-header">Tillgångar</div>
+      ${tillgangar.map(balRow).join('')}
+      <div class="balans-total" style="background:#e8f5e9;">
+        <span class="bt-lbl" style="color:#1b5e20;">SUMMA TILLGÅNGAR</span>
+        <span class="bt-val" style="color:#2e7d32;">${fmt(sumTillg)}</span>
+      </div>
+    </div>
+
+    <div class="balans-section">
+      <div class="balans-section-header">Skulder</div>
+      ${skulder.map(balRow).join('')}
+      <div class="balans-total" style="background:#fff3e0;">
+        <span class="bt-lbl" style="color:#bf360c;">SUMMA SKULDER</span>
+        <span class="bt-val" style="color:#e65100;">${fmt(sumSkuld)}</span>
+      </div>
+    </div>
+
+    <div class="balans-eget">
+      <div class="be-lbl">Eget kapital</div>
+      <div class="be-row">
+        <span class="be-name">Ingående eget kapital</span>
+        <span class="be-val">${fmt(ingEget)}</span>
+      </div>
+      <div class="be-row">
+        <span class="be-name">Årets resultat</span>
+        <span class="be-val" style="color:${res>=0?'#81c784':'#ef9a9a'};">${res>=0?'+':''}${fmt(res)}</span>
+      </div>
+      <div class="be-total">
+        <span class="be-total-lbl">Utgående eget kapital</span>
+        <span class="be-total-val" style="color:${utgEget>=0?'#81c784':'#ef9a9a'};">${fmt(utgEget)}</span>
+      </div>
+      <div style="margin-top:10px;">
+        <button class="balans-edit-btn" style="background:rgba(255,255,255,0.12);border-color:rgba(255,255,255,0.2);color:#fff;" onclick="openEditBalans('eget_kapital')">Ändra ingående eget kapital</button>
+      </div>
+    </div>
+
+    ${sumTillg>0&&sumPassiva>0?`
+    <div style="background:${Math.abs(sumTillg-sumPassiva)<1?'#e8f5e9':'#fff3e0'};border-radius:14px;padding:16px 20px;margin-bottom:16px;display:flex;justify-content:space-between;align-items:center;">
+      <div>
+        <div style="font-size:12px;font-weight:700;color:${Math.abs(sumTillg-sumPassiva)<1?'#2e7d32':'#e65100'};">Balansräkningens kontroll</div>
+        <div style="font-size:11px;color:#888;margin-top:2px;">Tillgångar – (Skulder + Eget kapital)</div>
+      </div>
+      <div style="font-size:16px;font-weight:800;color:${Math.abs(sumTillg-sumPassiva)<1?'#2e7d32':'#e65100'};">${Math.abs(sumTillg-sumPassiva)<1?'✓ Balanserar':fmt(sumTillg-sumPassiva)}</div>
+    </div>`:''}
+
+    <div class="nasta-steg">
+      <div class="nasta-steg-title">📈 Redo för nästa steg?</div>
+      <p>Det här hjälpmedlet passar föreningar som vill komma igång. När din förening växer kan ett certifierat bokföringsprogram vara värt det — från ca 299 kr/mån. RF rekommenderar flera alternativ via <a href="https://www.rf.se/bidrag-och-stod/idrottens-redovisning" target="_blank">Idrottens Redovisning</a>.</p>
+    </div>
+  </div>`;
 }
 
-// ══ POSTER ═════════════════════════════════════════════════════════════════
-function renderPoster(){
-  const sorted = [...DB.poster].sort((a,b)=>b.datum.localeCompare(a.datum));
-  const q = ($('ver-search-input')||{value:''}).value||'';
-  const filtered = q ? sorted.filter(p=>
-    p.kontoNamn.toLowerCase().includes(q.toLowerCase())||
-    (p.beskrivning||'').toLowerCase().includes(q.toLowerCase())
-  ) : sorted;
+function openEditBalans(id){
+  const post=STD_BALANS.find(b=>b.id===id);
+  editBalansId=id;
+  $('eb-title').textContent='Ange '+post.namn.toLowerCase();
+  $('eb-desc').textContent=post.hint+'.';
+  $('eb-belopp').value=DB.balans[id]||'';
+  $('panel-edit-balans').classList.remove('hidden');
+  setTimeout(function(){$('eb-belopp').focus();},100);
+}
+function closeEditBalans(){$('panel-edit-balans').classList.add('hidden');editBalansId=null;}
+function saveEditBalans(){
+  const v=parseFloat($('eb-belopp').value.replace(',','.'));
+  if(isNaN(v)||$('eb-belopp').value.trim()===''){DB.balans[editBalansId]=0;}
+  else{DB.balans[editBalansId]=v;}
+  saveDB();closeEditBalans();renderBalans();
+}
 
-  $('app-content').innerHTML = `<div class="ver-pad">
+// ══ POSTER ════════════════════════════════════════════════════════════════════
+function renderPoster(){
+  const sorted=[...DB.poster].sort((a,b)=>b.datum.localeCompare(a.datum));
+  const q=($('ver-search-input')||{value:''}).value||'';
+  const filtered=q?sorted.filter(p=>p.kontoNamn.toLowerCase().includes(q.toLowerCase())||(p.beskrivning||'').toLowerCase().includes(q.toLowerCase())):sorted;
+  $('app-content').innerHTML=`<div class="ver-pad">
     <div class="ver-search">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
       <input id="ver-search-input" type="text" placeholder="Sök poster…" value="${q}" oninput="renderPoster()"/>
     </div>
-    ${filtered.length===0?`<div class="ver-empty">Inga poster ännu</div>`:''}
-    ${filtered.map(p=>{
-      const isIn = p.typ==='intäkt';
-      return `<div class="ver-row">
-        <div class="ver-icon" style="background:${isIn?'#e8f5e9':'#fff3e0'};color:${isIn?'#2e7d32':'#e65100'};">${p.konto}</div>
-        <div class="ver-body">
-          <div class="ver-name">${p.kontoNamn}</div>
-          ${p.beskrivning?`<div class="ver-desc">${p.beskrivning}</div>`:''}
-          <div class="ver-tags">
-            <span class="ver-tag">${p.datum}</span>
-            <span class="ver-tag">${p.betalning}</span>
-            ${p.kvitto?'<span class="ver-tag kvitto">Kvitto ✓</span>':''}
-            ${p.foto?'<span class="ver-tag" style="background:#e8f0fe;color:#3730a3;">📷</span>':''}
-          </div>
-          ${p.foto?`<div style="margin-top:8px;border-radius:8px;overflow:hidden;border:1px solid #e8e8e8;cursor:pointer;" onclick="openFotoFullscreen(${p.id})"><img src="${p.foto}" style="width:100%;max-height:120px;object-fit:cover;display:block;" alt="Kvitto"/></div>`:''}
-        </div>
-        <div class="ver-right">
-          <span class="ver-amount" style="color:${isIn?'#2e7d32':'#e65100'};">${isIn?'+':'-'}${fmt(p.belopp)}</span>
-          <button class="del-btn" onclick="deletePost(${p.id})">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14H6L5 6"/><path d="M10 11v6"/><path d="M14 11v6"/><path d="M9 6V4h6v2"/></svg>
-          </button>
-        </div>
-      </div>`;
-    }).join('')}
+    ${filtered.length===0?'<div class="ver-empty">Inga poster ännu</div>':''}
+    ${filtered.map(p=>{const isIn=p.typ==='intäkt';return`<div class="ver-row">
+      <div class="ver-icon" style="background:${isIn?'#e8f5e9':'#fff3e0'};color:${isIn?'#2e7d32':'#e65100'};">${p.konto}</div>
+      <div class="ver-body">
+        <div class="ver-name">${p.kontoNamn}</div>
+        ${p.beskrivning?`<div class="ver-desc">${p.beskrivning}</div>`:''}
+        <div class="ver-tags"><span class="ver-tag">${p.datum}</span><span class="ver-tag">${p.betalning}</span>${p.kvitto?'<span class="ver-tag kvitto">Kvitto ✓</span>':''}${p.foto?'<span class="ver-tag" style="background:#e8f0fe;color:#3730a3;">📷</span>':''}</div>
+        ${p.foto?`<div style="margin-top:8px;border-radius:8px;overflow:hidden;border:1px solid #e8e8e8;cursor:pointer;" onclick="openFotoFullscreen(${p.id})"><img src="${p.foto}" style="width:100%;max-height:120px;object-fit:cover;display:block;" alt="Kvitto"/></div>`:''}
+      </div>
+      <div class="ver-right">
+        <span class="ver-amount" style="color:${isIn?'#2e7d32':'#e65100'};">${isIn?'+':'-'}${fmt(p.belopp)}</span>
+        <button class="del-btn" onclick="deletePost(${p.id})"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14H6L5 6"/><path d="M10 11v6"/><path d="M14 11v6"/><path d="M9 6V4h6v2"/></svg></button>
+      </div>
+    </div>`;}).join('')}
   </div>`;
 }
+function deletePost(id){if(!confirm('Ta bort denna post?'))return;DB.poster=DB.poster.filter(p=>p.id!==id);saveDB();updateHeader();renderPoster();}
 
-function deletePost(id){
-  if(!confirm('Ta bort denna post?')) return;
-  DB.poster = DB.poster.filter(p=>p.id!==id);
-  saveDB().catch(function(){}); updateHeader(); renderPoster();
-}
-
-// ══ NY POST ════════════════════════════════════════════════════════════════
+// ══ NY POST ════════════════════════════════════════════════════════════════════
 function openNyPost(){
-  selectedKonto = null;
-  kvittoChecked = false;
-  selectedBetalning = 'Swish';
-  currentFotoB64 = null;
-  $('konto-btn').innerHTML = '<span class="placeholder">Tryck för att välja kategori…</span>';
+  selectedKonto=null;kvittoChecked=false;selectedBetalning='Swish';currentFotoB64=null;
+  $('konto-btn').innerHTML='<span class="placeholder">Tryck för att välja kategori…</span>';
   $('konto-btn').classList.remove('selected');
-  $('konto-hint').style.display = 'none';
-  $('np-belopp').value = '';
-  $('np-datum').value = today();
-  $('np-beskrivning').value = '';
+  $('konto-hint').style.display='none';
+  $('np-belopp').value='';$('np-datum').value=today();$('np-beskrivning').value='';
   $('np-error').classList.add('hidden');
-  $('foto-preview').classList.add('hidden');
-  $('foto-preview-img').src = '';
-  renderBetalningRow();
-  updateKvittoUI();
+  $('foto-preview').classList.add('hidden');$('foto-preview-img').src='';
+  renderBetalningRow();updateKvittoUI();
   $('panel-nypost').classList.add('open');
 }
 function closeNyPost(){$('panel-nypost').classList.remove('open');}
-
-function renderBetalningRow(){
-  $('betalning-row').innerHTML = BETALNING.map(b=>
-    `<button class="betal-btn ${b===selectedBetalning?'active':''}" onclick="setBetalning('${b}')">${b}</button>`
-  ).join('');
-}
-function setBetalning(b){selectedBetalning=b; renderBetalningRow();}
-
-function toggleKvitto(){
-  kvittoChecked = !kvittoChecked;
-  updateKvittoUI();
-}
+function renderBetalningRow(){$('betalning-row').innerHTML=BETALNING.map(b=>`<button class="betal-btn ${b===selectedBetalning?'active':''}" onclick="setBetalning('${b}')">${b}</button>`).join('');}
+function setBetalning(b){selectedBetalning=b;renderBetalningRow();}
+function toggleKvitto(){kvittoChecked=!kvittoChecked;updateKvittoUI();}
 function updateKvittoUI(){
-  const btn = $('kvitto-btn'), box = $('kvitto-box'), lbl = $('kvitto-lbl');
-  if(kvittoChecked){
-    btn.classList.add('checked'); box.classList.add('checked'); box.textContent='✓';
-    lbl.classList.add('checked'); lbl.textContent='Kvitto finns ✓';
-  } else {
-    btn.classList.remove('checked'); box.classList.remove('checked'); box.textContent='';
-    lbl.classList.remove('checked'); lbl.textContent='Kvitto finns?';
-  }
+  const btn=$('kvitto-btn'),box=$('kvitto-box'),lbl=$('kvitto-lbl');
+  if(kvittoChecked){btn.classList.add('checked');box.classList.add('checked');box.textContent='✓';lbl.classList.add('checked');lbl.textContent='Kvitto finns ✓';}
+  else{btn.classList.remove('checked');box.classList.remove('checked');box.textContent='';lbl.classList.remove('checked');lbl.textContent='Kvitto finns?';}
 }
-
 function savePost(){
-  if(!selectedKonto){showNpError('Välj en kategori.'); return;}
-  const b = parseFloat($('np-belopp').value.replace(',','.'));
-  if(!b || isNaN(b)){showNpError('Ange ett giltigt belopp.'); return;}
-  const post = {
-    id: Date.now(),
-    datum: $('np-datum').value || today(),
-    konto: selectedKonto.nr,
-    kontoNamn: selectedKonto.namn,
-    typ: selectedKonto.typ,
-    grupp: selectedKonto.grupp,
-    belopp: b,
-    beskrivning: $('np-beskrivning').value.trim(),
-    betalning: selectedBetalning,
-    kvitto: kvittoChecked,
-    foto: currentFotoB64 || null
-  };
-  DB.poster.push(post);
-  saveDB().catch(function(){});
-  $('nypost-body').innerHTML = '<div class="saved-screen"><div class="saved-circle">✓</div><div class="saved-lbl">Sparad!</div></div>';
-  setTimeout(()=>{
-    closeNyPost();
-    updateHeader();
-    switchTab('poster');
-    // Återställ formuläret till originalHTML
-    $('nypost-body').innerHTML = `
-      <div class="field">
-        <label>Kategori *</label>
-        <button class="konto-btn" id="konto-btn" onclick="openKontoPicker()">
-          <span class="placeholder">Tryck för att välja kategori…</span>
-        </button>
-        <div class="belopp-hint" id="konto-hint" style="display:none;margin-top:6px;"></div>
-      </div>
-      <div class="field">
-        <label>Belopp (kr) *</label>
-        <div class="belopp-wrap">
-          <input class="input-base belopp-input" id="np-belopp" type="number" inputmode="decimal" placeholder="0"/>
-          <span class="belopp-kr">kr</span>
-        </div>
-      </div>
-      <div class="field">
-        <label>Datum</label>
-        <input class="input-base" id="np-datum" type="date"/>
-      </div>
-      <div class="field">
-        <label>Vad gäller det? <span style="color:#bbb;font-weight:400;text-transform:none;">(valfritt)</span></label>
-        <input class="input-base" id="np-beskrivning" type="text" placeholder="T.ex. hallhyra mars, cupen i Linköping…"/>
-      </div>
-      <div class="field">
-        <label>Betalning via</label>
-        <div class="betalning-row" id="betalning-row"></div>
-      </div>
-      <div class="field">
-        <button class="kvitto-btn" id="kvitto-btn" onclick="toggleKvitto()">
-          <div class="kvitto-box" id="kvitto-box"></div>
-          <span class="kvitto-lbl" id="kvitto-lbl">Kvitto finns?</span>
-        </button>
-      </div>
-      <div class="field kvitto-foto-wrap">
-        <label>Kvittofoto <span style="color:#bbb;font-weight:400;text-transform:none;">(valfritt)</span></label>
-        <button class="foto-btn" onclick="document.getElementById('foto-input').click()">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>
-          Fota kvitto eller välj bild
-        </button>
-        <div id="foto-preview" class="foto-preview hidden">
-          <img id="foto-preview-img" src="" alt="Kvitto"/>
-          <button class="foto-remove" onclick="removeFoto()">Ta bort ✕</button>
-        </div>
-        <div class="foto-hint">Tar foto med kameran på mobil, väljer fil på dator</div>
-      </div>
-      <div id="np-error" class="error-box hidden"></div>`;
-  }, 700);
+  if(!selectedKonto){showNpError('Välj en kategori.');return;}
+  const b=parseFloat($('np-belopp').value.replace(',','.'));
+  if(!b||isNaN(b)){showNpError('Ange ett giltigt belopp.');return;}
+  const post={id:Date.now(),datum:$('np-datum').value||today(),konto:selectedKonto.nr,kontoNamn:selectedKonto.namn,typ:selectedKonto.typ,grupp:selectedKonto.grupp,belopp:b,beskrivning:$('np-beskrivning').value.trim(),betalning:selectedBetalning,kvitto:kvittoChecked,foto:currentFotoB64||null};
+  DB.poster.push(post);saveDB();
+  $('nypost-body').innerHTML='<div class="saved-screen"><div class="saved-circle">✓</div><div class="saved-lbl">Sparad!</div></div>';
+  setTimeout(function(){
+    closeNyPost();updateHeader();switchTab('poster');
+    $('nypost-body').innerHTML=`<div class="field"><label>Kategori *</label><button class="konto-btn" id="konto-btn" onclick="openKontoPicker()"><span class="placeholder">Tryck för att välja kategori…</span></button><div class="belopp-hint" id="konto-hint" style="display:none;margin-top:6px;"></div></div><div class="field"><label>Belopp (kr) *</label><div class="belopp-wrap"><input class="input-base belopp-input" id="np-belopp" type="number" inputmode="decimal" placeholder="0"/><span class="belopp-kr">kr</span></div></div><div class="field"><label>Datum</label><input class="input-base" id="np-datum" type="date"/></div><div class="field"><label>Vad gäller det? <span style="color:#bbb;font-weight:400;text-transform:none;">(valfritt)</span></label><input class="input-base" id="np-beskrivning" type="text" placeholder="T.ex. hallhyra mars, cupen i Linköping…"/></div><div class="field"><label>Betalning via</label><div class="betalning-row" id="betalning-row"></div></div><div class="field"><button class="kvitto-btn" id="kvitto-btn" onclick="toggleKvitto()"><div class="kvitto-box" id="kvitto-box"></div><span class="kvitto-lbl" id="kvitto-lbl">Kvitto finns?</span></button></div><div class="field kvitto-foto-wrap"><label>Kvittofoto <span style="color:#bbb;font-weight:400;text-transform:none;">(valfritt)</span></label><button class="foto-btn" onclick="document.getElementById('foto-input').click()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>Fota kvitto eller välj bild</button><div id="foto-preview" class="foto-preview hidden"><img id="foto-preview-img" src="" alt="Kvitto"/><button class="foto-remove" onclick="removeFoto()">Ta bort ✕</button></div><div class="foto-hint">Tar foto med kameran på mobil, väljer fil på dator</div></div><div id="np-error" class="error-box hidden"></div>`;
+  },700);
 }
-function showNpError(msg){$('np-error').textContent=msg; $('np-error').classList.remove('hidden');}
+function showNpError(msg){$('np-error').textContent=msg;$('np-error').classList.remove('hidden');}
 
-// ══ KVITTOFOTO ════════════════════════════════════════════════════════════
+// ══ KVITTOFOTO ════════════════════════════════════════════════════════════════
 function handleFotoInput(e){
-  const file = e.target.files[0];
-  if(!file) return;
-  const reader = new FileReader();
-  reader.onload = function(ev){
-    const img = new Image();
-    img.onload = function(){
-      const MAX = 1000;
-      let w = img.width, h = img.height;
-      if(w > MAX){h = Math.round(h*(MAX/w)); w = MAX;}
-      const canvas = document.createElement('canvas');
-      canvas.width = w; canvas.height = h;
-      canvas.getContext('2d').drawImage(img,0,0,w,h);
-      currentFotoB64 = canvas.toDataURL('image/jpeg', 0.65);
-      $('foto-preview-img').src = currentFotoB64;
-      $('foto-preview').classList.remove('hidden');
-    };
-    img.src = ev.target.result;
-  };
-  reader.readAsDataURL(file);
-  e.target.value = '';
+  const file=e.target.files[0];if(!file)return;
+  const reader=new FileReader();
+  reader.onload=function(ev){const img=new Image();img.onload=function(){const MAX=1000;let w=img.width,h=img.height;if(w>MAX){h=Math.round(h*(MAX/w));w=MAX;}const canvas=document.createElement('canvas');canvas.width=w;canvas.height=h;canvas.getContext('2d').drawImage(img,0,0,w,h);currentFotoB64=canvas.toDataURL('image/jpeg',0.65);$('foto-preview-img').src=currentFotoB64;$('foto-preview').classList.remove('hidden');};img.src=ev.target.result;};
+  reader.readAsDataURL(file);e.target.value='';
 }
+function removeFoto(){currentFotoB64=null;$('foto-preview').classList.add('hidden');$('foto-preview-img').src='';}
 
-function removeFoto(){
-  currentFotoB64 = null;
-  $('foto-preview').classList.add('hidden');
-  $('foto-preview-img').src = '';
-}
-
-// ══ KONTOPICKER ════════════════════════════════════════════════════════════
-let kontoFilter = 'alla';
-function openKontoPicker(){
-  kontoFilter = 'alla';
-  $('konto-search').value = '';
-  renderFilterTabs();
-  renderKontoList();
-  $('panel-konto').classList.remove('hidden');
-  setTimeout(()=>$('konto-search').focus(), 100);
-}
-function closeKontoPicker(e){
-  if(!e || e.target === $('panel-konto')) $('panel-konto').classList.add('hidden');
-}
-function renderFilterTabs(){
-  $('konto-filter-tabs').innerHTML = ['alla',...grupper].map(g=>
-    `<button class="filter-tab ${g===kontoFilter?'active':''}" onclick="setKontoFilter('${g}')">${g==='alla'?'Alla':g}</button>`
-  ).join('');
-}
-function setKontoFilter(g){kontoFilter=g; renderFilterTabs(); renderKontoList();}
+// ══ KONTOPICKER ═══════════════════════════════════════════════════════════════
+let kontoFilter='alla';
+function openKontoPicker(){kontoFilter='alla';$('konto-search').value='';renderFilterTabs();renderKontoList();$('panel-konto').classList.remove('hidden');setTimeout(function(){$('konto-search').focus();},100);}
+function closeKontoPicker(e){if(!e||e.target===$('panel-konto'))$('panel-konto').classList.add('hidden');}
+function renderFilterTabs(){$('konto-filter-tabs').innerHTML=['alla',...grupper()].map(g=>`<button class="filter-tab ${g===kontoFilter?'active':''}" onclick="setKontoFilter('${g}')">${g==='alla'?'Alla':g}</button>`).join('');}
+function setKontoFilter(g){kontoFilter=g;renderFilterTabs();renderKontoList();}
 function renderKontoList(){
-  const q = $('konto-search').value.toLowerCase();
-  let list = kontoFilter==='alla' ? KONTON : KONTON.filter(k=>k.grupp===kontoFilter);
-  if(q) list = list.filter(k=>k.namn.toLowerCase().includes(q)||k.nr.includes(q));
-  $('konto-list').innerHTML = list.length===0
-    ? '<div class="konto-empty">Inga kategorier hittades</div>'
-    : list.map(k=>`
-      <button class="konto-row ${selectedKonto&&selectedKonto.nr===k.nr?'selected':''}" onclick="selectKonto('${k.nr}')">
-        <span class="konto-tag ${k.typ==='intäkt'?'intakt':'kostnad'}">${k.nr}</span>
-        <div class="konto-row-info">
-          <div class="konto-row-name">${k.namn}</div>
-          <div class="konto-row-sub">${k.grupp} · ${k.typ==='intäkt'?'Intäkt':'Kostnad'}</div>
-        </div>
-        ${selectedKonto&&selectedKonto.nr===k.nr?'<span class="konto-row-check">✓</span>':''}
-      </button>`).join('');
+  const q=$('konto-search').value.toLowerCase();
+  let list=kontoFilter==='alla'?KONTON:KONTON.filter(k=>k.grupp===kontoFilter);
+  if(q)list=list.filter(k=>k.namn.toLowerCase().includes(q)||k.nr.includes(q));
+  $('konto-list').innerHTML=list.length===0?'<div class="konto-empty">Inga kategorier hittades</div>':list.map(k=>`<button class="konto-row ${selectedKonto&&selectedKonto.nr===k.nr?'selected':''}" onclick="selectKonto('${k.nr}')"><span class="konto-tag ${k.typ==='intäkt'?'intakt':'kostnad'}">${k.nr}</span><div class="konto-row-info"><div class="konto-row-name">${k.namn}</div><div class="konto-row-sub">${k.grupp} · ${k.typ==='intäkt'?'Intäkt':'Kostnad'}</div></div>${selectedKonto&&selectedKonto.nr===k.nr?'<span class="konto-row-check">✓</span>':''}</button>`).join('');
 }
 function selectKonto(nr){
-  selectedKonto = KONTON.find(k=>k.nr===nr);
-  $('panel-konto').classList.add('hidden');
-  const btn = $('konto-btn');
-  const isIn = selectedKonto.typ==='intäkt';
-  btn.classList.add('selected');
-  btn.innerHTML = `
-    <span class="konto-tag ${isIn?'intakt':'kostnad'}">${selectedKonto.nr}</span>
-    <span class="konto-name">${selectedKonto.namn}</span>`;
-  const hint = $('konto-hint');
-  hint.style.display = 'block';
-  hint.textContent = isIn ? '✓ Pengar som kommer in till föreningen' : '✓ Pengar som betalas ut från föreningen';
+  selectedKonto=KONTON.find(k=>k.nr===nr);$('panel-konto').classList.add('hidden');
+  const btn=$('konto-btn'),isIn=selectedKonto.typ==='intäkt';
+  btn.classList.add('selected');btn.innerHTML=`<span class="konto-tag ${isIn?'intakt':'kostnad'}">${selectedKonto.nr}</span><span class="konto-name">${selectedKonto.namn}</span>`;
+  const hint=$('konto-hint');hint.style.display='block';hint.textContent=isIn?'✓ Pengar som kommer in till föreningen':'✓ Pengar som betalas ut från föreningen';
 }
 
-// ══ INSTÄLLNINGAR ══════════════════════════════════════════════════════════
+// ══ HANTERA KONTON (INSTÄLLNINGAR) ═══════════════════════════════════════════
 function openSettings(){
-  $('s-forening').value = DB.forening;
-  $('s-orgnr').value = DB.orgnr||'';
-  settingsAr = DB.ar;
-  renderSettingsYears();
-  $('rensa-confirm-1').classList.remove('hidden');
-  $('rensa-confirm-2').classList.add('hidden');
+  $('s-forening').value=DB.forening;$('s-orgnr').value=DB.orgnr||'';settingsAr=DB.ar;renderSettingsYears();
+  $('rensa-confirm-1').classList.remove('hidden');$('rensa-confirm-2').classList.add('hidden');
+  renderKontoManage();
   $('panel-settings').classList.remove('hidden');
 }
 function closeSettings(){$('panel-settings').classList.add('hidden');}
-function renderSettingsYears(){
-  const yr = new Date().getFullYear();
-  $('s-year-row').innerHTML = [yr-1,yr].map(y=>
-    `<button class="year-btn ${y===settingsAr?'active':''}" onclick="setSettingsYear(${y})">${y}</button>`
-  ).join('');
-}
-function setSettingsYear(y){settingsAr=y; renderSettingsYears();}
-function saveSettings(){
-  DB.forening = $('s-forening').value.trim()||DB.forening;
-  DB.orgnr = $('s-orgnr').value.trim();
-  DB.ar = settingsAr;
-  saveDB().catch(function(){}); updateHeader(); closeSettings();
-}
+function renderSettingsYears(){const yr=new Date().getFullYear();$('s-year-row').innerHTML=[yr-1,yr].map(y=>`<button class="year-btn ${y===settingsAr?'active':''}" onclick="setSettingsYear(${y})">${y}</button>`).join('');}
+function setSettingsYear(y){settingsAr=y;renderSettingsYears();}
+function saveSettings(){DB.forening=$('s-forening').value.trim()||DB.forening;DB.orgnr=$('s-orgnr').value.trim();DB.ar=settingsAr;saveDB();updateHeader();closeSettings();}
 function showRensaConfirm(){$('rensa-confirm-1').classList.add('hidden');$('rensa-confirm-2').classList.remove('hidden');}
 function hideRensaConfirm(){$('rensa-confirm-1').classList.remove('hidden');$('rensa-confirm-2').classList.add('hidden');}
-function rensaAllt(){
-  DB.poster = [];
-  saveDB().catch(function(){}); closeSettings(); updateHeader(); renderResultat(); openGrupper={};
+function rensaAllt(){DB.poster=[];DB.balans={};saveDB();closeSettings();updateHeader();renderResultat();openGrupper={};}
+
+function renderKontoManage(){
+  const allKonton=[...STD_KONTON,...(DB.extraKonton||[])];
+  const render=(typ,elId)=>{
+    const list=allKonton.filter(k=>k.typ===typ);
+    $(elId).innerHTML=list.map(k=>{
+      const harPoster=DB.poster.some(p=>p.konto===k.nr);
+      const arDold=(DB.dolda||[]).includes(k.nr);
+      const arExtra=(DB.extraKonton||[]).some(e=>e.nr===k.nr);
+      return `<div class="konto-manage-row">
+        <span class="konto-tag ${typ==='intäkt'?'intakt':'kostnad'}" style="flex-shrink:0;">${k.nr}</span>
+        <div class="konto-manage-info">
+          <div class="konto-manage-name" style="color:${arDold?'#bbb':'#1a1a2e'};">${k.namn}</div>
+          <div class="konto-manage-sub">${k.grupp}${harPoster?' · '+DB.poster.filter(p=>p.konto===k.nr).length+' poster':''}${arDold?' · Dold':''}${arExtra?' · Eget konto':''}</div>
+        </div>
+        ${arExtra?`<button class="konto-manage-del" onclick="removeExtraKonto('${k.nr}')" ${harPoster?'disabled title="Har poster"':''}>✕</button>`:`<button class="konto-manage-del" style="font-size:13px;color:${arDold?'#2e7d32':'#fca5a5'};" onclick="toggleDoldKonto('${k.nr}')">${arDold?'Visa':'Dölj'}</button>`}
+      </div>`;
+    }).join('');
+  };
+  render('intäkt','konto-list-intakt');
+  render('kostnad','konto-list-kostnad');
+}
+function toggleDoldKonto(nr){
+  if(!DB.dolda)DB.dolda=[];
+  const idx=DB.dolda.indexOf(nr);
+  if(idx>=0)DB.dolda.splice(idx,1);else DB.dolda.push(nr);
+  buildKonton();saveDB();renderKontoManage();
+}
+function removeExtraKonto(nr){
+  if(DB.poster.some(p=>p.konto===nr)){alert('Kan inte ta bort — det finns poster på detta konto.');return;}
+  DB.extraKonton=(DB.extraKonton||[]).filter(k=>k.nr!==nr);
+  buildKonton();saveDB();renderKontoManage();
 }
 
-// ══ KONTODETALJ ═══════════════════════════════════════════════════════════
+// ══ LÄGG TILL KONTO ════════════════════════════════════════════════════════════
+function openAddKonto(typ){addKontoTyp=typ;$('ak-nr').value='';$('ak-namn').value='';$('ak-grupp').value='';$('ak-error').classList.add('hidden');setAddKontoTyp(typ);$('panel-add-konto').classList.remove('hidden');}
+function closeAddKonto(){$('panel-add-konto').classList.add('hidden');}
+function setAddKontoTyp(typ){addKontoTyp=typ;$('typ-btn-intakt').classList.toggle('active',typ==='intäkt');$('typ-btn-kostnad').classList.toggle('active',typ==='kostnad');}
+function saveAddKonto(){
+  const nr=$('ak-nr').value.trim(),namn=$('ak-namn').value.trim(),grupp=$('ak-grupp').value.trim();
+  if(!nr||!namn||!grupp){$('ak-error').textContent='Fyll i alla fält.';$('ak-error').classList.remove('hidden');return;}
+  const allNr=[...STD_KONTON,...(DB.extraKonton||[])].map(k=>k.nr);
+  if(allNr.includes(nr)){$('ak-error').textContent='Kontonummer '+nr+' finns redan.';$('ak-error').classList.remove('hidden');return;}
+  if(!DB.extraKonton)DB.extraKonton=[];
+  DB.extraKonton.push({nr,namn,typ:addKontoTyp,grupp});
+  buildKonton();saveDB();closeAddKonto();renderKontoManage();
+}
+
+// ══ INSTÄLLNINGAR HJÄLPFUNKTIONER ════════════════════════════════════════════
 function openKontodetalj(nr){
-  const k = KONTON.find(x=>x.nr===nr);
-  if(!k) return;
-  const poster = DB.poster.filter(p=>p.konto===nr).sort((a,b)=>b.datum.localeCompare(a.datum));
-  const summa = poster.reduce((s,p)=>s+p.belopp,0);
-  const isIn = k.typ==='intäkt';
-  const color = isIn ? '#2e7d32' : '#e65100';
-  const bg = isIn ? '#e8f5e9' : '#fff3e0';
-
-  $('kdh-nr').textContent = nr;
-  $('kdh-nr').style.background = bg;
-  $('kdh-nr').style.color = color;
-  $('kdh-name').textContent = k.namn;
-  $('kdh-summa').textContent = fmt(summa);
-  $('kdh-summa').style.color = isIn ? '#81c784' : '#ffb74d';
-  $('kdh-ant').textContent = poster.length + ' verifikation' + (poster.length===1?'':'er');
-
-  $('kontodetalj-body').innerHTML = poster.length===0
-    ? '<div class="kd-empty">Inga poster registrerade på detta konto ännu.</div>'
-    : poster.map(p=>`
-      <div class="kd-post">
-        <div class="kd-post-top">
-          <div class="kd-post-info">
-            <div class="kd-post-desc">${p.beskrivning||p.kontoNamn}</div>
-            <div class="kd-post-meta">
-              <span class="kd-post-tag">${p.datum}</span>
-              <span class="kd-post-tag">${p.betalning}</span>
-              ${p.kvitto?'<span class="kd-post-tag kvitto">Kvitto ✓</span>':''}
-              ${p.foto?'<span class="kd-post-tag" style="background:#e8f0fe;color:#3730a3;">📷 Foto</span>':''}
-            </div>
-          </div>
-          <span class="kd-post-amount" style="color:${color};">${isIn?'+':'-'}${fmt(p.belopp)}</span>
-        </div>
-        ${p.foto?`<div class="kd-post-foto" onclick="openFotoFullscreen('${p.id}')">
-          <img src="${p.foto}" alt="Kvitto"/>
-        </div>`:''}
-      </div>`).join('');
-
+  const k=KONTON.find(x=>x.nr===nr)||STD_KONTON.find(x=>x.nr===nr)||(DB.extraKonton||[]).find(x=>x.nr===nr);
+  if(!k)return;
+  const poster=DB.poster.filter(p=>p.konto===nr).sort((a,b)=>b.datum.localeCompare(a.datum));
+  const summa=poster.reduce((s,p)=>s+p.belopp,0);
+  const isIn=k.typ==='intäkt',color=isIn?'#2e7d32':'#e65100',bg=isIn?'#e8f5e9':'#fff3e0';
+  $('kdh-nr').textContent=nr;$('kdh-nr').style.background=bg;$('kdh-nr').style.color=color;
+  $('kdh-name').textContent=k.namn;$('kdh-summa').textContent=fmt(summa);$('kdh-summa').style.color=isIn?'#81c784':'#ffb74d';
+  $('kdh-ant').textContent=poster.length+' verifikation'+(poster.length===1?'':'er');
+  $('kontodetalj-body').innerHTML=poster.length===0?'<div class="kd-empty">Inga poster registrerade på detta konto ännu.</div>':poster.map(p=>`<div class="kd-post"><div class="kd-post-top"><div class="kd-post-info"><div class="kd-post-desc">${p.beskrivning||p.kontoNamn}</div><div class="kd-post-meta"><span class="kd-post-tag">${p.datum}</span><span class="kd-post-tag">${p.betalning}</span>${p.kvitto?'<span class="kd-post-tag kvitto">Kvitto ✓</span>':''}${p.foto?'<span class="kd-post-tag" style="background:#e8f0fe;color:#3730a3;">📷 Foto</span>':''}</div></div><span class="kd-post-amount" style="color:${color};">${isIn?'+':'-'}${fmt(p.belopp)}</span></div>${p.foto?`<div class="kd-post-foto" onclick="openFotoFullscreen('${p.id}')"><img src="${p.foto}" alt="Kvitto"/></div>`:''}</div>`).join('');
   $('panel-kontodetalj').classList.remove('hidden');
 }
 function closeKontodetalj(){$('panel-kontodetalj').classList.add('hidden');}
+function openFotoFullscreen(id){const p=DB.poster.find(x=>x.id==id);if(!p||!p.foto)return;$('foto-fullscreen-img').src=p.foto;$('foto-fullscreen').classList.remove('hidden');}
+function closeFotoFullscreen(){$('foto-fullscreen').classList.add('hidden');$('foto-fullscreen-img').src='';}
 
-function openFotoFullscreen(id){
-  const p = DB.poster.find(x=>x.id==id);
-  if(!p||!p.foto) return;
-  $('foto-fullscreen-img').src = p.foto;
-  $('foto-fullscreen').classList.remove('hidden');
-}
-function closeFotoFullscreen(){
-  $('foto-fullscreen').classList.add('hidden');
-  $('foto-fullscreen-img').src='';
-}
-
-// ══ DETALJ RR ══════════════════════════════════════════════════════════════
+// ══ DETALJ RR ════════════════════════════════════════════════════════════════
 function openDetalj(){
-  const ti = totIntakt(), tk = totKostnad(), res = ti-tk;
-  $('detalj-mini').innerHTML = [
-    {l:'Intäkter',v:fmt(ti),c:'#81c784'},
-    {l:'Kostnader',v:fmt(tk),c:'#ffb74d'},
-    {l:'Resultat',v:(res>=0?'+':'')+fmt(res),c:res>=0?'#81c784':'#ef9a9a'}
-  ].map(i=>`<div class="detalj-mini-item"><div class="dm-lbl">${i.l}</div><div class="dm-val" style="color:${i.c};">${i.v}</div></div>`).join('');
-
-  const allK = KONTON.map(k=>({...k,summa:DB.poster.filter(p=>p.konto===k.nr).reduce((s,p)=>s+p.belopp,0)}));
-  const grp = (konton) => {
-    const g={};
-    konton.forEach(k=>{if(!g[k.grupp])g[k.grupp]={grupp:k.grupp,konton:[],summa:0};g[k.grupp].konton.push(k);g[k.grupp].summa+=k.summa;});
-    return Object.values(g);
-  };
-  const iG = grp(allK.filter(k=>k.typ==='intäkt'));
-  const kG = grp(allK.filter(k=>k.typ==='kostnad'));
-
-  const rrRow = (nr,namn,belopp,bold,indent) => `
-    <div class="${bold?'rr-row bold':'rr-row'}" style="${indent?'padding-left:28px;':''}">
-      ${nr?`<span class="rr-nr">${nr}</span>`:''}
-      <span class="rr-name ${bold?'bold':''}" style="${!nr?'padding-left:0;':''}">${namn}</span>
-      <span class="rr-val ${bold?'bold':''} ${belopp===0?'zero':''}">${belopp===0?'–':fmt(Math.abs(belopp))}</span>
-    </div>`;
-
-  let html = '';
-  html += `<div class="rr-divider"><hr/><span style="color:#2e7d32;">Rörelsens intäkter</span><hr/></div>`;
-  iG.forEach(g=>{
-    html += `<div class="rr-grupp-lbl" style="color:#2e7d32;">${g.grupp}</div>`;
-    g.konton.forEach(k=>{ html += rrRow(k.nr,k.namn,k.summa,false,true); });
-    html += `<div class="rr-sep"></div>`;
-    html += rrRow('',`Summa ${g.grupp.toLowerCase()}`,g.summa,true,false);
-  });
-  html += `<div class="rr-total" style="background:#e8f5e9;"><span class="rt-lbl" style="color:#1b5e20;">SUMMA RÖRELSENS INTÄKTER</span><span class="rt-val" style="color:#2e7d32;">${fmt(ti)}</span></div>`;
-
-  html += `<div class="rr-divider"><hr/><span style="color:#e65100;">Rörelsens kostnader</span><hr/></div>`;
-  kG.forEach(g=>{
-    html += `<div class="rr-grupp-lbl" style="color:#e65100;">${g.grupp}</div>`;
-    g.konton.forEach(k=>{ html += rrRow(k.nr,k.namn,k.summa>0?-k.summa:k.summa,false,true); });
-    html += `<div class="rr-sep"></div>`;
-    html += rrRow('',`Summa ${g.grupp.toLowerCase()}`,-g.summa,true,false);
-  });
-  html += `<div class="rr-total" style="background:#fff3e0;"><span class="rt-lbl" style="color:#bf360c;">SUMMA RÖRELSENS KOSTNADER</span><span class="rt-val" style="color:#e65100;">-${fmt(tk)}</span></div>`;
-
-  html += `<div class="rr-result" style="background:${res>=0?'#1a1a2e':'#7f1d1d'};">
-    <div><div class="rrs-lbl">Årets över-/underskott</div><div class="rrs-sub">Konto 8999</div></div>
-    <span class="rrs-val" style="color:${res>=0?'#81c784':'#ef9a9a'};">${res>=0?'+':''}${fmt(res)}</span>
-  </div>`;
-
-  $('detalj-body').innerHTML = html;
-  $('panel-detalj').classList.remove('hidden');
+  const ti=totIntakt(),tk=totKostnad(),res=ti-tk;
+  $('detalj-mini').innerHTML=[{l:'Intäkter',v:fmt(ti),c:'#81c784'},{l:'Kostnader',v:fmt(tk),c:'#ffb74d'},{l:'Resultat',v:(res>=0?'+':'')+fmt(res),c:res>=0?'#81c784':'#ef9a9a'}].map(i=>`<div class="detalj-mini-item"><div class="dm-lbl">${i.l}</div><div class="dm-val" style="color:${i.c};">${i.v}</div></div>`).join('');
+  const allK=KONTON.map(k=>({...k,summa:DB.poster.filter(p=>p.konto===k.nr).reduce((s,p)=>s+p.belopp,0)}));
+  const grp=(konton)=>{const g={};konton.forEach(k=>{if(!g[k.grupp])g[k.grupp]={grupp:k.grupp,konton:[],summa:0};g[k.grupp].konton.push(k);g[k.grupp].summa+=k.summa;});return Object.values(g);};
+  const iG=grp(allK.filter(k=>k.typ==='intäkt')),kG=grp(allK.filter(k=>k.typ==='kostnad'));
+  const rrRow=(nr,namn,belopp,bold,indent)=>`<div class="${bold?'rr-row bold':'rr-row'}" style="${indent?'padding-left:28px;':''}">${nr?`<span class="rr-nr">${nr}</span>`:''}<span class="rr-name ${bold?'bold':''}" style="${!nr?'padding-left:0;':''}">${namn}</span><span class="rr-val ${bold?'bold':''} ${belopp===0?'zero':''}">${belopp===0?'–':fmt(Math.abs(belopp))}</span></div>`;
+  let html='';
+  html+=`<div class="rr-divider"><hr/><span style="color:#2e7d32;">Rörelsens intäkter</span><hr/></div>`;
+  iG.forEach(g=>{html+=`<div class="rr-grupp-lbl" style="color:#2e7d32;">${g.grupp}</div>`;g.konton.forEach(k=>{html+=rrRow(k.nr,k.namn,k.summa,false,true);});html+=`<div class="rr-sep"></div>`;html+=rrRow('',`Summa ${g.grupp.toLowerCase()}`,g.summa,true,false);});
+  html+=`<div class="rr-total" style="background:#e8f5e9;"><span class="rt-lbl" style="color:#1b5e20;">SUMMA RÖRELSENS INTÄKTER</span><span class="rt-val" style="color:#2e7d32;">${fmt(ti)}</span></div>`;
+  html+=`<div class="rr-divider"><hr/><span style="color:#e65100;">Rörelsens kostnader</span><hr/></div>`;
+  kG.forEach(g=>{html+=`<div class="rr-grupp-lbl" style="color:#e65100;">${g.grupp}</div>`;g.konton.forEach(k=>{html+=rrRow(k.nr,k.namn,k.summa>0?-k.summa:k.summa,false,true);});html+=`<div class="rr-sep"></div>`;html+=rrRow('',`Summa ${g.grupp.toLowerCase()}`,-g.summa,true,false);});
+  html+=`<div class="rr-total" style="background:#fff3e0;"><span class="rt-lbl" style="color:#bf360c;">SUMMA RÖRELSENS KOSTNADER</span><span class="rt-val" style="color:#e65100;">-${fmt(tk)}</span></div>`;
+  html+=`<div class="rr-result" style="background:${res>=0?'#1a1a2e':'#7f1d1d'};"><div><div class="rrs-lbl">Årets över-/underskott</div><div class="rrs-sub">Konto 8999</div></div><span class="rrs-val" style="color:${res>=0?'#81c784':'#ef9a9a'};">${res>=0?'+':''}${fmt(res)}</span></div>`;
+  $('detalj-body').innerHTML=html;$('panel-detalj').classList.remove('hidden');
 }
 function closeDetalj(){$('panel-detalj').classList.add('hidden');}
 
-// ══ PDF EXPORT ══════════════════════════════════════════════════════════════
+// ══ PDF EXPORT ════════════════════════════════════════════════════════════════
 function exportPDF(){
-  const ti = totIntakt(), tk = totKostnad(), res = ti-tk;
-  const allK = KONTON.map(k=>({...k,summa:DB.poster.filter(p=>p.konto===k.nr).reduce((s,p)=>s+p.belopp,0)}));
-  const grp = (konton) => {const g={};konton.forEach(k=>{if(!g[k.grupp])g[k.grupp]={grupp:k.grupp,konton:[],summa:0};g[k.grupp].konton.push(k);g[k.grupp].summa+=k.summa;});return Object.values(g);};
-  const iG = grp(allK.filter(k=>k.typ==='intäkt'));
-  const kG = grp(allK.filter(k=>k.typ==='kostnad'));
-
-  const pRow = (nr,namn,belopp,bold,indent) => `
-    <tr style="background:${bold?'#f5f7fa':'transparent'}">
-      <td style="padding:${bold?7:5}px 8px 5px ${indent?24:8}px;font-size:11px;color:#aaa;font-family:monospace;white-space:nowrap;">${nr||''}</td>
-      <td style="padding:${bold?7:5}px 8px;font-size:${bold?12:11}px;font-weight:${bold?700:400};color:#1a1a2e;">${namn}</td>
-      <td style="padding:${bold?7:5}px 8px;font-size:${bold?12:11}px;font-weight:${bold?700:400};color:${belopp===0?'#ccc':'#1a1a2e'};text-align:right;font-family:monospace;">${belopp===0?'–':fmt(Math.abs(belopp))}</td>
-    </tr>`;
-
-  const verRows = [...DB.poster].sort((a,b)=>a.datum.localeCompare(b.datum)).map((p,i)=>`
-    <tr style="background:${i%2===0?'#fafafa':'#fff'}">
-      <td style="padding:5px 6px;font-size:10px;color:#888;">${p.datum}</td>
-      <td style="padding:5px 6px;font-size:10px;color:#888;font-family:monospace;">${p.konto}</td>
-      <td style="padding:5px 6px;font-size:11px;color:#1a1a2e;">${p.kontoNamn}${p.beskrivning?' – '+p.beskrivning:''}</td>
-      <td style="padding:5px 6px;font-size:10px;color:#888;">${p.betalning}</td>
-      <td style="padding:5px 6px;font-size:10px;color:${p.typ==='intäkt'?'#2e7d32':'#c0392b'};text-align:right;font-family:monospace;">${p.typ==='intäkt'?'+':'-'}${fmt(p.belopp)}</td>
-      <td style="padding:5px 6px;font-size:10px;text-align:center;">${p.kvitto?'✓':''}</td>
-    </tr>`).join('');
-
-  const pdfHtml = `<!DOCTYPE html><html lang="sv"><head><meta charset="UTF-8"/>
-<title>Resultaträkning – ${DB.forening} ${DB.ar}</title>
-<style>
-*{box-sizing:border-box;margin:0;padding:0;}
-body{font-family:Arial,sans-serif;background:#fff;color:#1a1a2e;font-size:12px;}
-.page{max-width:740px;margin:0 auto;padding:40px 32px;}
-.hdr{background:#1a1a2e;color:#fff;padding:28px 32px;border-radius:12px;margin-bottom:28px;}
-.hdr h1{font-size:22px;font-weight:800;margin-bottom:4px;}
-.hdr .sub{font-size:11px;color:rgba(255,255,255,0.5);text-transform:uppercase;letter-spacing:.08em;margin-bottom:12px;}
-.hdr .meta{display:flex;gap:24px;margin-top:14px;}
-.hdr .mi .lbl{font-size:10px;color:rgba(255,255,255,0.4);text-transform:uppercase;letter-spacing:.06em;}
-.hdr .mi .val{font-size:18px;font-weight:800;}
-.disclaimer{background:#fffbeb;border:1px solid #fcd34d;border-radius:8px;padding:12px 16px;margin-bottom:20px;font-size:11px;color:#92400e;line-height:1.6;}
-h2{font-size:13px;font-weight:800;color:#1a1a2e;margin:24px 0 10px;padding-bottom:6px;border-bottom:2px solid #e8e8e8;}
-table{width:100%;border-collapse:collapse;}
-.rr-total{display:flex;justify-content:space-between;padding:10px 8px;border-radius:8px;margin:4px 0 14px;}
-.rr-res{display:flex;justify-content:space-between;align-items:center;background:#1a1a2e;color:#fff;padding:16px 20px;border-radius:12px;margin:8px 0;}
-.rr-res .lbl{font-size:11px;color:rgba(255,255,255,0.5);text-transform:uppercase;letter-spacing:.06em;margin-bottom:4px;}
-.rr-res .val{font-size:22px;font-weight:800;font-family:monospace;}
-.footer{margin-top:40px;padding-top:14px;border-top:1px solid #e8e8e8;font-size:10px;color:#aaa;display:flex;justify-content:space-between;}
-.print-btn{display:block;text-align:center;margin-top:28px;}
-.print-btn button{background:#1a1a2e;color:#fff;border:none;padding:14px 32px;border-radius:10px;font-size:15px;font-weight:700;cursor:pointer;}
-@media print{.print-btn{display:none;} body{-webkit-print-color-adjust:exact;print-color-adjust:exact;}}
-</style></head><body><div class="page">
-<div class="hdr">
-  <div class="sub">Resultaträkning · Räkenskapsår ${DB.ar}</div>
-  <h1>${DB.forening}</h1>
-  <div class="meta">
-    ${DB.orgnr?`<div class="mi"><div class="lbl">Org.nr</div><div class="val" style="font-size:14px;padding-top:4px;">${DB.orgnr}</div></div>`:''}
-    <div class="mi"><div class="lbl">Intäkter</div><div class="val" style="color:#81c784;">${fmt(ti)}</div></div>
-    <div class="mi"><div class="lbl">Kostnader</div><div class="val" style="color:#ffb74d;">${fmt(tk)}</div></div>
-  </div>
-</div>
-<div class="disclaimer"><strong>OBS – Hjälpmedel, inte ett certifierat bokföringssystem.</strong> Det här dokumentet är framtaget med Föreningsbokföring som är ett hjälpmedel för ideella idrottsföreningar. Det ersätter inte revision eller professionell bokföringsrådgivning. Föreningen ansvarar alltid för sin egen bokföring i enlighet med bokföringslagen.</div>
-<h2>Resultaträkning – Rörelsens intäkter</h2>
+  const ti=totIntakt(),tk=totKostnad(),res=ti-tk;
+  const bal=DB.balans||{};
+  const tillgangar=STD_BALANS.filter(b=>b.grupp==='tillgång');
+  const skulder=STD_BALANS.filter(b=>b.grupp==='skuld');
+  const ingEget=parseFloat(bal['eget_kapital'])||0,utgEget=ingEget+res;
+  const sumTillg=tillgangar.reduce((s,b)=>s+(parseFloat(bal[b.id])||0),0);
+  const sumSkuld=skulder.reduce((s,b)=>s+(parseFloat(bal[b.id])||0),0);
+  const allK=KONTON.map(k=>({...k,summa:DB.poster.filter(p=>p.konto===k.nr).reduce((s,p)=>s+p.belopp,0)}));
+  const grp=(konton)=>{const g={};konton.forEach(k=>{if(!g[k.grupp])g[k.grupp]={grupp:k.grupp,konton:[],summa:0};g[k.grupp].konton.push(k);g[k.grupp].summa+=k.summa;});return Object.values(g);};
+  const iG=grp(allK.filter(k=>k.typ==='intäkt')),kG=grp(allK.filter(k=>k.typ==='kostnad'));
+  const pRow=(nr,namn,belopp,bold,indent)=>`<tr style="background:${bold?'#f5f7fa':'transparent'}"><td style="padding:${bold?7:5}px 8px 5px ${indent?24:8}px;font-size:11px;color:#aaa;font-family:monospace;white-space:nowrap;">${nr||''}</td><td style="padding:${bold?7:5}px 8px;font-size:${bold?12:11}px;font-weight:${bold?700:400};color:#1a1a2e;">${namn}</td><td style="padding:${bold?7:5}px 8px;font-size:${bold?12:11}px;font-weight:${bold?700:400};color:${belopp===0?'#ccc':'#1a1a2e'};text-align:right;font-family:monospace;">${belopp===0?'–':fmt(Math.abs(belopp))}</td></tr>`;
+  const verRows=[...DB.poster].sort((a,b)=>a.datum.localeCompare(b.datum)).map((p,i)=>`<tr style="background:${i%2===0?'#fafafa':'#fff'}"><td style="padding:5px 6px;font-size:10px;color:#888;">${p.datum}</td><td style="padding:5px 6px;font-size:10px;color:#888;font-family:monospace;">${p.konto}</td><td style="padding:5px 6px;font-size:11px;color:#1a1a2e;">${p.kontoNamn}${p.beskrivning?' – '+p.beskrivning:''}</td><td style="padding:5px 6px;font-size:10px;color:#888;">${p.betalning}</td><td style="padding:5px 6px;font-size:10px;color:${p.typ==='intäkt'?'#2e7d32':'#c0392b'};text-align:right;font-family:monospace;">${p.typ==='intäkt'?'+':'-'}${fmt(p.belopp)}</td><td style="padding:5px 6px;font-size:10px;text-align:center;">${p.kvitto?'✓':''}</td></tr>`).join('');
+  const balHtml=sumTillg>0||sumSkuld>0||ingEget!==0?`
+<h2>Balansräkning (förenklad)</h2>
 <table>
-${iG.map(g=>`
-  <tr><td colspan="3" style="padding:10px 8px 2px;font-size:10px;font-weight:700;color:#2e7d32;text-transform:uppercase;letter-spacing:.06em;">${g.grupp}</td></tr>
-  ${g.konton.map(k=>pRow(k.nr,k.namn,k.summa,false,true)).join('')}
-  <tr><td colspan="3" style="padding:0;"><div style="height:1px;background:#e8e8e8;margin:2px 0;"></div></td></tr>
-  ${pRow('',`Summa ${g.grupp.toLowerCase()}`,g.summa,true,false)}
-`).join('')}
-</table>
-<div class="rr-total" style="background:#e8f5e9;">
-  <span style="font-size:12px;font-weight:800;color:#1b5e20;">SUMMA RÖRELSENS INTÄKTER</span>
-  <span style="font-size:13px;font-weight:800;color:#2e7d32;font-family:monospace;">${fmt(ti)}</span>
-</div>
-<h2>Resultaträkning – Rörelsens kostnader</h2>
-<table>
-${kG.map(g=>`
-  <tr><td colspan="3" style="padding:10px 8px 2px;font-size:10px;font-weight:700;color:#e65100;text-transform:uppercase;letter-spacing:.06em;">${g.grupp}</td></tr>
-  ${g.konton.map(k=>pRow(k.nr,k.namn,k.summa>0?-k.summa:k.summa,false,true)).join('')}
-  <tr><td colspan="3" style="padding:0;"><div style="height:1px;background:#e8e8e8;margin:2px 0;"></div></td></tr>
-  ${pRow('',`Summa ${g.grupp.toLowerCase()}`,-g.summa,true,false)}
-`).join('')}
-</table>
-<div class="rr-total" style="background:#fff3e0;">
-  <span style="font-size:12px;font-weight:800;color:#bf360c;">SUMMA RÖRELSENS KOSTNADER</span>
-  <span style="font-size:13px;font-weight:800;color:#e65100;font-family:monospace;">-${fmt(tk)}</span>
-</div>
-<div class="rr-res">
-  <div><div class="lbl">Årets över-/underskott · Konto 8999</div><div style="font-size:11px;color:rgba(255,255,255,0.3);margin-top:2px;">Idrottens BAS-kontoplan IBK v3.3</div></div>
-  <div class="val" style="color:${res>=0?'#81c784':'#ef9a9a'};">${res>=0?'+':''}${fmt(res)}</div>
-</div>
-<h2>Verifikationslista (${DB.poster.length} poster)</h2>
-<table>
-<thead><tr style="background:#f5f7fa;">
-  <th style="padding:7px 6px;font-size:10px;text-align:left;font-weight:700;color:#888;">Datum</th>
-  <th style="padding:7px 6px;font-size:10px;text-align:left;font-weight:700;color:#888;">Konto</th>
-  <th style="padding:7px 6px;font-size:10px;text-align:left;font-weight:700;color:#888;">Beskrivning</th>
-  <th style="padding:7px 6px;font-size:10px;text-align:left;font-weight:700;color:#888;">Via</th>
-  <th style="padding:7px 6px;font-size:10px;text-align:right;font-weight:700;color:#888;">Belopp</th>
-  <th style="padding:7px 6px;font-size:10px;text-align:center;font-weight:700;color:#888;">Kvitto</th>
-</tr></thead>
-<tbody>${verRows||'<tr><td colspan="6" style="padding:20px;text-align:center;color:#aaa;">Inga poster registrerade</td></tr>'}</tbody>
-</table>
-<div class="footer">
-  <span>Föreningsbokföring · Idrottens bokföringshjälpmedel · IBK v3.3 · Hjälpmedel, ej certifierat bokföringssystem</span>
-  <span>Utskrivet ${new Date().toLocaleDateString('sv-SE')}</span>
-</div>
+<tr style="background:#f5f7fa"><td colspan="2" style="padding:8px;font-size:10px;font-weight:700;text-transform:uppercase;color:#2e7d32;">Tillgångar</td></tr>
+${tillgangar.filter(b=>(parseFloat(bal[b.id])||0)!==0).map(b=>`<tr><td style="padding:5px 8px;font-size:11px;color:#1a1a2e;">${b.namn}</td><td style="padding:5px 8px;font-size:11px;text-align:right;font-family:monospace;">${fmt(parseFloat(bal[b.id])||0)}</td></tr>`).join('')}
+<tr style="background:#e8f5e9"><td style="padding:8px;font-size:12px;font-weight:800;color:#1b5e20;">Summa tillgångar</td><td style="padding:8px;font-size:12px;font-weight:800;text-align:right;font-family:monospace;color:#2e7d32;">${fmt(sumTillg)}</td></tr>
+<tr style="background:#f5f7fa"><td colspan="2" style="padding:8px;font-size:10px;font-weight:700;text-transform:uppercase;color:#e65100;">Skulder</td></tr>
+${skulder.filter(b=>(parseFloat(bal[b.id])||0)!==0).map(b=>`<tr><td style="padding:5px 8px;font-size:11px;color:#1a1a2e;">${b.namn}</td><td style="padding:5px 8px;font-size:11px;text-align:right;font-family:monospace;">${fmt(parseFloat(bal[b.id])||0)}</td></tr>`).join('')}
+<tr style="background:#fff3e0"><td style="padding:8px;font-size:12px;font-weight:800;color:#bf360c;">Summa skulder</td><td style="padding:8px;font-size:12px;font-weight:800;text-align:right;font-family:monospace;color:#e65100;">${fmt(sumSkuld)}</td></tr>
+<tr style="background:#f5f7fa"><td colspan="2" style="padding:8px;font-size:10px;font-weight:700;text-transform:uppercase;color:#1a1a2e;">Eget kapital</td></tr>
+<tr><td style="padding:5px 8px;font-size:11px;color:#1a1a2e;">Ingående eget kapital</td><td style="padding:5px 8px;font-size:11px;text-align:right;font-family:monospace;">${fmt(ingEget)}</td></tr>
+<tr><td style="padding:5px 8px;font-size:11px;color:#1a1a2e;">Årets resultat</td><td style="padding:5px 8px;font-size:11px;text-align:right;font-family:monospace;color:${res>=0?'#2e7d32':'#c0392b'};">${res>=0?'+':''}${fmt(res)}</td></tr>
+<tr style="background:#1a1a2e"><td style="padding:8px;font-size:12px;font-weight:800;color:#fff;">Utgående eget kapital</td><td style="padding:8px;font-size:12px;font-weight:800;text-align:right;font-family:monospace;color:${utgEget>=0?'#81c784':'#ef9a9a'};">${fmt(utgEget)}</td></tr>
+</table>`:'';
+
+  const pdfHtml=`<!DOCTYPE html><html lang="sv"><head><meta charset="UTF-8"/><title>Bokslut – ${DB.forening} ${DB.ar}</title><style>*{box-sizing:border-box;margin:0;padding:0;}body{font-family:Arial,sans-serif;background:#fff;color:#1a1a2e;font-size:12px;}.page{max-width:740px;margin:0 auto;padding:40px 32px;}.hdr{background:#1a1a2e;color:#fff;padding:28px 32px;border-radius:12px;margin-bottom:28px;}.hdr h1{font-size:22px;font-weight:800;margin-bottom:4px;}.hdr .sub{font-size:11px;color:rgba(255,255,255,0.5);text-transform:uppercase;letter-spacing:.08em;margin-bottom:12px;}.hdr .meta{display:flex;gap:24px;margin-top:14px;}.hdr .mi .lbl{font-size:10px;color:rgba(255,255,255,0.4);text-transform:uppercase;letter-spacing:.06em;}.hdr .mi .val{font-size:18px;font-weight:800;}.disclaimer{background:#fffbeb;border:1px solid #fcd34d;border-radius:8px;padding:12px 16px;margin-bottom:20px;font-size:11px;color:#92400e;line-height:1.6;}h2{font-size:13px;font-weight:800;color:#1a1a2e;margin:24px 0 10px;padding-bottom:6px;border-bottom:2px solid #e8e8e8;}table{width:100%;border-collapse:collapse;}.rr-total{display:flex;justify-content:space-between;padding:10px 8px;border-radius:8px;margin:4px 0 14px;}.rr-res{display:flex;justify-content:space-between;align-items:center;background:#1a1a2e;color:#fff;padding:16px 20px;border-radius:12px;margin:8px 0;}.rr-res .lbl{font-size:11px;color:rgba(255,255,255,0.5);text-transform:uppercase;letter-spacing:.06em;margin-bottom:4px;}.rr-res .val{font-size:22px;font-weight:800;font-family:monospace;}.footer{margin-top:40px;padding-top:14px;border-top:1px solid #e8e8e8;font-size:10px;color:#aaa;display:flex;justify-content:space-between;}.print-btn{display:block;text-align:center;margin-top:28px;}.print-btn button{background:#1a1a2e;color:#fff;border:none;padding:14px 32px;border-radius:10px;font-size:15px;font-weight:700;cursor:pointer;}@media print{.print-btn{display:none;}body{-webkit-print-color-adjust:exact;print-color-adjust:exact;}}</style></head><body><div class="page">
+<div class="hdr"><div class="sub">Förenklat bokslut · Räkenskapsår ${DB.ar}</div><h1>${DB.forening}</h1><div class="meta">${DB.orgnr?`<div class="mi"><div class="lbl">Org.nr</div><div class="val" style="font-size:14px;padding-top:4px;">${DB.orgnr}</div></div>`:''}<div class="mi"><div class="lbl">Intäkter</div><div class="val" style="color:#81c784;">${fmt(ti)}</div></div><div class="mi"><div class="lbl">Kostnader</div><div class="val" style="color:#ffb74d;">${fmt(tk)}</div></div></div></div>
+<div class="disclaimer"><strong>OBS – Hjälpmedel, inte ett certifierat bokföringssystem.</strong> Det här dokumentet ersätter inte revision eller professionell bokföringsrådgivning. Föreningen ansvarar alltid för sin bokföring enligt bokföringslagen.</div>
+<h2>Resultaträkning – Intäkter</h2><table>${iG.map(g=>`<tr><td colspan="3" style="padding:10px 8px 2px;font-size:10px;font-weight:700;color:#2e7d32;text-transform:uppercase;">${g.grupp}</td></tr>${g.konton.map(k=>pRow(k.nr,k.namn,k.summa,false,true)).join('')}<tr><td colspan="3" style="padding:0;"><div style="height:1px;background:#e8e8e8;margin:2px 0;"></div></td></tr>${pRow('','Summa '+g.grupp.toLowerCase(),g.summa,true,false)}`).join('')}</table>
+<div class="rr-total" style="background:#e8f5e9;"><span style="font-size:12px;font-weight:800;color:#1b5e20;">SUMMA INTÄKTER</span><span style="font-size:13px;font-weight:800;color:#2e7d32;font-family:monospace;">${fmt(ti)}</span></div>
+<h2>Resultaträkning – Kostnader</h2><table>${kG.map(g=>`<tr><td colspan="3" style="padding:10px 8px 2px;font-size:10px;font-weight:700;color:#e65100;text-transform:uppercase;">${g.grupp}</td></tr>${g.konton.map(k=>pRow(k.nr,k.namn,k.summa>0?-k.summa:k.summa,false,true)).join('')}<tr><td colspan="3" style="padding:0;"><div style="height:1px;background:#e8e8e8;margin:2px 0;"></div></td></tr>${pRow('','Summa '+g.grupp.toLowerCase(),-g.summa,true,false)}`).join('')}</table>
+<div class="rr-total" style="background:#fff3e0;"><span style="font-size:12px;font-weight:800;color:#bf360c;">SUMMA KOSTNADER</span><span style="font-size:13px;font-weight:800;color:#e65100;font-family:monospace;">-${fmt(tk)}</span></div>
+<div class="rr-res"><div><div class="lbl">Årets över-/underskott · Konto 8999</div><div style="font-size:11px;color:rgba(255,255,255,0.3);margin-top:2px;">Idrottens BAS-kontoplan IBK v3.3</div></div><div class="val" style="color:${res>=0?'#81c784':'#ef9a9a'};">${res>=0?'+':''}${fmt(res)}</div></div>
+${balHtml}
+<h2>Verifikationslista (${DB.poster.length} poster)</h2><table><thead><tr style="background:#f5f7fa;"><th style="padding:7px 6px;font-size:10px;text-align:left;font-weight:700;color:#888;">Datum</th><th style="padding:7px 6px;font-size:10px;text-align:left;font-weight:700;color:#888;">Konto</th><th style="padding:7px 6px;font-size:10px;text-align:left;font-weight:700;color:#888;">Beskrivning</th><th style="padding:7px 6px;font-size:10px;text-align:left;font-weight:700;color:#888;">Via</th><th style="padding:7px 6px;font-size:10px;text-align:right;font-weight:700;color:#888;">Belopp</th><th style="padding:7px 6px;font-size:10px;text-align:center;font-weight:700;color:#888;">Kvitto</th></tr></thead><tbody>${verRows||'<tr><td colspan="6" style="padding:20px;text-align:center;color:#aaa;">Inga poster registrerade</td></tr>'}</tbody></table>
+<div class="footer"><span>Föreningsbokföring · IBK v3.3 · Hjälpmedel, ej certifierat bokföringssystem</span><span>Utskrivet ${new Date().toLocaleDateString('sv-SE')}</span></div>
 <div class="print-btn"><button onclick="window.print()">Skriv ut / Spara som PDF</button></div>
 </div></body></html>`;
-
-  const blob = new Blob([pdfHtml],{type:'text/html;charset=utf-8'});
-  const url = URL.createObjectURL(blob);
-  const w = window.open(url,'_blank');
-  if(w) w.focus();
+  const blob=new Blob([pdfHtml],{type:'text/html;charset=utf-8'});
+  const url=URL.createObjectURL(blob);const w=window.open(url,'_blank');if(w)w.focus();
 }
 
-// ══ UTILS ════════════════════════════════════════════════════════════════════
-function closePanelOutside(e, id){if(e.target===$(id)) $(id).classList.add('hidden');}
+function closePanelOutside(e,id){if(e.target===$(id))$(id).classList.add('hidden');}
 </script>
-<!-- ══ KONTODETALJ PANEL ═══════════════════════════════════════════════════ -->
-<div id="panel-kontodetalj" class="hidden" onclick="closePanelOutside(event,'panel-kontodetalj')">
-  <div class="kontodetalj-sheet">
-    <div class="kontodetalj-head">
-      <div class="kdh-label">Kontodetalj</div>
-      <div style="display:flex;align-items:center;">
-        <span class="kdh-nr" id="kdh-nr"></span>
-        <span class="kdh-name" id="kdh-name"></span>
-      </div>
-      <div class="kdh-summa" id="kdh-summa"></div>
-      <div style="display:flex;justify-content:space-between;align-items:center;margin-top:8px;">
-        <span style="font-size:11px;color:rgba(255,255,255,0.4);" id="kdh-ant"></span>
-        <button class="close-btn" onclick="closeKontodetalj()">Stäng</button>
-      </div>
-    </div>
-    <div class="kontodetalj-body" id="kontodetalj-body"></div>
-  </div>
-</div>
 
-<!-- Fullskärm kvitto -->
-<div id="foto-fullscreen" class="kd-post-foto-full hidden">
-  <img id="foto-fullscreen-img" src="" alt="Kvitto"/>
-  <button class="kd-post-foto-full-close" onclick="closeFotoFullscreen()">Stäng ✕</button>
-</div>
-
-<!-- Dold fil-input för kvittofoto -->
-<input type="file" id="foto-input" accept="image/*" capture="environment" style="display:none;" onchange="handleFotoInput(event)"/>
 <script>
-if ('serviceWorker' in navigator) {
-  window.addEventListener('load', () => {
-    navigator.serviceWorker.register('/sw.js').then(reg => {
-      console.log('SW registrerad:', reg.scope);
-    }).catch(err => {
-      console.log('SW fel:', err);
-    });
+if('serviceWorker' in navigator){
+  window.addEventListener('load',function(){
+    navigator.serviceWorker.register('./sw.js').then(function(reg){console.log('SW:',reg.scope);}).catch(function(e){console.log('SW fel:',e);});
   });
 }
 </script>
+
 <div id="ios-install-banner" style="display:none;position:fixed;bottom:0;left:0;right:0;background:#1a1a2e;color:#fff;padding:16px 20px;z-index:999;box-shadow:0 -4px 20px rgba(0,0,0,0.3);max-width:480px;margin:0 auto;">
   <div style="display:flex;align-items:flex-start;gap:12px;">
     <img src="icon-192.png" style="width:44px;height:44px;border-radius:10px;flex-shrink:0;" alt=""/>
-    <div style="flex:1;">
-      <div style="font-size:13px;font-weight:700;margin-bottom:3px;">Installera som app</div>
-      <div style="font-size:12px;color:rgba(255,255,255,0.6);line-height:1.5;">Tryck på <strong style="color:#fff;">⎋ Dela</strong> och sedan <strong style="color:#fff;">"Lägg till på hemskärmen"</strong> för att använda appen offline.</div>
-    </div>
+    <div style="flex:1;"><div style="font-size:13px;font-weight:700;margin-bottom:3px;">Installera som app</div><div style="font-size:12px;color:rgba(255,255,255,0.6);line-height:1.5;">Tryck på <strong style="color:#fff;">⎋ Dela</strong> och sedan <strong style="color:#fff;">"Lägg till på hemskärmen"</strong> för att använda appen offline.</div></div>
     <button onclick="document.getElementById('ios-install-banner').style.display='none';localStorage.setItem('ios-banner-dismissed','1');" style="background:rgba(255,255,255,0.12);border:none;border-radius:8px;color:#fff;font-size:18px;width:30px;height:30px;flex-shrink:0;cursor:pointer;display:flex;align-items:center;justify-content:center;">×</button>
   </div>
 </div>
 
-<script>
-// Visa iOS-banner om: Safari på iOS, ej redan installerad, ej avvisad
-(function(){
-  const isIOS = /iphone|ipad|ipod/i.test(navigator.userAgent);
-  const isSafari = /safari/i.test(navigator.userAgent) && !/chrome/i.test(navigator.userAgent);
-  const isStandalone = window.navigator.standalone === true;
-  const dismissed = localStorage.getItem('ios-banner-dismissed');
-  if(isIOS && isSafari && !isStandalone && !dismissed){
-    setTimeout(()=>{ document.getElementById('ios-install-banner').style.display='block'; }, 3000);
-  }
-
-  // Android: lyssna på beforeinstallprompt
-  let deferredPrompt;
-  window.addEventListener('beforeinstallprompt', e => {
-    e.preventDefault();
-    deferredPrompt = e;
-    if(!localStorage.getItem('android-banner-dismissed')){
-      document.getElementById('android-install-banner').style.display='block';
-    }
-  });
-  window.installApp = function(){
-    if(deferredPrompt){
-      deferredPrompt.prompt();
-      deferredPrompt.userChoice.then(()=>{ deferredPrompt=null; document.getElementById('android-install-banner').style.display='none'; });
-    }
-  };
-})();
-</script>
-
 <div id="android-install-banner" style="display:none;position:fixed;bottom:0;left:0;right:0;background:#1a1a2e;color:#fff;padding:16px 20px;z-index:999;box-shadow:0 -4px 20px rgba(0,0,0,0.3);max-width:480px;margin:0 auto;">
   <div style="display:flex;align-items:center;gap:12px;">
     <img src="icon-192.png" style="width:44px;height:44px;border-radius:10px;flex-shrink:0;" alt=""/>
-    <div style="flex:1;">
-      <div style="font-size:13px;font-weight:700;margin-bottom:2px;">Installera Föreningsbokföring</div>
-      <div style="font-size:12px;color:rgba(255,255,255,0.6);">Lägg till på hemskärmen för snabb åtkomst offline.</div>
-    </div>
+    <div style="flex:1;"><div style="font-size:13px;font-weight:700;margin-bottom:2px;">Installera Föreningsbokföring</div><div style="font-size:12px;color:rgba(255,255,255,0.6);">Lägg till på hemskärmen för snabb åtkomst offline.</div></div>
     <div style="display:flex;gap:8px;flex-shrink:0;">
       <button onclick="document.getElementById('android-install-banner').style.display='none';localStorage.setItem('android-banner-dismissed','1');" style="background:rgba(255,255,255,0.12);border:none;border-radius:8px;color:#fff;font-size:12px;padding:8px 10px;cursor:pointer;">Senare</button>
       <button onclick="installApp()" style="background:#81c784;border:none;border-radius:8px;color:#1a1a2e;font-size:12px;font-weight:700;padding:8px 12px;cursor:pointer;">Installera</button>
     </div>
   </div>
 </div>
+
+<script>
+(function(){
+  var isIOS=/iphone|ipad|ipod/i.test(navigator.userAgent);
+  var isSafari=/safari/i.test(navigator.userAgent)&&!/chrome/i.test(navigator.userAgent);
+  var isStandalone=window.navigator.standalone===true;
+  var dismissed=localStorage.getItem('ios-banner-dismissed');
+  if(isIOS&&isSafari&&!isStandalone&&!dismissed){setTimeout(function(){document.getElementById('ios-install-banner').style.display='block';},3000);}
+  var deferredPrompt;
+  window.addEventListener('beforeinstallprompt',function(e){e.preventDefault();deferredPrompt=e;if(!localStorage.getItem('android-banner-dismissed')){document.getElementById('android-install-banner').style.display='block';}});
+  window.installApp=function(){if(deferredPrompt){deferredPrompt.prompt();deferredPrompt.userChoice.then(function(){deferredPrompt=null;document.getElementById('android-install-banner').style.display='none';});}};
+})();
+</script>
 
 </body>
 </html>
